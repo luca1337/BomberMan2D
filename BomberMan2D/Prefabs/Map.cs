@@ -42,7 +42,7 @@ namespace BomberMan2D.Prefabs
 
             foreach (string t1 in lines)
             {
-                string[] values = t1.Trim().Split(',');
+                string[] values = t1.Trim().Split(',',' ');
                 if (columns == 0)
                     columns = values.Length;
 
@@ -53,7 +53,6 @@ namespace BomberMan2D.Prefabs
                    bool success      = int.TryParse(currentVal, out value);
                    if (success)
                         cells.Add(value);
-
                 }
             }
         }
