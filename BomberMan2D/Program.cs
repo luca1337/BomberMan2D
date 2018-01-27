@@ -7,6 +7,8 @@ namespace BomberMan2D
     {
         static void Main(string[] args)
         {
+            Game.Init();
+            Game.Run();
         }
     }
 }
