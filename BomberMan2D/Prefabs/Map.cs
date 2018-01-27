@@ -14,16 +14,16 @@ namespace BomberMan2D.Prefabs
 
         private int rows;
         private int columns;
-        private int[] cells;
-        
+        private List<int> cells;
         public Map(string fileName)
         {
+            cells = new List<int>();
             ReadFromFile(fileName);
 
 
-            for (int i = 0; i < cells.Length; i++)
+            for (int i = 0; i < cells.Count; i++)
             {
-                if (cells[i] == 0)
+                if (cells[i] == 3)
                 {
                     Spawn(new Tile(new Vector2(i % columns * 50, i / columns * 50)));
                 }
@@ -42,19 +42,17 @@ namespace BomberMan2D.Prefabs
 
             foreach (string t1 in lines)
             {
-                string[] values = t1.Trim().Split(',');
+                string[] values = t1.Trim().Split(',', ' ');
                 if (columns == 0)
                     columns = values.Length;
 
-                cells = new int[rows * columns];
-
-                for (int i = 0; i < values.Length; i++)
-                {
-                    int value;
-                    string currentVal = values[i].Trim();
-                    bool success      = int.TryParse(currentVal, out value);
-                    if (success)
-                        cells[i] = value;
+               for (int i = 0; i < values.Length; i++)
+               {
+                   int value;
+                   string currentVal = values[i].Trim();
+                   bool success      = int.TryParse(currentVal, out value);
+                   if (success)
+                        cells.Add(value);
 
                 }
             }
