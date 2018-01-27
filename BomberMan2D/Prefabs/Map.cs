@@ -20,7 +20,7 @@ namespace BomberMan2D.Prefabs
         {
             cells = new List<int>();
             ReadFromFile(fileName);
-            offset = 50f;
+            offset = 100f;
 
             for (int i = 0; i < cells.Count; i++)
             {
