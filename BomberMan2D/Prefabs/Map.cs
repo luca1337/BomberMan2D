@@ -34,10 +34,6 @@ namespace BomberMan2D.Prefabs
                 }
             }
 
-            // for (int i = 0; i < 20; i++)
-            // {
-            //     GameObject.Spawn(new Tile(new Vector2(i % 20 * 50, i / 20 * 50)));
-            // }
         }
 
         private void ReadFromFile(string csvFileName)
