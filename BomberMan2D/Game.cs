@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Aiv.Fast2D;
 using BehaviourEngine;
+using BomberMan2D.Prefabs;
 
 namespace BomberMan2D
 {
@@ -15,6 +16,10 @@ namespace BomberMan2D
             Window window = new Window(1200, 700, "BomberMan");
             window.SetClearColor(1.0f, 0.61f, 0.0f);
             Engine.Init(window);
+
+            FlyWeight.Add("wall", "Assets/wall.dat");
+
+            GameObject.Spawn(new Map());
         }
 
         public static void Run()
