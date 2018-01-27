@@ -18,11 +18,11 @@ namespace BomberMan2D.Prefabs
         private float offset;
         public Map(string fileName)
         {
-            cells = new List<int>();
-            ReadFromFile(fileName);
             offset = 100f;
+            cells  = new List<int>();
+            ReadFromFile(fileName);
             GenerateMap();
-
+            //I gabbianiiii!!!!
         }
 
         private void GenerateMap()
