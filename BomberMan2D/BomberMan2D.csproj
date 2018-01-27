@@ -35,6 +35,10 @@
     <Reference Include="aiv-fast2d, Version=1.0.6336.29264, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Aiv.Fast2D.0.13.0\lib\net40\aiv-fast2d.dll</HintPath>
     </Reference>
+    <Reference Include="aiv-fast2d-utils-input, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\BehaviourEngine\bin\Debug\aiv-fast2d-utils-input.dll</HintPath>
+    </Reference>
     <Reference Include="aiv-fast2d-utils-texturehelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TextureHelper.1.1.0\lib\net45\aiv-fast2d-utils-texturehelper.dll</HintPath>
     </Reference>
@@ -54,7 +58,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\AnimationType.cs" />
+    <Compile Include="Enums\CollisionLayer.cs" />
+    <Compile Include="Components\BoxCollider2DRenderer.cs" />
+    <Compile Include="Components\CharacterController.cs" />
+    <Compile Include="Components\FSMUpdater.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Prefabs\BomberMan.cs" />
     <Compile Include="Prefabs\Map.cs" />
     <Compile Include="Prefabs\Tile.cs" />
     <Compile Include="Program.cs" />
@@ -91,16 +101,13 @@
     <None Include="Assets\Health.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\obstacle.dat">
+    <None Include="Assets\Obstacle_01.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Speed.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Assets\w.dat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\wall.dat">
+    <None Include="Assets\Wall_01.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\warrior.dat">
@@ -119,8 +126,6 @@
       <Name>BehaviourEngine</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

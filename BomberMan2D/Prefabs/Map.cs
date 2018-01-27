@@ -11,34 +11,38 @@ namespace BomberMan2D.Prefabs
 {
     public class Map : GameObject
     {
+        private int                 blockSize = 50;
+        private int                 rows;
+        private int                 columns;
+        private List<int>           cells;
+        private float               offset;
+        private static Vector2      playerSpawnPoint;
 
-        private int rows;
-        private int columns;
-        private List<int> cells;
-        private float offset;
         public Map(string fileName)
         {
-
-
-            offset = 100f;
+            //represent blockSize * 2 (2 times blocksize)
+            offset = 2 * blockSize;
             cells  = new List<int>();
+
             ReadFromFile(fileName);
             GenerateMap();
-            //I gabbianiiii!!!!
-            //Olè
         }
 
         private void GenerateMap()
         {
-            for (int i = 0; i < cells.Count; i++)
+            for (int iterator = 0; iterator < cells.Count; iterator++)
             {
-                if (cells[i] == 3)
+                if (cells[iterator] == 3)
                 {
-                    Spawn(new Tile(new Vector2(i % (columns - 1) * 50, (i / (columns - 1) * 50) + offset), "wall"));
+                    Spawn(new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize) + offset)), "Wall", true));
                 }
-                else if (cells[i] == 2)
+                else if (cells[iterator] == 2)
                 {
-                    Spawn(new Tile(new Vector2(i % (columns - 1) * 50, (i / (columns - 1) * 50) + offset), "obstacle"));
+                    Spawn(new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize) + offset)), "Obstacle", true));
+                }
+                else if (cells[iterator] == 5)
+                {
+                    playerSpawnPoint = new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize) + offset));
                 }
             }
         }
@@ -63,6 +67,11 @@ namespace BomberMan2D.Prefabs
                         cells.Add(value);
                 }
             }
+        }
+
+        public static Vector2 GetPlayerSpawnPoint()
+        {
+            return playerSpawnPoint;
         }
     }
 }
