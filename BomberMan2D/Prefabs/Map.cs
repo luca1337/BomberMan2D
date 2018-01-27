@@ -25,7 +25,11 @@ namespace BomberMan2D.Prefabs
             {
                 if (cells[i] == 3)
                 {
-                    Spawn(new Tile(new Vector2(i % (columns -1) * 50, i / (columns - 1) * 50)));
+                    Spawn(new Tile(new Vector2(i % (columns -1) * 50, i / (columns - 1) * 50), "wall"));
+                }
+                else if(cells[i] == 2)
+                {
+                    Spawn(new Tile(new Vector2(i % (columns - 1) * 50, i / (columns - 1) * 50), "obstacle"));
                 }
             }
 

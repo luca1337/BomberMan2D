@@ -18,6 +18,7 @@ namespace BomberMan2D
             Engine.Init(window);
 
             FlyWeight.Add("wall", "Assets/wall.dat");
+            FlyWeight.Add("obstacle", "Assets/obstacle.dat");
 
             GameObject.Spawn(new Map("Levels/Level00.csv"));
         }
