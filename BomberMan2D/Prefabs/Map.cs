@@ -19,6 +19,7 @@ namespace BomberMan2D.Prefabs
         public Map(string fileName)
         {
 
+
             offset = 100f;
             cells  = new List<int>();
             ReadFromFile(fileName);
