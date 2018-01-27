@@ -109,6 +109,9 @@
     <None Include="Configs\App.config" />
     <None Include="Configs\OpenTK.dll.config" />
     <None Include="Configs\packages.config" />
+    <None Include="Levels\Level00.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BehaviourEngine\BehaviourEngine.csproj">

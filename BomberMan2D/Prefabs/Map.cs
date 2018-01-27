@@ -15,12 +15,24 @@ namespace BomberMan2D.Prefabs
         private int rows;
         private int columns;
         private int[] cells;
-        public Map()
+        
+        public Map(string fileName)
         {
-            for (int i = 0; i < 20; i++)
+            ReadFromFile(fileName);
+
+
+            for (int i = 0; i < cells.Length; i++)
             {
-                GameObject.Spawn(new Tile(new Vector2(i % 20 * 50, i / 20 * 50)));
+                if (cells[i] == 0)
+                {
+                    Spawn(new Tile(new Vector2(i % columns * 50, i / columns * 50)));
+                }
             }
+
+            // for (int i = 0; i < 20; i++)
+            // {
+            //     GameObject.Spawn(new Tile(new Vector2(i % 20 * 50, i / 20 * 50)));
+            // }
         }
 
         private void ReadFromFile(string csvFileName)
@@ -45,15 +57,6 @@ namespace BomberMan2D.Prefabs
                         cells[i] = value;
 
                 }
-             //  foreach (string t in values)
-             //  {
-             //      int value;
-             //      string currentVal = t.Trim();
-             //      bool success = int.TryParse(currentVal, out value);
-             //
-             //      if (success)
-             //          map.Add(value);
-             //  }
             }
         }
     }
