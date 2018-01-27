@@ -15,21 +15,22 @@ namespace BomberMan2D.Prefabs
         private int rows;
         private int columns;
         private List<int> cells;
+        private float offset;
         public Map(string fileName)
         {
             cells = new List<int>();
             ReadFromFile(fileName);
-
+            offset = 50f;
 
             for (int i = 0; i < cells.Count; i++)
             {
                 if (cells[i] == 3)
                 {
-                    Spawn(new Tile(new Vector2(i % (columns -1) * 50, i / (columns - 1) * 50), "wall"));
+                    Spawn(new Tile(new Vector2(i % (columns -1) * 50, (i / (columns - 1) * 50) + offset), "wall"));
                 }
                 else if(cells[i] == 2)
                 {
-                    Spawn(new Tile(new Vector2(i % (columns - 1) * 50, i / (columns - 1) * 50), "obstacle"));
+                    Spawn(new Tile(new Vector2(i % (columns - 1) * 50, (i / (columns - 1) * 50) + offset), "obstacle"));
                 }
             }
 
