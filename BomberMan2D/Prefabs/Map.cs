@@ -25,7 +25,7 @@ namespace BomberMan2D.Prefabs
             {
                 if (cells[i] == 3)
                 {
-                    Spawn(new Tile(new Vector2(i % columns * 50, i / columns * 50)));
+                    Spawn(new Tile(new Vector2(i % (columns -1) * 50, i / (columns - 1) * 50)));
                 }
             }
 
@@ -42,7 +42,7 @@ namespace BomberMan2D.Prefabs
 
             foreach (string t1 in lines)
             {
-                string[] values = t1.Trim().Split(',', ' ');
+                string[] values = t1.Trim().Split(',');
                 if (columns == 0)
                     columns = values.Length;
 
