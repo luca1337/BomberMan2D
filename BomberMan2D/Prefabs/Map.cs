@@ -21,19 +21,23 @@ namespace BomberMan2D.Prefabs
             cells = new List<int>();
             ReadFromFile(fileName);
             offset = 100f;
+            GenerateMap();
 
+        }
+
+        private void GenerateMap()
+        {
             for (int i = 0; i < cells.Count; i++)
             {
                 if (cells[i] == 3)
                 {
-                    Spawn(new Tile(new Vector2(i % (columns -1) * 50, (i / (columns - 1) * 50) + offset), "wall"));
+                    Spawn(new Tile(new Vector2(i % (columns - 1) * 50, (i / (columns - 1) * 50) + offset), "wall"));
                 }
-                else if(cells[i] == 2)
+                else if (cells[i] == 2)
                 {
                     Spawn(new Tile(new Vector2(i % (columns - 1) * 50, (i / (columns - 1) * 50) + offset), "obstacle"));
                 }
             }
-
         }
 
         private void ReadFromFile(string csvFileName)
