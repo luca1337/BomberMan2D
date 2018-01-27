@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BomberMan2D", "BomberMan2D\BomberMan2D.csproj", "{CB42B0AB-3193-4C76-A29E-58E799BBF5A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BehaviourEngine", "..\BehaviourEngine\BehaviourEngine.csproj", "{99881EEB-2DE4-4B80-B7AF-07124ABEEAD3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB42B0AB-3193-4C76-A29E-58E799BBF5A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB42B0AB-3193-4C76-A29E-58E799BBF5A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB42B0AB-3193-4C76-A29E-58E799BBF5A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB42B0AB-3193-4C76-A29E-58E799BBF5A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99881EEB-2DE4-4B80-B7AF-07124ABEEAD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99881EEB-2DE4-4B80-B7AF-07124ABEEAD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99881EEB-2DE4-4B80-B7AF-07124ABEEAD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99881EEB-2DE4-4B80-B7AF-07124ABEEAD3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1237EC01-6FE3-4C0A-B715-04500B2B13D4}
+	EndGlobalSection
+EndGlobal
