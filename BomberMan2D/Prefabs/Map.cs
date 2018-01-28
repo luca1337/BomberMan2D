@@ -74,32 +74,32 @@ namespace BomberMan2D.Prefabs
 
         private void GenerateNeighborNode()
         {
-            for (int y = 0; y < rows; y++)
+            for (int y = 0; y < rows + 2; y++)
             {
                 for (int x = 0; x < (columns - 1); x++)
                 {
-                    int index = (y / 50) * (columns - 1) + (x / 50);
+                    int index = y * (columns - 1) + x;
 
                     if (mapNodes[index] == null)
                         continue;
 
                     // top
-                    Node top = GetNodeByIndex(x, y - 1);
+                    Node top = GetNodeByIndex(x, y - 50);
                     if (top != null)
                         mapNodes[index].AddNeighbour(top);
 
                     // right
-                    Node right = GetNodeByIndex(x + 1, y);
+                    Node right = GetNodeByIndex(x + 50, y);
                     if (right != null)
                         mapNodes[index].AddNeighbour(right);
 
                     // bottom
-                    Node bottom = GetNodeByIndex(x, y + 1);
+                    Node bottom = GetNodeByIndex(x, y + 50);
                     if (bottom != null)
                         mapNodes[index].AddNeighbour(bottom);
 
                     // left
-                    Node left = GetNodeByIndex(x - 1, y);
+                    Node left = GetNodeByIndex(x - 50, y);
                     if (left != null)
                         mapNodes[index].AddNeighbour(left);
                 }
@@ -171,10 +171,11 @@ namespace BomberMan2D.Prefabs
         {
             if (x < 0 || x > (columns - 1))
                 return null;
-            if (y < 0 || y > rows)
+            if (y < 0 || y > rows + 2)
                 return null;
 
-            int index = (y / 50) * (columns - 1) + (x / 50);
+            int index = y * (columns - 1) + x;
+
             return mapNodes[index];
         }
 
