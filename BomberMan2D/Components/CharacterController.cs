@@ -20,7 +20,7 @@ namespace BomberMan2D.Components
         public void Update()
         {
             SetDirection();
-            Owner.Transform.Position += Direction * Time.DeltaTime * 2;
+            Owner.Transform.Position += Direction * Time.DeltaTime * 0.05f;
         }
 
         private void SetDirection()
