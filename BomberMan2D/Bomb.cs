@@ -77,7 +77,7 @@ namespace BomberMan2D
 
             public void Update()
             {
-                currentState.Owner = Owner;
+                //currentState.Owner = Owner;
                 currentState = currentState.OnStateUpdate();
             }
         }

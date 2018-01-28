@@ -62,6 +62,7 @@
     <Compile Include="Bomb.cs" />
     <Compile Include="Components\CameraFollow.cs" />
     <Compile Include="Explosion.cs" />
+    <Compile Include="IWaypoint.cs" />
     <Compile Include="Prefabs\AI.cs" />
     <Compile Include="Prefabs\PowerupSpawner.cs" />
     <Compile Include="Enums\AnimationType.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Prefabs\BomberMan.cs" />
     <Compile Include="Prefabs\Map.cs" />
     <Compile Include="Prefabs\PowerUp.cs" />
+    <Compile Include="Prefabs\TargetPoint.cs" />
     <Compile Include="Prefabs\Tile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

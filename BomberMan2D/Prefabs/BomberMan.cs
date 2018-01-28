@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BomberMan2D.Prefabs
 {
-    public class BomberMan : GameObject, IPowerupable
+    public class BomberMan : GameObject, IPowerupable, IWaypoint
     {
         #region Animations
         private Dictionary<AnimationType, AnimationRenderer> playerAnimations = new Dictionary<AnimationType, AnimationRenderer>();
@@ -28,6 +28,8 @@ namespace BomberMan2D.Prefabs
         private IState walkState;
         private IState bombState;
         private List<IState> states = new List<IState>();
+
+        public Vector2 Location { get; set; }
         #endregion
 
         public BomberMan() : base("BomberMan")

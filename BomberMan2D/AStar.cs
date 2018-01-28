@@ -13,12 +13,12 @@ namespace BomberMan2D
     {
         public static List<Node> GetPath<T>(T map, int startX, int startY, int endX, int endY) where T : IMap
         {
-            //Node start = (map as Map).GetNodeByIndex(startX, startY);
-            //Node end   = (map as Map).GetNodeByIndex(endX, endY);
-            //if (start != null && end != null)
-            //{
-            //    return GetPath(start, end);
-            //}
+            Node start = (map as Map).GetNodeByIndex(startX, startY);
+            Node end = (map as Map).GetNodeByIndex(endX, endY);
+            if (start != null && end != null)
+            {
+                return GetPath(start, end);
+            }
             return null;
         }
 

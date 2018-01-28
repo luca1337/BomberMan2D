@@ -32,8 +32,6 @@ namespace BomberMan2D.Components
 
         public void Update()
         {
-            Node.ShowPath();
-
             if(Owner.Transform.Position.X > BehaviourEngine.Graphics.Instance.Window.Width / 2 - Owner.Transform.Scale.X
                 && Owner.Transform.Position.X < BehaviourEngine.Graphics.Instance.Window.Width / 2 + (6 * blockSize))
             cam.position.X = Owner.Transform.Position.X;
