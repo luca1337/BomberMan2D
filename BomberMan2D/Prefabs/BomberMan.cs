@@ -149,7 +149,7 @@ namespace BomberMan2D.Prefabs
             {
                 if (Input.IsKeyDown(KeyCode.Space) && !timer.IsActive)
                 {
-                    AudioManager.PlayClip(AudioType.SOUND_DROP);
+                //    AudioManager.PlayClip(AudioType.SOUND_DROP);
 
                     /*Pool<Bomb>.GetInstance(x =>
                     {
