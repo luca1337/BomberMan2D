@@ -38,7 +38,7 @@ namespace BomberMan2D
             colliders = new List<BoxCollider2D>();
             locations = new List<Vector2>();
             renderer  = new AnimationRenderer(FlyWeight.Get("Bomb"), 150, 150, 4, new int[] { 0, 1, 2, 3, 2 }, 0.2f, true, false);
-
+            AddComponent(renderer);
             #region FSM
             wait    = new StateWait();
             explode = new StateExplode();
@@ -92,14 +92,14 @@ namespace BomberMan2D
             if (Map.GetIndex(true, (int)from.X - 50, (int)from.Y))
                 adjacentLocation.Add(new Vector2(from.X - 50, from.Y));
 
-            if (Map.GetIndex(true, (int)from.X, (int)from.Y - 50))
-                adjacentLocation.Add(new Vector2(from.X, from.Y - 50));
+            if (Map.GetIndex(true, (int)from.X, (int)from.Y - 150))
+                adjacentLocation.Add(new Vector2(from.X, from.Y - 150));
 
             if (Map.GetIndex(true, (int)from.X + 50, (int)from.Y))
                 adjacentLocation.Add(new Vector2(from.X + 50, from.Y));
 
-            if (Map.GetIndex(true, (int)from.X, (int)from.Y + 50))
-                adjacentLocation.Add(new Vector2(from.X, from.Y + 50));
+            if (Map.GetIndex(true, (int)from.X, (int)from.Y + 150))
+                adjacentLocation.Add(new Vector2(from.X, from.Y + 150));
 
             return adjacentLocation;
         }

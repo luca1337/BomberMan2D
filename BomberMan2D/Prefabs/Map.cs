@@ -77,7 +77,7 @@ namespace BomberMan2D.Prefabs
 
         public static bool GetIndex(bool explosion, int x, int y) // for explosion spawn
         {
-            int index = ((x/ 51) + (columns - 1) * (y /51));
+            int index = ((x/50) + (columns - 1) * ((y/50) + 2));
 
             if (explosion)
             {
