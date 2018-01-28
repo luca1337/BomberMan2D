@@ -23,12 +23,12 @@ namespace BomberMan2D.Prefabs
 
         public Map(string fileName)
         {
-            cells = new List<int>();
             firstTimeIteration = true;
-            mapNodes = new Node[cells.Count];
-
+            cells              = new List<int>();
             ReadFromFile(fileName);
             GenerateMap();
+
+            mapNodes = new Node[cells.Count];
             GenerateNodes();
             GenerateNeighborNode();
         }
