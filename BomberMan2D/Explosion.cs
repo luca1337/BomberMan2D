@@ -43,7 +43,7 @@ namespace BomberMan2D
             AddComponent(anim);
 
             //TODO: replace this with the sceneManager method
-            Spawn(this);
+           // Spawn(this);
         }
 
         private void OnTriggerEnter(Collider2D other)

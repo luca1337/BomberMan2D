@@ -180,6 +180,13 @@ namespace BomberMan2D.Prefabs
             }
         }
 
+        public static int GetIndex(int x, int y)
+        {
+            int index = (y / 50) * (columns - 1) + (x / 50);
+            return index;
+        }
+
+
         public static Vector2 GetPlayerSpawnPoint()
         {
             return playerSpawnPoint;

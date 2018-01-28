@@ -21,9 +21,9 @@ namespace BomberMan2D
         public bool Exploding { get; private set; }
         public bool Stop { get; set; }
         public bool Show { get; set; }
-        
+
         //Private Field
-        private AnimationRenderer   renderer;
+        private AnimationRenderer renderer;
         private List<BoxCollider2D> colliders;
         private List<Vector2> locations;
         private StateExplode explode;
@@ -31,22 +31,22 @@ namespace BomberMan2D
         private IState currentState;
 
 
-        public Bomb( ) : base("Bomb")
+        public Bomb() : base("Bomb")
         {
             this.Layer = (uint)CollisionLayer.BomberMan;
 
             colliders = new List<BoxCollider2D>();
             locations = new List<Vector2>();
-            renderer  = new AnimationRenderer(FlyWeight.Get("Bomb"), 150, 150, 4, new int[] { 0, 1, 2, 3, 2 }, 0.2f, true, false);
+            renderer = new AnimationRenderer(FlyWeight.Get("Bomb"), 150, 150, 4, new int[] { 0, 1, 2, 3, 2 }, 0.2f, true, false);
             AddComponent(renderer);
             #region FSM
-            wait    = new StateWait();
+            wait = new StateWait();
             explode = new StateExplode();
             wait.Owner = this;
             explode.Owner = this;
 
             explode.Next = wait;
-            wait.Next    = explode;
+            wait.Next = explode;
 
             wait.OnStateEnter();
             currentState = wait;
@@ -109,12 +109,14 @@ namespace BomberMan2D
             public StateWait Next { get; set; }
             public GameObject Owner { get; set; }
 
+            private bool oneTimeSpawn;
             private Timer timer;
-         //   private Explosion explosion;
+            //   private Explosion explosion;
 
-            public StateExplode( )
+            public StateExplode()
             {
-                timer      = new Timer(1.8f);
+                timer = new Timer(1.8f);
+                oneTimeSpawn = true;
             }
 
             public void OnStateEnter()
@@ -131,17 +133,14 @@ namespace BomberMan2D
             {
                 if ((Owner as Bomb).Exploding)
                 {
-                    //camera shake
-                    CameraManager.Instance.Shake(0.09f, 1.0f);
-
                     (Owner as Bomb).GetComponent<AnimationRenderer>().Enabled = false;
 
-               //     AudioManager.PlayClip(AudioType.SOUND_EXPLOSION);
+                    //     AudioManager.PlayClip(AudioType.SOUND_EXPLOSION);
                     (Owner as Bomb).locations = GetAdjacentLocation(Owner.Transform.Position);
 
                     for (int i = 0; i < (Owner as Bomb).locations.Count; i++)
                     {
-                        GameObject toSpawn = Spawn(Pool<Explosion>.GetInstance(x =>
+                        Explosion toSpawn = Pool<Explosion>.GetInstance(x =>
                         {
                             x.Transform.Position = (Owner as Bomb).locations[i];
                             x.Active = true;
@@ -150,10 +149,21 @@ namespace BomberMan2D
                                 if (!component.Enabled)
                                     component.Enabled = true;
                             }
-                        }));
-                        (Owner as Bomb).explosionList.Add(toSpawn as Explosion);
+                        });
+                        (Owner as Bomb).explosionList.Add(toSpawn);
+
+
                     }
-                   
+
+                    if (oneTimeSpawn)
+                    {
+                        for (int j = 0; j < (Owner as Bomb).explosionList.Count; j++)
+                        {
+                            Spawn((Owner as Bomb).explosionList[j]);
+                        }
+                        oneTimeSpawn = false;
+                    }
+
                     (Owner as Bomb).Exploding = false;
                 }
 
@@ -173,12 +183,12 @@ namespace BomberMan2D
                                 x.Active = false;
                                 foreach (BehaviourEngine.Component component in x.Components)
                                 {
-                                     component.Enabled = false;
+                                    component.Enabled = false;
                                 }
                             }
                         );
                     }
-                    
+
                     (Owner as Bomb).explosionList.Clear();
 
                     #endregion
@@ -204,7 +214,7 @@ namespace BomberMan2D
             public GameObject Owner { get; set; }
             private Timer timer;
 
-            public StateWait( )
+            public StateWait()
             {
                 timer = new Timer(1f);
             }
@@ -223,7 +233,7 @@ namespace BomberMan2D
                 if (timer.IsActive)
                     timer.Update();
 
-                (Owner as Bomb).EnableAnimation("Bomb",(Owner as Bomb).Stop, (Owner as Bomb).Show);
+                (Owner as Bomb).EnableAnimation("Bomb", (Owner as Bomb).Stop, (Owner as Bomb).Show);
 
                 if (!timer.IsActive)
                 {
