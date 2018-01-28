@@ -66,7 +66,7 @@ namespace BomberMan2D.Prefabs
 
                     if (cells[index] == 0 || cells[index] == 5 || cells[index] == 12)
                     {
-                        mapNodes[index] = new Node(1, new Vector2(x, y));
+                        mapNodes[index] = new Node(1, new Vector2(x * 50, y * 50));
                     }
                 }
             }
@@ -169,12 +169,12 @@ namespace BomberMan2D.Prefabs
 
         public Node GetNodeByIndex(int x, int y)
         {
-            if (x < 0 || x > (columns - 1))
+            if (x/50 < 0 || x/50 > (columns - 1))
                 return null;
-            if (y < 0 || y > rows + 2)
+            if (y / 50 < 0 || y / 50 > rows + 2)
                 return null;
 
-            int index = y * (columns - 1) + x;
+            int index = (y / 50) * (columns - 1) + (x / 50);
 
             return mapNodes[index];
         }
