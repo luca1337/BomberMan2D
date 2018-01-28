@@ -74,6 +74,7 @@ namespace BomberMan2D.Prefabs
 
         private void GenerateNeighborNode()
         {
+            // Here we move between the indexes
             for (int y = 0; y < rows + 2; y++)
             {
                 for (int x = 0; x < (columns - 1); x++)
