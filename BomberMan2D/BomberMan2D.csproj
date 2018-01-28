@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\CameraFollow.cs" />
+    <Compile Include="Prefabs\PowerupSpawner.cs" />
     <Compile Include="Enums\AnimationType.cs" />
     <Compile Include="Enums\CollisionLayer.cs" />
     <Compile Include="Components\BoxCollider2DRenderer.cs" />

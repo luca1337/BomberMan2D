@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BomberMan2D.Prefabs
 {
-    public class BomberMan : GameObject
+    public class BomberMan : GameObject, IPowerupable
     {
         #region Animations
         private Dictionary<AnimationType, AnimationRenderer> playerAnimations = new Dictionary<AnimationType, AnimationRenderer>();
@@ -30,7 +30,7 @@ namespace BomberMan2D.Prefabs
         private List<IState> states = new List<IState>();
         #endregion
 
-        public BomberMan()
+        public BomberMan() : base("BomberMan")
         {
             #region LayerMask
             this.Layer = (uint)CollisionLayer.BomberMan;
@@ -102,7 +102,9 @@ namespace BomberMan2D.Prefabs
             AddComponent(new Components.CharacterController());
             AddComponent(new Components.FSMUpdater(states));
 
-            AddComponent(new BoxCollider2D(new Vector2(35f, 35f)));
+            BoxCollider2D collider2D = new BoxCollider2D(new Vector2(35f, 35f));
+            collider2D.TriggerEnter += OnTriggerEnter;
+            AddComponent(collider2D);
 
             Rigidbody2D rigidBody = new Rigidbody2D();
             rigidBody.IsGravityAffected = false;
@@ -111,6 +113,15 @@ namespace BomberMan2D.Prefabs
             AddComponent(new Components.CameraFollow());
 
             #endregion
+        }
+
+        private void OnTriggerEnter(Collider2D other)
+        {
+            if(other.Owner is IPowerup)
+            {
+                IPowerup powerup = other.Owner as IPowerup;
+                powerup.ApplyPowerUp(this);
+            }
         }
 
         private void EnableAnimation(AnimationType animationType, bool enable)
@@ -124,6 +135,17 @@ namespace BomberMan2D.Prefabs
                 x.Value.Show = !enable;
                 x.Value.Stop = !enable;
             });
+        }
+
+        public void ApplySpeed(float amount)
+        {
+            Console.WriteLine("Speed Applied!");
+        }
+
+        public float ApplyHealth(int amount)
+        {
+            Console.WriteLine("Health Applied!");
+            return 0.0f;
         }
 
         private class StateDrop : IState
@@ -149,7 +171,7 @@ namespace BomberMan2D.Prefabs
             {
                 if (Input.IsKeyDown(KeyCode.Space) && !timer.IsActive)
                 {
-                    AudioManager.PlayClip(AudioType.SOUND_DROP);
+                    //AudioManager.PlayClip(AudioType.SOUND_DROP);
 
                     /*Pool<Bomb>.GetInstance(x =>
                     {

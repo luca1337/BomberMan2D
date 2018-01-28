@@ -8,7 +8,6 @@ namespace BomberMan2D
 {
     public enum PowerUpType
     {
-        PRP_NONE,
         PRP_SPEED,
         PRP_HEALTH
     }

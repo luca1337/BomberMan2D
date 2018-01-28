@@ -13,6 +13,7 @@ namespace BomberMan2D
         BomberMan = 2,
         Enemy = 4,
         Wall = 8,
-        Bombs = 16
+        Bombs = 16,
+        Powerup = 32
     }
 }
