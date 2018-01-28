@@ -18,6 +18,7 @@ namespace BomberMan2D
         public static void Init()
         {
             Window window = new Window(1200, 700, "BomberMan");
+            window.SetDefaultOrthographicSize(14);
             window.SetClearColor(0.0f, 0.61f, 0.0f);
             Engine.Init(window);
 
@@ -38,7 +39,7 @@ namespace BomberMan2D
             ai.Player = bomberMan;
             ai.CurrentTarget = bomberMan;
             ai.map = map;
-            GameObject.Spawn(ai, new Vector2(50, 150));
+            GameObject.Spawn(ai, new Vector2(5, 5));
 
             GameObject.Spawn(new PowerupSpawner(5));
         }

@@ -12,7 +12,7 @@ namespace BomberMan2D.Prefabs
 {
     public class Map : GameObject, IMap
     {
-        private int blockSize = 50;
+        private int blockSize = 1;
         private static int rows;
         private static int columns;
         private static List<int> cells;
