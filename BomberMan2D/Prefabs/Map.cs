@@ -58,11 +58,11 @@ namespace BomberMan2D.Prefabs
 
         private void GenerateNodes()
         {
-            for (int y = 0; y < rows; y++)
+            for (int y = 0; y < rows + 2; y++)
             {
                 for (int x = 0; x < (columns - 1); x++)
                 {
-                    int index = (y / 50) * (columns - 1) + (x / 50);
+                    int index = y * (columns - 1) + x ;
 
                     if (cells[index] == 0 || cells[index] == 5 || cells[index] == 12)
                     {

@@ -134,7 +134,7 @@ namespace BomberMan2D
                     //camera shake
                     CameraManager.Instance.Shake(0.09f, 1.0f);
 
-                  //  (Owner as Bomb).GetComponent<AnimationRenderer>().Enabled = false;
+                    (Owner as Bomb).GetComponent<AnimationRenderer>().Enabled = false;
 
                //     AudioManager.PlayClip(AudioType.SOUND_EXPLOSION);
                     (Owner as Bomb).locations = GetAdjacentLocation(Owner.Transform.Position);
@@ -223,7 +223,7 @@ namespace BomberMan2D
                 if (timer.IsActive)
                     timer.Update();
 
-                (Owner as Bomb).EnableAnimation("Bomb", false, true);
+                (Owner as Bomb).EnableAnimation("Bomb",(Owner as Bomb).Stop, (Owner as Bomb).Show);
 
                 if (!timer.IsActive)
                 {
