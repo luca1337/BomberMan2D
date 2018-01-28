@@ -67,7 +67,7 @@ namespace BomberMan2D.Prefabs
 
                     if (cells[index] == 0 || cells[index] == 5 || cells[index] == 12)
                     {
-                        mapNodes[index] = new Node(1, new Vector2(x * 50, y * 50));
+                        mapNodes[index] = new Node(1, new Vector2(x , y ));
                     }
                 }
             }
@@ -156,7 +156,7 @@ namespace BomberMan2D.Prefabs
 
         public static bool GetIndex(bool explosion, int x, int y) // for explosion spawn
         {
-            int index = (y / 50) * (columns - 1) + (x / 50);
+            int index = y * (columns - 1) + x ;
 
             if (explosion)
             {
@@ -183,7 +183,7 @@ namespace BomberMan2D.Prefabs
 
         public static int GetIndex(int x, int y)
         {
-            int index = (y / 50) * (columns - 1) + (x / 50);
+            int index = y  * (columns - 1) + x ;
             return index;
         }
 

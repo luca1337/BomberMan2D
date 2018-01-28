@@ -89,17 +89,17 @@ namespace BomberMan2D
             if (Map.GetIndex(true, (int)from.X, (int)from.Y))
                 adjacentLocation.Add(new Vector2(from.X, from.Y));
 
-            if (Map.GetIndex(true, (int)from.X - 50, (int)from.Y))
-                adjacentLocation.Add(new Vector2(from.X - 50, from.Y));
+            if (Map.GetIndex(true, (int)from.X - 1, (int)from.Y))
+                adjacentLocation.Add(new Vector2(from.X - 1, from.Y));
 
-            if (Map.GetIndex(true, (int)from.X, (int)from.Y - 50))
-                adjacentLocation.Add(new Vector2(from.X, from.Y - 50));
+            if (Map.GetIndex(true, (int)from.X, (int)from.Y - 1))
+                adjacentLocation.Add(new Vector2(from.X, from.Y - 1));
 
-            if (Map.GetIndex(true, (int)from.X + 50, (int)from.Y))
-                adjacentLocation.Add(new Vector2(from.X + 50, from.Y));
+            if (Map.GetIndex(true, (int)from.X + 1, (int)from.Y))
+                adjacentLocation.Add(new Vector2(from.X + 1, from.Y));
 
-            if (Map.GetIndex(true, (int)from.X, (int)from.Y + 50))
-                adjacentLocation.Add(new Vector2(from.X, from.Y + 50));
+            if (Map.GetIndex(true, (int)from.X, (int)from.Y + 1))
+                adjacentLocation.Add(new Vector2(from.X, from.Y + 1));
 
             return adjacentLocation;
         }
