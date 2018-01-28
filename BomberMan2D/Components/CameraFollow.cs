@@ -1,6 +1,7 @@
 ﻿using Aiv.Fast2D;
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
+using BomberMan2D.Prefabs;
 using OpenTK;
 using System;
 using System.Collections.Generic;

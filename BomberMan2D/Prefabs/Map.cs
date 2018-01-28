@@ -12,21 +12,24 @@ namespace BomberMan2D.Prefabs
     public class Map : GameObject
     {
         private int                     blockSize = 50;
-        private static int                     rows;
-        private static int                     columns;
-        private static List<int>               cells;
+        private static int              rows;
+        private static int              columns;
+        private static List<int>        cells;
         private float                   offset;
         private static Vector2          playerSpawnPoint;
-        private static List<Vector2> powerUpSpawnPoints = new List<Vector2>();
+        private static List<Vector2>    powerUpSpawnPoints = new List<Vector2>();
+        private Node[] mapNodes;
 
         public Map(string fileName)
         {
             //represent blockSize * 2 (2 times blocksize)
             offset = 2 * blockSize;
             cells  = new List<int>();
+            mapNodes = new Node[cells.Count];
 
             ReadFromFile(fileName);
             GenerateMap();
+            GenerateNodes();
         }
 
         private void GenerateMap()
@@ -49,6 +52,25 @@ namespace BomberMan2D.Prefabs
                 {
                     powerUpSpawnPoints.Add(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize) + offset)));
                 }
+            }
+        }
+
+        private void GenerateNodes()
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                for (int x = 0; x < (columns - 1); x++)
+                {
+                    int index = y * (columns - 1) + x;
+
+                    if (cells[index] == 0 || cells[index] == 5 || cells[index] == 12)
+                    {
+                        mapNodes[index] = new Node(1, new Vector2(x, y));
+                        break;
+                    }
+                    break;
+                }
+                break;
             }
         }
 

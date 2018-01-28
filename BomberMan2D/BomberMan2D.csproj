@@ -58,9 +58,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AStar.cs" />
     <Compile Include="Bomb.cs" />
     <Compile Include="Components\CameraFollow.cs" />
     <Compile Include="Explosion.cs" />
+    <Compile Include="Prefabs\AI.cs" />
     <Compile Include="Prefabs\PowerupSpawner.cs" />
     <Compile Include="Enums\AnimationType.cs" />
     <Compile Include="Enums\CollisionLayer.cs" />
