@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Aiv.Fast2D;
 using BehaviourEngine;
+using BehaviourEngine.Interfaces;
 using BomberMan2D.Prefabs;
 using OpenTK;
 
@@ -12,6 +13,8 @@ namespace BomberMan2D
 {
     public class Game
     {
+        private static List<IWaypoint> targetPoints = new List<IWaypoint>();
+
         public static void Init()
         {
             Window window = new Window(1200, 700, "BomberMan");
@@ -27,8 +30,15 @@ namespace BomberMan2D
             LoadTextures();
             ObjectPools();
 
-            GameObject.Spawn(new Map("Levels/Level00.csv"));
-            GameObject.Spawn(new Prefabs.BomberMan(), Map.GetPlayerSpawnPoint());
+            IMap map = GameObject.Spawn(new Map("Levels/Level00.csv")) as IMap;
+            Prefabs.BomberMan bomberMan = new Prefabs.BomberMan();
+            GameObject.Spawn(bomberMan, Map.GetPlayerSpawnPoint());
+
+            AI ai = new AI();
+            ai.Player = bomberMan;
+            ai.CurrentTarget = bomberMan;
+            ai.map = map;
+            GameObject.Spawn(ai, new Vector2(50, 150));
 
             GameObject.Spawn(new PowerupSpawner(5));
         }
@@ -42,6 +52,22 @@ namespace BomberMan2D
             FlyWeight.Add("Health", "Assets/Health.dat");
             FlyWeight.Add("Bomb", "Assets/Bomb.dat");
             FlyWeight.Add("Explosion", "Assets/Explosion.dat");
+            FlyWeight.Add("AI", "Assets/ballon.dat");
+        }
+
+        internal static List<IWaypoint> GetAllPoints()
+        {
+            return targetPoints;
+        }
+
+        internal static void AddTargetPoint(IWaypoint current)
+        {
+            targetPoints.Add(current);
+        }
+
+        internal static int GetPointsCount()
+        {
+            return targetPoints.Count();
         }
 
         private static void ObjectPools()
@@ -55,5 +81,6 @@ namespace BomberMan2D
         {
             Engine.Run();
         }
+
     }
 }

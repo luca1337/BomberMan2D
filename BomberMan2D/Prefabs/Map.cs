@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using BehaviourEngine;
 using OpenTK;
 using System.IO;
+using BehaviourEngine.Interfaces;
 
 namespace BomberMan2D.Prefabs
 {
-    public class Map : GameObject
+    public class Map : GameObject, IMap
     {
         private int blockSize = 50;
         private static int rows;
