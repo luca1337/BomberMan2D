@@ -108,6 +108,8 @@ namespace BomberMan2D.Prefabs
             rigidBody.IsGravityAffected = false;
             AddComponent(rigidBody);
 
+            AddComponent(new Components.CameraFollow());
+
             #endregion
         }
 
