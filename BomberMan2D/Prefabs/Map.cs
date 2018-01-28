@@ -84,26 +84,39 @@ namespace BomberMan2D.Prefabs
                         continue;
 
                     // top
-                    Node top = GetNodeByIndex(x, y - 50);
+                    Node top = GetNodeByIndex(x, y - 1);
                     if (top != null)
                         mapNodes[index].AddNeighbour(top);
 
                     // right
-                    Node right = GetNodeByIndex(x + 50, y);
+                    Node right = GetNodeByIndex(x + 1, y);
                     if (right != null)
                         mapNodes[index].AddNeighbour(right);
 
                     // bottom
-                    Node bottom = GetNodeByIndex(x, y + 50);
+                    Node bottom = GetNodeByIndex(x, y + 1);
                     if (bottom != null)
                         mapNodes[index].AddNeighbour(bottom);
 
                     // left
-                    Node left = GetNodeByIndex(x - 50, y);
+                    Node left = GetNodeByIndex(x - 1, y);
                     if (left != null)
                         mapNodes[index].AddNeighbour(left);
                 }
             }
+        }
+
+
+        public Node GetNodeByIndex(int x, int y)
+        {
+            if (x < 0 || x  > (columns - 1))
+                return null;
+            if (y  < 0 || y > rows + 2)
+                return null;
+
+            int index = y  * (columns - 1) + x ;
+
+            return mapNodes[index];
         }
 
         private void ReadFromFile(string csvFileName)
@@ -139,7 +152,6 @@ namespace BomberMan2D.Prefabs
             }
         }
 
-
         public static bool GetIndex(bool explosion, int x, int y) // for explosion spawn
         {
             int index = (y / 50) * (columns - 1) + (x / 50);
@@ -165,18 +177,6 @@ namespace BomberMan2D.Prefabs
 
                 return false;
             }
-        }
-
-        public Node GetNodeByIndex(int x, int y)
-        {
-            if (x/50 < 0 || x/50 > (columns - 1))
-                return null;
-            if (y / 50 < 0 || y / 50 > rows + 2)
-                return null;
-
-            int index = (y / 50) * (columns - 1) + (x / 50);
-
-            return mapNodes[index];
         }
 
         public static Vector2 GetPlayerSpawnPoint()
