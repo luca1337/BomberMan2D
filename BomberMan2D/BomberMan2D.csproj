@@ -65,8 +65,12 @@
     <Compile Include="Components\CharacterController.cs" />
     <Compile Include="Components\FSMUpdater.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="IPowerup.cs" />
+    <Compile Include="IPowerupable.cs" />
+    <Compile Include="PowerUpType.cs" />
     <Compile Include="Prefabs\BomberMan.cs" />
     <Compile Include="Prefabs\Map.cs" />
+    <Compile Include="Prefabs\PowerUp.cs" />
     <Compile Include="Prefabs\Tile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

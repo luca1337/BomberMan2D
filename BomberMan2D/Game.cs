@@ -26,6 +26,8 @@ namespace BomberMan2D
 
             GameObject.Spawn(new Map("Levels/Level00.csv"));
             GameObject.Spawn(new Prefabs.BomberMan(), Map.GetPlayerSpawnPoint());
+
+            GameObject.Spawn(new PowerUp());
         }
 
         private static void LoadTextures()
@@ -33,6 +35,8 @@ namespace BomberMan2D
             FlyWeight.Add("Wall", "Assets/Wall_01.dat");
             FlyWeight.Add("Obstacle", "Assets/Obstacle_01.dat");
             FlyWeight.Add("BomberMan", "Assets/Bombertab1.dat");
+            FlyWeight.Add("Speed", "Assets/Speed.dat");
+            FlyWeight.Add("Health", "Assets/Health.dat");
         }
 
         public static void Run()
