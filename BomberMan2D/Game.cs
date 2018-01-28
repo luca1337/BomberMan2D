@@ -23,7 +23,7 @@ namespace BomberMan2D
             Engine.Init(window);
 
             //do we want physics?
-            Physics.Instance.Gravity *= 20f;
+            Physics.Instance.Gravity *= 2f;
 
             //Collision masks
             LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.Wall + (uint)CollisionLayer.Powerup);
