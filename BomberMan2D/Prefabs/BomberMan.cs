@@ -102,7 +102,7 @@ namespace BomberMan2D.Prefabs
             AddComponent(new Components.CharacterController());
             AddComponent(new Components.FSMUpdater(states));
 
-            AddComponent(new BoxCollider2D(new Vector2(25, 25)));
+            AddComponent(new BoxCollider2D(new Vector2(35f, 35f)));
 
             Rigidbody2D rigidBody = new Rigidbody2D();
             rigidBody.IsGravityAffected = false;
