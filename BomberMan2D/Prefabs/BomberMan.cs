@@ -184,7 +184,7 @@ namespace BomberMan2D.Prefabs
                        x.Active = true;
                        x.Stop = false;
                        x.Show = true;
-                       x.Transform.Position = Owner.Transform.Position;
+                       x.Transform.Position = new Vector2((int)Owner.Transform.Position.X, (int)Owner.Transform.Position.Y);
                    }));
 
                     timer.Start();
