@@ -48,7 +48,7 @@ namespace BomberMan2D
         {
             Pool<PowerUp>.Register(() => new PowerUp(), 100);
             Pool<Bomb>.Register(() => new Bomb(),100);
-            Pool<Explosion>.Register(() => new Explosion());
+            Pool<Explosion>.Register(() => new Explosion(), 12);
         }
 
         public static void Run()
