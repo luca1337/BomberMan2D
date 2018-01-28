@@ -48,13 +48,19 @@ namespace BomberMan2D.Prefabs
             #endregion
 
             #region FSM
-            drop = new StateDrop(this);
-            walkUp = new WalkUp(this);
-            walkDown = new WalkDown(this);
-            walkLeft = new WalkLeft(this);
-            walkRight = new WalkRight(this);
-            idle = new Idle(this);
+            drop = new StateDrop();
+            walkUp = new WalkUp();
+            walkDown = new WalkDown();
+            walkLeft = new WalkLeft();
+            walkRight = new WalkRight();
+            idle = new Idle();
 
+            drop.Owner = this;
+            walkUp.Owner = this;
+            walkDown.Owner = this;
+            walkLeft.Owner = this;
+            walkRight.Owner = this;
+            idle.Owner = this;
             //walk up
             walkUp.NextDown = walkDown;
             walkUp.NextLeft = walkLeft;
@@ -150,12 +156,12 @@ namespace BomberMan2D.Prefabs
 
         private class StateDrop : IState
         {
-            private BomberMan owner { get; set; }
+            public GameObject Owner { get; set; }
+
             private Timer timer;
 
-            public StateDrop(BomberMan owner)
+            public StateDrop( )
             {
-                this.owner = owner;
                 timer = new Timer(2f);
             }
 
@@ -173,13 +179,13 @@ namespace BomberMan2D.Prefabs
                 {
                     //AudioManager.PlayClip(AudioType.SOUND_DROP);
 
-                    /*Pool<Bomb>.GetInstance(x =>
-                    {
-                        x.Active = true;
-                        x.Stop = false;
-                        x.Show = true;
-                        x.Transform.Position = new Vector2((int)owner.BoxCollider.Position.X, (int)owner.BoxCollider.Position.Y);
-                    });*/
+                    GameObject.Spawn(Pool<Bomb>.GetInstance(x =>
+                   {
+                       x.Active = true;
+                       x.Stop = false;
+                       x.Show = true;
+                       x.Transform.Position = Owner.Transform.Position;
+                   }));
 
                     timer.Start();
                 }
@@ -197,11 +203,10 @@ namespace BomberMan2D.Prefabs
             public WalkDown NextDown { get; set; }
             public WalkRight NextRight { get; set; }
             public Idle NextIdle { get; set; }
-            private BomberMan owner { get; set; }
+            public GameObject Owner { get; set; }
 
-            public WalkLeft(BomberMan owner)
+            public WalkLeft()
             {
-                this.owner = owner;
             }
 
             public void OnStateEnter() => OnStateUpdate();
@@ -212,7 +217,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                owner.EnableAnimation(AnimationType.WALK_LEFT, true);
+                (Owner as BomberMan).EnableAnimation(AnimationType.WALK_LEFT, true);
                 return this;
             }
         }
@@ -223,11 +228,10 @@ namespace BomberMan2D.Prefabs
             public WalkDown NextDown { get; set; }
             public WalkLeft NextLeft { get; set; }
             public Idle NextIdle { get; set; }
-            private BomberMan owner { get; set; }
+            public GameObject Owner { get; set; }
 
-            public WalkRight(BomberMan owner)
+            public WalkRight( )
             {
-                this.owner = owner;
             }
 
             public void OnStateEnter()
@@ -241,7 +245,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                owner.EnableAnimation(AnimationType.WALK_RIGHT, true);
+                (Owner as BomberMan).EnableAnimation(AnimationType.WALK_RIGHT, true);
                 return this;
             }
         }
@@ -252,11 +256,10 @@ namespace BomberMan2D.Prefabs
             public WalkDown NextDown { get; set; }
             public WalkRight NextRight { get; set; }
             public Idle NextIdle { get; set; }
-            private BomberMan owner { get; set; }
+            public GameObject Owner { get; set; }
 
-            public WalkUp(BomberMan owner)
+            public WalkUp()
             {
-                this.owner = owner;
             }
 
             public void OnStateEnter()
@@ -270,7 +273,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                owner.EnableAnimation(AnimationType.WALK_UP, true);
+                (Owner as BomberMan).EnableAnimation(AnimationType.WALK_UP, true);
                 return this;
             }
         }
@@ -282,10 +285,10 @@ namespace BomberMan2D.Prefabs
             public WalkRight NextRight { get; set; }
             public Idle NextIdle { get; set; }
             private BomberMan owner { get; set; }
+            public GameObject Owner { get; set; }
 
-            public WalkDown(BomberMan owner)
+            public WalkDown()
             {
-                this.owner = owner;
             }
 
             public void OnStateEnter()
@@ -299,7 +302,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                owner.EnableAnimation(AnimationType.WALK_DOWN, true);
+                (Owner as BomberMan).EnableAnimation(AnimationType.WALK_DOWN, true);
                 return this;
             }
         }
@@ -310,11 +313,10 @@ namespace BomberMan2D.Prefabs
             public WalkDown NextDown { get; set; }
             public WalkRight NextRight { get; set; }
             public WalkLeft NextLeft { get; set; }
-            private BomberMan owner { get; set; }
+            public GameObject Owner { get; set; }
 
-            public Idle(BomberMan owner)
+            public Idle()
             {
-                this.owner = owner;
             }
 
             public void OnStateEnter()
@@ -354,7 +356,7 @@ namespace BomberMan2D.Prefabs
                 }
                 else
                 {
-                    owner.EnableAnimation(AnimationType.IDLE, true);
+                    (Owner as BomberMan).EnableAnimation(AnimationType.IDLE, true);
                     return this;
                 }
             }

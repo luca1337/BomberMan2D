@@ -12,9 +12,9 @@ namespace BomberMan2D.Prefabs
     public class Map : GameObject
     {
         private int                     blockSize = 50;
-        private int                     rows;
-        private int                     columns;
-        private List<int>               cells;
+        private static int                     rows;
+        private static int                     columns;
+        private static List<int>               cells;
         private float                   offset;
         private static Vector2          playerSpawnPoint;
         private static List<Vector2> powerUpSpawnPoints = new List<Vector2>();
@@ -71,6 +71,34 @@ namespace BomberMan2D.Prefabs
                    if (success)
                         cells.Add(value);
                 }
+            }
+        }
+
+
+        public static bool GetIndex(bool explosion, int x, int y) // for explosion spawn
+        {
+            int index = (x + (columns - 1) * y)/ 51 ;
+
+            if (explosion)
+            {
+                if (cells[index ] == 0 || cells[index] == 5 || cells[index] == 12)
+                    return true;
+
+                if (cells[index] == 3)
+                    return false;
+
+                if (cells[index] == 2)
+                {
+                    return true;
+                }
+                return false;
+            }
+            else
+            {
+                if (cells[index] == 0)
+                    return true;
+
+                return false;
             }
         }
 

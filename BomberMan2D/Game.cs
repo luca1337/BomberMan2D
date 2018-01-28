@@ -40,11 +40,15 @@ namespace BomberMan2D
             FlyWeight.Add("BomberMan", "Assets/Bombertab1.dat");
             FlyWeight.Add("Speed", "Assets/Speed.dat");
             FlyWeight.Add("Health", "Assets/Health.dat");
+            FlyWeight.Add("Bomb", "Assets/Bomb.dat");
+            FlyWeight.Add("Explosion", "Assets/Explosion.dat");
         }
 
         private static void ObjectPools()
         {
             Pool<PowerUp>.Register(() => new PowerUp(), 100);
+            Pool<Bomb>.Register(() => new Bomb(),100);
+            Pool<Explosion>.Register(() => new Explosion(),100);
         }
 
         public static void Run()
