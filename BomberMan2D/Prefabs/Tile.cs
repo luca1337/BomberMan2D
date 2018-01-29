@@ -21,7 +21,7 @@ namespace BomberMan2D.Prefabs
 
             if (solidBlock)
             {
-                BoxCollider2D collider = new BoxCollider2D(new Vector2(0.5f, 0.5f));
+                BoxCollider2D collider = new BoxCollider2D(new Vector2(1, 1));
                 AddComponent(collider);
             }
         }

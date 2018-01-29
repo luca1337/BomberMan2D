@@ -58,11 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AStar.cs" />
-    <Compile Include="Bomb.cs" />
+    <Compile Include="AI\AStar.cs" />
+    <Compile Include="Prefabs\Bomb.cs" />
     <Compile Include="Components\CameraFollow.cs" />
-    <Compile Include="Explosion.cs" />
-    <Compile Include="IWaypoint.cs" />
+    <Compile Include="Prefabs\Explosion.cs" />
+    <Compile Include="AI\IWaypoint.cs" />
+    <Compile Include="Main\LevelManager.cs" />
     <Compile Include="Prefabs\AI.cs" />
     <Compile Include="Prefabs\PowerupSpawner.cs" />
     <Compile Include="Enums\AnimationType.cs" />
@@ -70,16 +71,16 @@
     <Compile Include="Components\BoxCollider2DRenderer.cs" />
     <Compile Include="Components\CharacterController.cs" />
     <Compile Include="Components\FSMUpdater.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="IPowerup.cs" />
-    <Compile Include="IPowerupable.cs" />
-    <Compile Include="PowerUpType.cs" />
+    <Compile Include="Main\Game.cs" />
+    <Compile Include="Interfaces\IPowerup.cs" />
+    <Compile Include="Interfaces\IPowerupable.cs" />
+    <Compile Include="Enums\PowerUpType.cs" />
     <Compile Include="Prefabs\BomberMan.cs" />
     <Compile Include="Prefabs\Map.cs" />
     <Compile Include="Prefabs\PowerUp.cs" />
     <Compile Include="Prefabs\TargetPoint.cs" />
     <Compile Include="Prefabs\Tile.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Main\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

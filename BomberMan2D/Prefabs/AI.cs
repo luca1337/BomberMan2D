@@ -28,7 +28,7 @@ namespace BomberMan2D.Prefabs
 
         private AnimationRenderer aiAnimation;
 
-        private float radius = 250f;
+        private float radius = 4f;
 
         public IWaypoint Player { get; set; }
         public IWaypoint CurrentTarget { get; set; }
@@ -144,11 +144,10 @@ namespace BomberMan2D.Prefabs
             {
                 if (owner.IsInRadius(out target))
                 {
-                    if (target is BomberMan) // cast not failed
+                    if (target is BomberMan)
                     {
                         owner.CurrentTarget = target as IWaypoint;
-                        owner.ComputePath(owner.map, (int)((owner.CurrentTarget as BomberMan).Transform.Position.X /*+ owner.Offset.X*/), (int)((owner.CurrentTarget as BomberMan).Transform.Position.Y /*+ owner.Offset.Y*/));
-                        //Console.WriteLine("Current Target in Radius : {0}", owner.CurrentTarget);
+                        owner.ComputePath(LevelManager.CurrentMap, (int)((owner.CurrentTarget as BomberMan).Transform.Position.X + 0.5f), (int)((owner.CurrentTarget as BomberMan).Transform.Position.Y + 0.5f));
                     }
                 }
                 else

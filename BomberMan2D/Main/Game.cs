@@ -31,15 +31,14 @@ namespace BomberMan2D
             LoadTextures();
             ObjectPools();
 
-            IMap map = GameObject.Spawn(new Map("Levels/Level00.csv")) as IMap;
+            GameObject.Spawn(new Map("Levels/Level00.csv"));
             Prefabs.BomberMan bomberMan = new Prefabs.BomberMan();
             GameObject.Spawn(bomberMan, Map.GetPlayerSpawnPoint());
 
-            AI ai = new AI();
-            ai.Player = bomberMan;
-            ai.CurrentTarget = bomberMan;
-            ai.map = map;
-            GameObject.Spawn(ai, new Vector2(5, 5));
+            AI enemy = new AI();
+            enemy.Player = bomberMan;
+            enemy.CurrentTarget = bomberMan;
+            GameObject.Spawn(enemy, new Vector2(5, 5));
 
             GameObject.Spawn(new PowerupSpawner(5));
         }

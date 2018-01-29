@@ -31,7 +31,7 @@ namespace BomberMan2D.Prefabs
             renderer.RenderOffset = (int)RenderLayer.Powerup;
             AddComponent(renderer);
 
-            BoxCollider2D collider2D = new BoxCollider2D(new Vector2(35, 35));
+            BoxCollider2D collider2D = new BoxCollider2D(new Vector2(1, 1));
             collider2D.CollisionMode = CollisionMode.Trigger;
             collider2D.TriggerEnter += OnTriggerEnter;
             AddComponent(collider2D);
