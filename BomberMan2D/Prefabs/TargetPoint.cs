@@ -9,7 +9,11 @@ namespace BomberMan2D.Prefabs
     {
         public Vector2 Location { get => this.Transform.Position; set => this.Transform.Position = value; }
 
-        public TargetPoint() : base("TargetPoint") => Location = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, Map.GetPowerupSpawnPoint().Count)];
+        public TargetPoint() : base("TargetPoint")
+        {
+            Location = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, Map.GetPowerupSpawnPoint().Count)];
+            AddComponent(new SpriteRenderer(FlyWeight.Get("Explosion")));
+        }
     }
 
     public class TargetSpawner : GameObject
@@ -31,6 +35,7 @@ namespace BomberMan2D.Prefabs
             {
                 current = new TargetPoint();
                 Game.AddTargetPoint(current);
+                GameObject.Spawn(current);
             }
         }
 

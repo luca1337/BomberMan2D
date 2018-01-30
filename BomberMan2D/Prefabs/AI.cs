@@ -27,12 +27,13 @@ namespace BomberMan2D.Prefabs
         #endregion
 
         private AnimationRenderer aiAnimation;
-
         private float radius = 4f;
 
+        #region Target
         public IWaypoint Player { get; set; }
         public IWaypoint CurrentTarget { get; set; }
         public IMap map { get; set; }
+        #endregion
 
         #region FSM
         private PatrolState patrol;
@@ -50,8 +51,6 @@ namespace BomberMan2D.Prefabs
             patrol = new PatrolState(this);
             idle = new StateIdle(this);
             chase = new ChaseState(this);
-
-            //chase.PatrolState = patrol;
 
             patrol.ChaseState = chase;
             chase.NextPatrol = patrol;
@@ -81,6 +80,39 @@ namespace BomberMan2D.Prefabs
             CurrentPath = AStar.GetPath(item, pX, pY, x, y);
         }
 
+        private IState CheckAgentPath(AI owner, out IState state)
+        {
+            state = null;
+
+            if (owner.CurrentPath == null)
+                return state;
+
+            if (owner.CurrentPath.Count == 0)
+            {
+                owner.CurrentPath = null;
+                return state;
+            }
+
+            if (!owner.Computed)
+            {
+                Vector2 targetPos = owner.CurrentPath[0].Position;
+                if (targetPos != owner.Transform.Position)
+                {
+                    Vector2 direction = (targetPos - owner.Transform.Position).Normalized();
+                    owner.Transform.Position += direction * 1.5f * Time.DeltaTime;
+                }
+
+                float distance = (targetPos - owner.Transform.Position).Length;
+
+                if (distance <= 0.1f)
+                {
+                    owner.CurrentPath.RemoveAt(0);
+                }
+            }
+
+            return state;
+        }
+
         public bool IsInRadius(out GameObject target)
         {
             float distance = ((Player as GameObject).Transform.Position - this.Transform.Position).Length;
@@ -100,14 +132,24 @@ namespace BomberMan2D.Prefabs
             public PatrolState NextPatrol { get; set; }
             public ChaseState NextChase { get; set; }
             public StateIdle NextIdle { get; set; }
+            private IWaypoint next;
+
+            private IState chase;
 
             private AI owner { get; set; }
+
+            private GameObject target;
+
             public ChaseState(AI owner)
             {
                 this.owner = owner;
+                next = owner.CurrentTarget;
+                chase = this;
             }
+
             public void OnStateEnter()
             {
+                OnStateUpdate();
             }
 
             public void OnStateExit()
@@ -116,7 +158,21 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                return this;
+                if(!owner.IsInRadius(out target))
+                {
+                    next = Game.GetAllPoints()[RandomManager.Instance.Random.Next(0, Game.GetPointsCount())];
+
+                    if (next is TargetPoint)
+                    {
+                        owner.ComputePath(LevelManager.CurrentMap, (int)((next as TargetPoint).Transform.Position.X + 0.5f), (int)((next as TargetPoint).Transform.Position.Y + 0.5f));
+                        Console.WriteLine("computing path");
+                    }
+
+                    return owner.CheckAgentPath(owner, out chase);
+                }
+
+                NextChase.OnStateEnter();
+                return NextChase;
             }
         }
         private class PatrolState : IState
@@ -124,12 +180,12 @@ namespace BomberMan2D.Prefabs
             public ChaseState ChaseState { get; set; }
             private AI owner;
             private GameObject target;
-            private IWaypoint next;
+            private IState patrol;
 
             public PatrolState(AI owner)
             {
                 this.owner = owner;
-                next = owner.CurrentTarget;
+                patrol = this;
             }
 
             public void OnStateEnter()
@@ -152,52 +208,13 @@ namespace BomberMan2D.Prefabs
                 }
                 else
                 {
-                    //if ((owner.CurrentTarget.Location - owner.Transform.Position).Length < 0.3f)
-                    //{
-                    //    next = Game.GetAllPoints()[RandomManager.Instance.Random.Next(0, Game.GetPointsCount())];
-                    //    while (next is BomberMan)
-                    //    {
-                    //        next = Game.GetAllPoints()[RandomManager.Instance.Random.Next(0, Game.GetPointsCount())];
-                    //    }
-
-                    //}
-
-                    //owner.CurrentTarget = next;
-
-                    //if (owner.CurrentTarget is TargetPoint) //cast not failed
-                    //{
-                    //    owner.ComputePath(owner.map, (int)((owner.CurrentTarget as TargetPoint).Transform.Position.X /*+ owner.Offset.X*/), (int)((owner.CurrentTarget as TargetPoint).Transform.Position.Y /*+ owner.Offset.Y*/));
-                    //}
+                    ChaseState.OnStateEnter();
+                    return ChaseState;
                 }
 
-                if (owner.CurrentPath == null)
-                    return this;
-
-                if (owner.CurrentPath.Count == 0)
-                {
-                    owner.CurrentPath = null;
-                    return this;
-                }
-
-                if (!owner.Computed)
-                {
-                    Vector2 targetPos = owner.CurrentPath[0].Position;
-                    if (targetPos != owner.Transform.Position)
-                    {
-                        Vector2 direction = (targetPos - owner.Transform.Position).Normalized();
-                        owner.Transform.Position += direction * 1.5f * Time.DeltaTime;
-                    }
-
-                    float distance = (targetPos - owner.Transform.Position).Length;
-
-                    if (distance <= 0.1f)
-                        owner.CurrentPath.RemoveAt(0);
-
-                }
-                return this;
+                return owner.CheckAgentPath(owner, out patrol);
             }
         }
-
         private class StateIdle : IState
         {
             private AI owner;

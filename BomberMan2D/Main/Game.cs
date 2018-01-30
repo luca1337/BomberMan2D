@@ -41,6 +41,8 @@ namespace BomberMan2D
             GameObject.Spawn(enemy, new Vector2(5, 5));
 
             GameObject.Spawn(new PowerupSpawner(5));
+
+            GameObject.Spawn(new TargetSpawner(5, 3.5f));
         }
 
         private static void LoadTextures()
@@ -73,7 +75,7 @@ namespace BomberMan2D
         private static void ObjectPools()
         {
             Pool<PowerUp>.Register(() => new PowerUp(), 100);
-            Pool<Bomb>.Register(() => new Bomb(),100);
+            Pool<Bomb>.Register(() => new Bomb(), 100);
             Pool<Explosion>.Register(() => new Explosion(), 12);
         }
 

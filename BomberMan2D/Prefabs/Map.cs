@@ -196,7 +196,7 @@ namespace BomberMan2D.Prefabs
 
         public static List<Vector2> GetPowerupSpawnPoint()
         {
-            return powerUpSpawnPoints; ;
+            return powerUpSpawnPoints;
         }
     }
 }
