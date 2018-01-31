@@ -30,6 +30,7 @@ namespace BomberMan2D
             LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.Wall + (uint)CollisionLayer.Powerup);
             LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.Wall);
 
+
             //Load texture and initialize object pools
             LoadTextures();
             ObjectPools();

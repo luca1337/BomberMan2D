@@ -60,7 +60,22 @@ namespace BomberMan2D.Prefabs
 
             states.Add(currentState);
 
+            BoxCollider2D collider = new BoxCollider2D(new Vector2(1, 1));
+            collider.CollisionMode = CollisionMode.Trigger;
+            collider.TriggerEnter += OnTriggerEnter;
+            AddComponent(collider);
+
+            AddComponent(new BoxCollider2DRenderer(new Vector4(-1f, -1f, 1f, 0f)));
+
             AddComponent(new FSMUpdater(states));
+        }
+
+        private void OnTriggerEnter(Collider2D other)
+        {
+            if(other.Owner is Bomberman)
+            {
+                Console.WriteLine(other.Owner);
+            }
         }
 
         public void ComputePath<T>(T item, int x, int y) where T : IMap

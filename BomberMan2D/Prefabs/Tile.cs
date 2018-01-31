@@ -10,6 +10,11 @@ namespace BomberMan2D.Prefabs
 {
     public class Tile : GameObject
     {
+        private short minPercentage = 0;
+        private short maxPercentage = 100;
+        private short halfPercentage = 50;
+
+
         public Tile(Vector2 position, string textureName, bool solidBlock)
         {
             this.Layer = (uint)CollisionLayer.Wall;
@@ -31,14 +36,21 @@ namespace BomberMan2D.Prefabs
 
         private void OnTriggerEnter(Collider2D other)
         {
-            this.Active = false;
-
-            int randomNumber = RandomManager.Instance.Random.Next(0, 12);
-            if(randomNumber > 9)
+            if(other.Owner is Explosion)
             {
-                PowerUp p = new PowerUp();
-                p.GetComponent<SpriteRenderer>().SetTexture("Bomb_PW");
-                GameObject.Spawn(p, this.Transform.Position);
+                this.Active = false;
+
+                int chance = RandomManager.Instance.Random.Next(0, 100);
+
+                if (chance > halfPercentage + 40)
+                {
+                    PowerUp p = Pool<PowerUp>.GetInstance(x =>
+                    {
+                        x.GetComponent<SpriteRenderer>().SetTexture("Bomb_PW");
+                    });
+                    
+                    GameObject.Spawn(p, this.Transform.Position);
+                }
             }
         }
     }
