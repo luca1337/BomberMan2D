@@ -130,7 +130,6 @@ namespace BomberMan2D.Prefabs
         private class ChaseState : IState
         {
             public PatrolState NextPatrol { get; set; }
-            public ChaseState NextChase { get; set; }
             public StateIdle NextIdle { get; set; }
             private IWaypoint next;
 
@@ -139,12 +138,14 @@ namespace BomberMan2D.Prefabs
             private AI owner { get; set; }
 
             private GameObject target;
+            private bool oneTimeChase;
 
             public ChaseState(AI owner)
             {
                 this.owner = owner;
                 next = owner.CurrentTarget;
                 chase = this;
+                oneTimeChase = true;
             }
 
             public void OnStateEnter()
@@ -158,21 +159,33 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                if(!owner.IsInRadius(out target))
+                if (!owner.IsInRadius(out target))
                 {
-                    next = Game.GetAllPoints()[RandomManager.Instance.Random.Next(0, Game.GetPointsCount())];
+                    if (oneTimeChase)
+                    {
+                        next = Game.GetAllPoints()[RandomManager.Instance.Random.Next(0, Game.GetPointsCount())];
+                        Console.WriteLine(next);
+                        oneTimeChase = !oneTimeChase;
+                    }
 
-                    if (next is TargetPoint)
+
+                    if (next is TargetPoint && target != next)
                     {
                         owner.ComputePath(LevelManager.CurrentMap, (int)((next as TargetPoint).Transform.Position.X + 0.5f), (int)((next as TargetPoint).Transform.Position.Y + 0.5f));
-                        Console.WriteLine("computing path");
+                      //  Console.WriteLine("computing path");
                     }
+
+                    if ((next.Location - owner.Transform.Position).Length < 1f || owner.CurrentPath == null)
+                        oneTimeChase = !oneTimeChase;
 
                     return owner.CheckAgentPath(owner, out chase);
                 }
+                else
+                {
+                    NextPatrol.OnStateEnter();
+                    return NextPatrol;
+                }
 
-                NextChase.OnStateEnter();
-                return NextChase;
             }
         }
         private class PatrolState : IState
