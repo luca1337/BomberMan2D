@@ -45,9 +45,6 @@ namespace BomberMan2D
             //AI
             GameObject.Spawn(new EnemySpawner(bomberMan));
 
-            //Powerups
-            GameObject.Spawn(new PowerupSpawner(5));
-
             //TargetPoints
             GameObject.Spawn(new TargetSpawner(5, 3.5f));
         }

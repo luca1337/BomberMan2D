@@ -114,7 +114,6 @@ namespace BomberMan2D.Prefabs
             }
         }
 
-
         public Node GetNodeByIndex(int x, int y)
         {
             if (x < 0 || x  > (columns - 1))
@@ -192,7 +191,6 @@ namespace BomberMan2D.Prefabs
             int index = y  * (columns - 1) + x ;
             return index;
         }
-
 
         public static Vector2 GetPlayerSpawnPoint()
         {

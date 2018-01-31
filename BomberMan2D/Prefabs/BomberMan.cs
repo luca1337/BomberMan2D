@@ -181,13 +181,13 @@ namespace BomberMan2D.Prefabs
                 {
                     //AudioManager.PlayClip(AudioType.SOUND_DROP);
 
-                   GameObject.Spawn(Pool<Bomb>.GetInstance(x =>
-                   {
+                    GameObject.Spawn(Pool<Bomb>.GetInstance(x =>
+                    {
                        x.Active = true;
                        x.Stop = false;
                        x.Show = true;
                        x.Transform.Position = new Vector2((int)Owner.Transform.Position.X, (int)Owner.Transform.Position.Y);
-                   }));
+                    }));
 
                     timer.Start();
                 }

@@ -39,6 +39,7 @@ namespace BomberMan2D
             locations = new List<Vector2>();
             renderer = new AnimationRenderer(FlyWeight.Get("Bomb"), 150, 150, 4, new int[] { 0, 1, 2, 3, 2 }, 0.2f, true, false);
             AddComponent(renderer);
+
             #region FSM
             wait = new StateWait();
             explode = new StateExplode();
@@ -72,12 +73,10 @@ namespace BomberMan2D
             public UpdateBomb(IState state) : base()
             {
                 this.currentState = state;
-
             }
 
             public void Update()
             {
-                //currentState.Owner = Owner;
                 currentState = currentState.OnStateUpdate();
             }
         }
@@ -107,11 +106,10 @@ namespace BomberMan2D
         private class StateExplode : IState
         {
             public StateWait Next { get; set; }
-            public GameObject Owner { get; set; }
+            public Bomb Owner { get; set; }
 
             private bool oneTimeSpawn;
             private Timer timer;
-            //   private Explosion explosion;
 
             public StateExplode()
             {
@@ -122,7 +120,7 @@ namespace BomberMan2D
             public void OnStateEnter()
             {
                 timer.Start();
-                (Owner as Bomb).Exploding = true;
+                Owner.Exploding = true;
             }
 
             public void OnStateExit()
@@ -131,40 +129,33 @@ namespace BomberMan2D
 
             public IState OnStateUpdate()
             {
-                if ((Owner as Bomb).Exploding)
+                if (Owner.Exploding)
                 {
-                    (Owner as Bomb).GetComponent<AnimationRenderer>().Enabled = false;
+                    Owner.GetComponent<AnimationRenderer>().Enabled = false;
 
-                    //     AudioManager.PlayClip(AudioType.SOUND_EXPLOSION);
-                    (Owner as Bomb).locations = GetAdjacentLocation(Owner.Transform.Position);
+                    //AudioManager.PlayClip(AudioType.SOUND_EXPLOSION);
+                    Owner.locations = GetAdjacentLocation(Owner.Transform.Position);
 
-                    for (int i = 0; i < (Owner as Bomb).locations.Count; i++)
+                    for (int i = 0; i < Owner.locations.Count; i++)
                     {
                         Explosion toSpawn = Pool<Explosion>.GetInstance(x =>
                         {
-                            x.Transform.Position = (Owner as Bomb).locations[i];
                             x.Active = true;
-                            foreach (BehaviourEngine.Component component in x.Components)
-                            {
-                                if (!component.Enabled)
-                                    component.Enabled = true;
-                            }
+                            x.Transform.Position = Owner.locations[i];
                         });
-                        (Owner as Bomb).explosionList.Add(toSpawn);
-
-
+                        Owner.explosionList.Add(toSpawn);
                     }
 
                     if (oneTimeSpawn)
                     {
-                        for (int j = 0; j < (Owner as Bomb).explosionList.Count; j++)
+                        for (int j = 0; j < Owner.explosionList.Count; j++)
                         {
-                            Spawn((Owner as Bomb).explosionList[j]);
+                            Spawn(Owner.explosionList[j]);
                         }
                         oneTimeSpawn = false;
                     }
 
-                    (Owner as Bomb).Exploding = false;
+                    Owner.Exploding = false;
                 }
 
                 if (timer.IsActive)
@@ -173,29 +164,25 @@ namespace BomberMan2D
                 if (!timer.IsActive)
                 {
                     #region Explosions recycle
-                    for (int i = 0; i < (Owner as Bomb).explosionList.Count; i++)
+                    for (int i = 0; i < Owner.explosionList.Count; i++)
                     {
                         Pool<Explosion>.RecycleInstance
                         (
-                             (Owner as Bomb).explosionList[i], x =>
+                            Owner.explosionList[i], x =>
                             {
                                 x.Reset();
                                 x.Active = false;
-                                foreach (BehaviourEngine.Component component in x.Components)
-                                {
-                                    component.Enabled = false;
-                                }
                             }
                         );
                     }
 
-                    (Owner as Bomb).explosionList.Clear();
+                    //Owner.explosionList.Clear();
 
                     #endregion
 
                     Pool<Bomb>.RecycleInstance
                     (
-                         (Owner as Bomb), x =>
+                        Owner, x =>
                         {
                             x.Active = false;
                         }

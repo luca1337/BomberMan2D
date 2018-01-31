@@ -18,7 +18,7 @@ namespace BomberMan2D
 
         private AnimationRenderer anim;
 
-        public Explosion( ) : base("Explosion")
+        public Explosion() : base("Explosion")
         {
             this.Layer = (uint)CollisionLayer.Explosion;
 

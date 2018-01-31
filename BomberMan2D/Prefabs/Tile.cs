@@ -40,7 +40,7 @@ namespace BomberMan2D.Prefabs
             {
                 this.Active = false;
 
-                int chance = RandomManager.Instance.Random.Next(0, 100);
+                int chance = RandomManager.Instance.Random.Next(minPercentage, maxPercentage);
 
                 if (chance > halfPercentage + 40)
                 {
