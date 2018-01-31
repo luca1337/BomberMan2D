@@ -181,7 +181,7 @@ namespace BomberMan2D.Prefabs
                 {
                     //AudioManager.PlayClip(AudioType.SOUND_DROP);
 
-                    GameObject.Spawn(Pool<Bomb>.GetInstance(x =>
+                   GameObject.Spawn(Pool<Bomb>.GetInstance(x =>
                    {
                        x.Active = true;
                        x.Stop = false;

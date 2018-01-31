@@ -12,8 +12,6 @@ using static BehaviourEngine.Collider2D;
 
 namespace BomberMan2D
 {
-
-
     public class Explosion : GameObject
     {
         public BoxCollider2D BoxCollider { get; set; }
@@ -22,7 +20,7 @@ namespace BomberMan2D
 
         public Explosion( ) : base("Explosion")
         {
-            this.Active = false;
+            this.Layer = (uint)CollisionLayer.Explosion;
 
             anim = new AnimationRenderer(FlyWeight.Get("Explosion"), 100, 100, 9, new int[]
             {
@@ -36,30 +34,13 @@ namespace BomberMan2D
                 71, 72, 73, 74, 75
             }, 0.1f, true, false);
 
-            BoxCollider  = new BoxCollider2D(new Vector2(40f,40f));
-            BoxCollider.TriggerEnter += OnTriggerEnter;
+            BoxCollider  = new BoxCollider2D(new Vector2(1f, 1f));
+            BoxCollider.CollisionMode = CollisionMode.Trigger;
             AddComponent(BoxCollider);
 
+            AddComponent(new BoxCollider2DRenderer(new Vector4(1f, -1f, -1f, 0f)));
+
             AddComponent(anim);
-
-            //TODO: replace this with the sceneManager method
-           // Spawn(this);
-        }
-
-        private void OnTriggerEnter(Collider2D other)
-        {
-            //if (other is AI)
-            //{
-            //    // Test
-            //    Pool<AI>.RecycleInstance(other as AI, x =>
-            //    {
-            //        for (int i = 0; i < x.Behaviours.Count; i++)
-            //        {
-            //            x.Behaviours[i].Enabled = false;
-            //        }
-            //    });
-            //    // Pool<AI>.RecycleInstance(other as AI, x => x.Active = false);
-            //}
         }
 
         public void Reset()

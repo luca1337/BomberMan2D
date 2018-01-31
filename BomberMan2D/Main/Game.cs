@@ -28,6 +28,7 @@ namespace BomberMan2D
 
             //Collision masks
             LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.Wall + (uint)CollisionLayer.Powerup);
+            LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.Wall);
 
             //Load texture and initialize object pools
             LoadTextures();
@@ -60,6 +61,14 @@ namespace BomberMan2D
             FlyWeight.Add("Bomb", "Assets/Bomb.dat");
             FlyWeight.Add("Explosion", "Assets/Explosion.dat");
             FlyWeight.Add("AI", "Assets/ballon.dat");
+            FlyWeight.Add("Bomb_PW", "Assets/BombsPw.dat");
+            FlyWeight.Add("Bombpass_PW", "Assets/BombpassPw.dat");
+            FlyWeight.Add("Flamepass_PW", "Assets/FlamepassPw.dat");
+            FlyWeight.Add("Mystery_PW", "Assets/MysteryPw.dat");
+            FlyWeight.Add("Detonator_PW", "Assets/DetonatorPw.dat");
+            FlyWeight.Add("Wallpass_PW", "Assets/WallpassPw.dat");
+            FlyWeight.Add("Speed_PW", "Assets/SpeedPw.dat");
+            FlyWeight.Add("Flame_PW", "Assets/FlamesPw.dat");
         }
 
         internal static List<IWaypoint> GetAllPoints()

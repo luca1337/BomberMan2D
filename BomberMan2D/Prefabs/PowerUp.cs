@@ -12,11 +12,11 @@ namespace BomberMan2D.Prefabs
 {
     public class PowerUp : GameObject, IPowerup
     {
-        public List<string> textures = new List<string>();
         public PowerUpType powerUpType;
         private List<float> speedValues = new List<float>();
 
         private Rigidbody2D rigidBody;
+        public string TextureName;
 
         public PowerUp()
         {
@@ -24,10 +24,8 @@ namespace BomberMan2D.Prefabs
             this.Layer = (uint)CollisionLayer.Powerup;
             #endregion
 
-            textures.Add("Speed");
-            textures.Add("Health");
-
-            SpriteRenderer renderer = new SpriteRenderer(FlyWeight.Get(textures[(int)powerUpType]));
+            TextureName = "Speed_PW";
+            SpriteRenderer renderer = new SpriteRenderer(FlyWeight.Get(TextureName));
             renderer.RenderOffset = (int)RenderLayer.Powerup;
             AddComponent(renderer);
 
@@ -59,7 +57,7 @@ namespace BomberMan2D.Prefabs
 
         public void ApplyPowerUp(IPowerupable powerUp)
         {
-            if (powerUpType == PowerUpType.PRP_HEALTH)
+            if (powerUpType == PowerUpType.PW_FLAME)
             {
                 powerUp.ApplyHealth(1);
             }
