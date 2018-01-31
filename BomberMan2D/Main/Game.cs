@@ -17,6 +17,7 @@ namespace BomberMan2D
 
         public static void Init()
         {
+            //Setup context
             Window window = new Window(1200, 700, "BomberMan");
             window.SetDefaultOrthographicSize(14);
             window.SetClearColor(0.0f, 0.61f, 0.0f);
@@ -28,12 +29,13 @@ namespace BomberMan2D
             //Collision masks
             LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.Wall + (uint)CollisionLayer.Powerup);
 
+            //Load texture and initialize object pools
             LoadTextures();
             ObjectPools();
 
             //Levels
             GameObject.Spawn(new Map("Levels/Level00.csv"));
-            Prefabs.BomberMan bomberMan = new Prefabs.BomberMan();
+            Bomberman bomberMan = new Bomberman();
 
             //Player
             GameObject.Spawn(bomberMan, Map.GetPlayerSpawnPoint());
@@ -79,7 +81,7 @@ namespace BomberMan2D
         {
             Pool<PowerUp>.Register(() => new PowerUp(), 100);
             Pool<Bomb>.Register(() => new Bomb(), 100);
-            Pool<Explosion>.Register(() => new Explosion(), 12);
+            Pool<Explosion>.Register(() => new Explosion(), 100);
             Pool<AI>.Register(() => new AI(), 100);
         }
 
@@ -87,6 +89,5 @@ namespace BomberMan2D
         {
             Engine.Run();
         }
-
     }
 }

@@ -45,7 +45,7 @@ namespace BomberMan2D.Prefabs
 
         private void OnTriggerEnter(Collider2D other)
         {
-            if(other.Owner is BomberMan)
+            if(other.Owner is Bomberman)
             {
                 Pool<PowerUp>.RecycleInstance(this, p => p.OnRecycle());
             }

@@ -45,7 +45,7 @@ namespace BomberMan2D.Prefabs
             tMin += Time.DeltaTime;
             if (tMin > tMax)
             {
-                Game.GetAllPoints().Where( x => x.GetType() != typeof(BomberMan)).ToList().ForEach(item => (item as GameObject).GetComponent<Transform>().Position = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, Map.GetPowerupSpawnPoint().Count)]);
+                Game.GetAllPoints().Where( x => x.GetType() != typeof(Bomberman)).ToList().ForEach(item => (item as GameObject).GetComponent<Transform>().Position = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, Map.GetPowerupSpawnPoint().Count)]);
                 ResetTiming();
             }
         }

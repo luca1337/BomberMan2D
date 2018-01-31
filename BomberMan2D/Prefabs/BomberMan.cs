@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BomberMan2D.Prefabs
 {
-    public class BomberMan : GameObject, IPowerupable, IWaypoint
+    public class Bomberman : GameObject, IPowerupable, IWaypoint
     {
         #region Animations
         private Dictionary<AnimationType, AnimationRenderer> playerAnimations = new Dictionary<AnimationType, AnimationRenderer>();
@@ -32,7 +32,7 @@ namespace BomberMan2D.Prefabs
         public Vector2 Location { get; set; }
         #endregion
 
-        public BomberMan() : base("BomberMan")
+        public Bomberman() : base("BomberMan")
         {
             #region LayerMask
             this.Layer = (uint)CollisionLayer.BomberMan;
@@ -219,7 +219,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                (Owner as BomberMan).EnableAnimation(AnimationType.WALK_LEFT, true);
+                (Owner as Bomberman).EnableAnimation(AnimationType.WALK_LEFT, true);
                 return this;
             }
         }
@@ -247,7 +247,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                (Owner as BomberMan).EnableAnimation(AnimationType.WALK_RIGHT, true);
+                (Owner as Bomberman).EnableAnimation(AnimationType.WALK_RIGHT, true);
                 return this;
             }
         }
@@ -275,7 +275,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                (Owner as BomberMan).EnableAnimation(AnimationType.WALK_UP, true);
+                (Owner as Bomberman).EnableAnimation(AnimationType.WALK_UP, true);
                 return this;
             }
         }
@@ -286,7 +286,7 @@ namespace BomberMan2D.Prefabs
             public WalkLeft NextLeft { get; set; }
             public WalkRight NextRight { get; set; }
             public Idle NextIdle { get; set; }
-            private BomberMan owner { get; set; }
+            private Bomberman owner { get; set; }
             public GameObject Owner { get; set; }
 
             public WalkDown()
@@ -304,7 +304,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                (Owner as BomberMan).EnableAnimation(AnimationType.WALK_DOWN, true);
+                (Owner as Bomberman).EnableAnimation(AnimationType.WALK_DOWN, true);
                 return this;
             }
         }
@@ -358,7 +358,7 @@ namespace BomberMan2D.Prefabs
                 }
                 else
                 {
-                    (Owner as BomberMan).EnableAnimation(AnimationType.IDLE, true);
+                    (Owner as Bomberman).EnableAnimation(AnimationType.IDLE, true);
                     return this;
                 }
             }

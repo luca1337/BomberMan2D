@@ -212,10 +212,10 @@ namespace BomberMan2D.Prefabs
             {
                 if (owner.IsInRadius(out target))
                 {
-                    if (target is BomberMan)
+                    if (target is Bomberman)
                     {
                         owner.CurrentTarget = target as IWaypoint;
-                        owner.ComputePath(LevelManager.CurrentMap, (int)((owner.CurrentTarget as BomberMan).Transform.Position.X + 0.5f), (int)((owner.CurrentTarget as BomberMan).Transform.Position.Y + 0.5f));
+                        owner.ComputePath(LevelManager.CurrentMap, (int)((owner.CurrentTarget as Bomberman).Transform.Position.X + 0.5f), (int)((owner.CurrentTarget as Bomberman).Transform.Position.Y + 0.5f));
                     }
                 }
                 else
