@@ -31,17 +31,20 @@ namespace BomberMan2D
             LoadTextures();
             ObjectPools();
 
+            //Levels
             GameObject.Spawn(new Map("Levels/Level00.csv"));
             Prefabs.BomberMan bomberMan = new Prefabs.BomberMan();
+
+            //Player
             GameObject.Spawn(bomberMan, Map.GetPlayerSpawnPoint());
 
-            AI enemy = new AI();
-            enemy.Player = bomberMan;
-            enemy.CurrentTarget = bomberMan;
-            GameObject.Spawn(enemy, new Vector2(5, 5));
+            //AI
+            GameObject.Spawn(new EnemySpawner(bomberMan));
 
+            //Powerups
             GameObject.Spawn(new PowerupSpawner(5));
 
+            //TargetPoints
             GameObject.Spawn(new TargetSpawner(5, 3.5f));
         }
 
@@ -77,6 +80,7 @@ namespace BomberMan2D
             Pool<PowerUp>.Register(() => new PowerUp(), 100);
             Pool<Bomb>.Register(() => new Bomb(), 100);
             Pool<Explosion>.Register(() => new Explosion(), 12);
+            Pool<AI>.Register(() => new AI(), 100);
         }
 
         public static void Run()

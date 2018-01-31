@@ -1,0 +1,19 @@
+﻿This file is for the LEVEL documentation, how the level are built
+and how to create your the level in order to make it possible.
+
+the following examples contains the ID's that are used to build levels
+
+Indexes or id's:
+
+size: Width '(24-1)' || Height '(12-1)'
+
+'3' => used to build static walls and not destructible. (non walkable)
+'0' => walkable path, where the player, enemy and pickups are spawned. (walkable)
+'2' => used to spawn explosion, aka destructible walls. (non walkable before explosion)
+'12' => enemy spawn point, where the '12' is placed, the enemy is spawned. (walkable)
+'5' => player spawn point, where the '5' is placed, the player will spawn. (walkable)
+
+this is the list of current used id's to build the level.
+the map size it's static built-in and can't be changed, to build
+the own level the width and the height for the map must be the same as the 
+original one otherwise the game throws exception. 

@@ -19,6 +19,7 @@ namespace BomberMan2D.Prefabs
         private float offset;
         private static Vector2 playerSpawnPoint;
         private static List<Vector2> powerUpSpawnPoints = new List<Vector2>();
+        private static List<Vector2> enemySpawnPoints = new List<Vector2>();
         private bool firstTimeIteration;
         private Node[] mapNodes;
 
@@ -54,6 +55,10 @@ namespace BomberMan2D.Prefabs
                 else if (cells[iterator] == 5 || cells[iterator] == 0)
                 {
                     powerUpSpawnPoints.Add(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize) )));
+                }
+                else if (cells[iterator] == 12)
+                {
+                    enemySpawnPoints.Add(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))));
                 }
             }
         }
@@ -197,6 +202,11 @@ namespace BomberMan2D.Prefabs
         public static List<Vector2> GetPowerupSpawnPoint()
         {
             return powerUpSpawnPoints;
+        }
+
+        public static List<Vector2> GetEnemySpawnPoints()
+        {
+            return enemySpawnPoints;
         }
     }
 }

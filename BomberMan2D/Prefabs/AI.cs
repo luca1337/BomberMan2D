@@ -172,7 +172,6 @@ namespace BomberMan2D.Prefabs
                     if (next is TargetPoint && target != next)
                     {
                         owner.ComputePath(LevelManager.CurrentMap, (int)((next as TargetPoint).Transform.Position.X + 0.5f), (int)((next as TargetPoint).Transform.Position.Y + 0.5f));
-                      //  Console.WriteLine("computing path");
                     }
 
                     if ((next.Location - owner.Transform.Position).Length < 1f || owner.CurrentPath == null)
@@ -247,6 +246,27 @@ namespace BomberMan2D.Prefabs
             public IState OnStateUpdate()
             {
                 return this;
+            }
+        }
+    }
+
+    public class EnemySpawner : GameObject
+    {
+        IWaypoint Player { get; set; }
+
+        public EnemySpawner(IWaypoint player) : base("AI Spawner")
+        {
+            this.Player = player;
+
+            for (int i = 0; i < Map.GetEnemySpawnPoints().Count(); i++)
+            {
+                AI enemy = Pool<AI>.GetInstance(x =>
+                {
+                    x.Player = Player;
+                    x.Transform.Position = Map.GetEnemySpawnPoints()[RandomManager.Instance.Random.Next(0, Map.GetEnemySpawnPoints().Count())];
+                });
+
+                GameObject.Spawn(enemy);
             }
         }
     }

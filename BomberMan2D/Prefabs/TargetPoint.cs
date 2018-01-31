@@ -12,7 +12,6 @@ namespace BomberMan2D.Prefabs
         public TargetPoint() : base("TargetPoint")
         {
             Location = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, Map.GetPowerupSpawnPoint().Count)];
-            AddComponent(new SpriteRenderer(FlyWeight.Get("Explosion")));
         }
     }
 
