@@ -11,11 +11,6 @@ namespace BomberMan2D.Prefabs
 {
     public class Tile : GameObject
     {
-        private short minPercentage = 0;
-        private short maxPercentage = 100;
-        private short halfPercentage = 50;
-
-
         public Tile(Vector2 position, string textureName, bool solidBlock)
         {
             this.Layer = (uint)CollisionLayer.Wall;
@@ -44,8 +39,8 @@ namespace BomberMan2D.Prefabs
 
                 PowerUp p = Pool<PowerUp>.GetInstance(x =>
                 {
-                    x.powerUpType = PowerUpType.PW_BOMB;
-                    x.GetComponent<SpriteRenderer>().SetTexture("Bomb_PW");
+                    x.powerUpType = PowerUpType.PW_WALL_PASS;
+                    x.GetComponent<SpriteRenderer>().SetTexture("Wallpass_PW");
                     x.Transform.Position = this.Transform.Position;
                 });
                     

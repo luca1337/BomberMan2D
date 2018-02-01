@@ -10,7 +10,7 @@ namespace BomberMan2D.Components
     {
         public Vector2 Direction { get; set; }
 
-        public float Speed { get; set; }
+        public float Speed { get; set; } = 0.05f;
         private bool play;
 
         public CharacterController()
@@ -18,6 +18,7 @@ namespace BomberMan2D.Components
             Speed = 0.05f;
             play = false;
         }
+
         public void Update()
         {
             SetDirection();
@@ -48,16 +49,16 @@ namespace BomberMan2D.Components
                 play = false;
             }
 
-          //  if (!play)
-          //  {
-          //      AudioManager.Pause(AudioType.SOUND_WALK_SLOW);
-          //  }
+            if (!play)
+            {
+                AudioManager.Pause(AudioType.SOUND_WALK_SLOW);
+            }
         }
 
         private void SetDirection(Vector2 dir, AudioType type)
         {
             Direction = dir;
-      //      AudioManager.PlayClip(type);
+            AudioManager.PlayClip(type);
             play = true;
         }
     }

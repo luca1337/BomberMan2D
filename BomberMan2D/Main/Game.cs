@@ -31,9 +31,9 @@ namespace BomberMan2D
             LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.Wall + (uint)CollisionLayer.Powerup);
             LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.Wall);
 
-
-            //Load texture and initialize object pools
+            //Load texture and initialize object pools and sounds
             LoadTextures();
+            InitSound();
             ObjectPools();
 
             //Levels
@@ -48,6 +48,16 @@ namespace BomberMan2D
 
             //TargetPoints
             GameObject.Spawn(new TargetSpawner(5, 3.5f));
+        }
+
+        internal static List<IWaypoint> GetAllPoints()
+        {
+            return targetPoints;
+        }
+
+        internal static void AddTargetPoint(IWaypoint current)
+        {
+            targetPoints.Add(current);
         }
 
         private static void LoadTextures()
@@ -70,16 +80,6 @@ namespace BomberMan2D
             FlyWeight.Add("Flame_PW", "Assets/FlamesPw.dat");
         }
 
-        internal static List<IWaypoint> GetAllPoints()
-        {
-            return targetPoints;
-        }
-
-        internal static void AddTargetPoint(IWaypoint current)
-        {
-            targetPoints.Add(current);
-        }
-
         internal static int GetPointsCount()
         {
             return targetPoints.Count();
@@ -91,6 +91,30 @@ namespace BomberMan2D
             Pool<Bomb>.Register(() => new Bomb(), 100);
             Pool<Explosion>.Register(() => new Explosion(), 100);
             Pool<AI>.Register(() => new AI(), 100);
+        }
+
+        private static void InitSound()
+        {
+            AudioManager.AddSource(AudioType.SOUND_EXPLOSION);
+            AudioManager.AddClip("Sounds/Explosion.ogg", AudioType.SOUND_EXPLOSION);
+
+            AudioManager.AddSource(AudioType.SOUND_DROP);
+            AudioManager.AddClip("Sounds/Drop.ogg", AudioType.SOUND_DROP);
+
+            AudioManager.AddSource(AudioType.SOUND_WALK_FAST);
+            AudioManager.AddClip("Sounds/StepFast.ogg", AudioType.SOUND_WALK_FAST);
+
+            AudioManager.AddSource(AudioType.SOUND_WALK_SLOW);
+            AudioManager.AddClip("Sounds/StepSlow.ogg", AudioType.SOUND_WALK_SLOW);
+
+            AudioManager.AddSource(AudioType.SOUND_PICKUP);
+            AudioManager.AddClip("Sounds/Powerup.ogg", AudioType.SOUND_PICKUP);
+
+            AudioManager.AddSource(AudioType.SOUND_DIE);
+            AudioManager.AddClip("Sounds/Dead.ogg", AudioType.SOUND_DIE);
+
+            AudioManager.AddSource(AudioType.SOUND_BACKGROUND);
+            AudioManager.AddClip("Sounds/03_Stage_Theme.ogg", AudioType.SOUND_BACKGROUND);
         }
 
         public static void Run()

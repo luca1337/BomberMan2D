@@ -32,8 +32,10 @@ namespace BomberMan2D.Prefabs
         public Vector2 Location { get; set; }
         #endregion
 
+        #region Powerups
         private IPowerup powerup { get; set; }
         private PowerUpType pType { get; set; }
+        #endregion
 
         public Bomberman() : base("BomberMan")
         {
@@ -66,6 +68,7 @@ namespace BomberMan2D.Prefabs
             walkLeft.Owner = this;
             walkRight.Owner = this;
             idle.Owner = this;
+
             //walk up
             walkUp.NextDown = walkDown;
             walkUp.NextLeft = walkLeft;

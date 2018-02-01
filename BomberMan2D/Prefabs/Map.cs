@@ -16,7 +16,6 @@ namespace BomberMan2D.Prefabs
         private static int rows;
         private static int columns;
         private static List<int> cells;
-        private float offset;
         private static Vector2 playerSpawnPoint;
         private static List<Vector2> powerUpSpawnPoints = new List<Vector2>();
         private static List<Vector2> enemySpawnPoints = new List<Vector2>();

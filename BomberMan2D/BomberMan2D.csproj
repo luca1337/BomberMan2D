@@ -42,6 +42,7 @@
     <Reference Include="aiv-fast2d-utils-texturehelper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\TextureHelper.1.1.0\lib\net45\aiv-fast2d-utils-texturehelper.dll</HintPath>
     </Reference>
+    <Reference Include="aiv-vorbis, Version=1.0.6195.38242, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="EngineBuilder">
       <HintPath>..\..\BehaviourEngine\bin\Debug\EngineBuilder.dll</HintPath>
     </Reference>
@@ -154,6 +155,27 @@
     <None Include="Configs\OpenTK.dll.config" />
     <None Include="Configs\packages.config" />
     <None Include="Levels\Level00.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sounds\03_Stage_Theme.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sounds\Dead.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sounds\Drop.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sounds\Explosion.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sounds\Powerup.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sounds\StepFast.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sounds\StepSlow.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
