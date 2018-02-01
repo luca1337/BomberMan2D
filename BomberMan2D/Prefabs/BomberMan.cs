@@ -32,6 +32,9 @@ namespace BomberMan2D.Prefabs
         public Vector2 Location { get; set; }
         #endregion
 
+        private IPowerup powerup { get; set; }
+        private PowerUpType pType { get; set; }
+
         public Bomberman() : base("BomberMan")
         {
             #region LayerMask
@@ -127,8 +130,8 @@ namespace BomberMan2D.Prefabs
         {
             if(other.Owner is IPowerup)
             {
-                IPowerup powerup = other.Owner as IPowerup;
-                powerup.ApplyPowerUp(this);
+                powerup = other.Owner as IPowerup;
+                powerup.ApplyPowerUp(this, pType);
             }
         }
 
@@ -145,15 +148,17 @@ namespace BomberMan2D.Prefabs
             });
         }
 
-        public void ApplySpeed(float amount)
+        public void ApplyEffect()
         {
-            Console.WriteLine("Speed Applied!");
-        }
-
-        public float ApplyHealth(int amount)
-        {
-            Console.WriteLine("Health Applied!");
-            return 0.0f;
+            pType = (powerup as PowerUp).powerUpType;
+            if (pType == PowerUpType.PW_BOMB) { Console.WriteLine("Bomb Powerup"); }
+            else if (pType == PowerUpType.PW_BOMB_PASS) { Console.WriteLine("Bombpass Powerup"); }
+            else if (pType == PowerUpType.PW_DETONATOR) { Console.WriteLine("Detonator Powerup"); }
+            else if (pType == PowerUpType.PW_FLAME) { Console.WriteLine("Flame Powerup"); }
+            else if (pType == PowerUpType.PW_FLAME_PASS) { Console.WriteLine("Flamepass Powerup"); }
+            else if (pType == PowerUpType.PW_MYSTERY) { Console.WriteLine("Mystery Powerup"); }
+            else if (pType == PowerUpType.PW_SPEED) { Console.WriteLine("Speed Powerup"); }
+            else if (pType == PowerUpType.PW_WALL_PASS) { Console.WriteLine("Wallpass Powerup"); }
         }
 
         private class StateDrop : IState

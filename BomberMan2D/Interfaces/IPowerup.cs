@@ -8,6 +8,6 @@ namespace BomberMan2D
 {
     public interface IPowerup
     {
-        void ApplyPowerUp(IPowerupable powerUp);
+        void ApplyPowerUp(IPowerupable powerUp, PowerUpType type);
     }
 }

@@ -75,6 +75,7 @@
     <Compile Include="Interfaces\IPowerupable.cs" />
     <Compile Include="Enums\PowerUpType.cs" />
     <Compile Include="Prefabs\BomberMan.cs" />
+    <Compile Include="Prefabs\IEffect.cs" />
     <Compile Include="Prefabs\Map.cs" />
     <Compile Include="Prefabs\PowerUp.cs" />
     <Compile Include="Prefabs\TargetPoint.cs" />

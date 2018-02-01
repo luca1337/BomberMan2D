@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Aiv.Fast2D;
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
+using BehaviourEngine.Utils;
 using BomberMan2D.Prefabs;
 using OpenTK;
 

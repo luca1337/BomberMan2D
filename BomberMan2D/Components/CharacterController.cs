@@ -15,12 +15,13 @@ namespace BomberMan2D.Components
 
         public CharacterController()
         {
+            Speed = 0.05f;
             play = false;
         }
         public void Update()
         {
             SetDirection();
-            Owner.Transform.Position += Direction * Time.DeltaTime * 0.05f;
+            Owner.Transform.Position += Direction * Time.DeltaTime * Speed;
         }
 
         private void SetDirection()

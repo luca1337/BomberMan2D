@@ -8,7 +8,6 @@ namespace BomberMan2D
 {
     public interface IPowerupable
     {
-        void ApplySpeed(float amount);
-        float ApplyHealth(int amount);
+        void ApplyEffect();
     }
 }

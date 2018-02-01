@@ -1,4 +1,5 @@
 ﻿using BehaviourEngine;
+using BehaviourEngine.Utils;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -40,17 +41,15 @@ namespace BomberMan2D.Prefabs
             {
                 this.Active = false;
 
-                int chance = RandomManager.Instance.Random.Next(minPercentage, maxPercentage);
 
-                if (chance > halfPercentage + 40)
+                PowerUp p = Pool<PowerUp>.GetInstance(x =>
                 {
-                    PowerUp p = Pool<PowerUp>.GetInstance(x =>
-                    {
-                        x.GetComponent<SpriteRenderer>().SetTexture("Bomb_PW");
-                    });
+                    x.powerUpType = PowerUpType.PW_BOMB;
+                    x.GetComponent<SpriteRenderer>().SetTexture("Bomb_PW");
+                    x.Transform.Position = this.Transform.Position;
+                });
                     
-                    GameObject.Spawn(p, this.Transform.Position);
-                }
+                GameObject.Spawn(p);
             }
         }
     }

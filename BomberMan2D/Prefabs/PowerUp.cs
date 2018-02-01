@@ -55,16 +55,9 @@ namespace BomberMan2D.Prefabs
             rigidBody.Velocity = Vector2.Zero;
         }
 
-        public void ApplyPowerUp(IPowerupable powerUp)
+        public void ApplyPowerUp(IPowerupable powerUp, PowerUpType type)
         {
-            if (powerUpType == PowerUpType.PW_FLAME)
-            {
-                powerUp.ApplyHealth(1);
-            }
-            else
-            {
-                powerUp.ApplySpeed(speedValues[RandomManager.Instance.Random.Next(0, speedValues.Count)]);
-            }
+            powerUp.ApplyEffect();
         }
 
         private List<float> GetRandomFloats(int size, float min, float max)
