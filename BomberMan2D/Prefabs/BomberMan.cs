@@ -122,8 +122,8 @@ namespace BomberMan2D.Prefabs
 
             Rigidbody2D rigidBody = new Rigidbody2D();
             rigidBody.IsGravityAffected = false;
-            AddComponent(rigidBody);
 
+            AddComponent(rigidBody);
             AddComponent(new Components.CameraFollow());
 
             #endregion
@@ -196,6 +196,7 @@ namespace BomberMan2D.Prefabs
                         x.Active = true;
                         x.Stop = false;
                         x.Show = true;
+                        x.GetComponent<AnimationRenderer>().Enabled = true;
                         // Maybe this is the way for spawn in the middle of the cell
                         x.Transform.Position = new Vector2((int)(Owner.Transform.Position.X + 0.5f), (int)(Owner.Transform.Position.Y + 0.5f));
                     });

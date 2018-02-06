@@ -32,8 +32,8 @@ namespace BomberMan2D
                 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
                 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
                 71, 72, 73, 74, 75
-            }, 0.1f, true, false);
-
+            }, 0.02f, true, false);
+           
             BoxCollider  = new BoxCollider2D(new Vector2(1f, 1f));
             BoxCollider.CollisionMode = CollisionMode.Trigger;
             AddComponent(BoxCollider);

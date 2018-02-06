@@ -18,7 +18,7 @@ namespace BomberMan2D
     {
         //Property
         public List<Explosion> explosionList = new List<Explosion>();
-        public int ExplosionForce = 5;
+        public int ExplosionForce            = 5;
 
         public bool Exploding { get; private set; }
         public bool Stop { get; set; }
@@ -63,10 +63,12 @@ namespace BomberMan2D
 
                 explosionList.Add(toAdd);
                 Spawn(toAdd);
-
+                //This deactive because the spawn method set the active field true automatically
                 toAdd.Active = false;
             }
         }
+
+        #region MaybeToDelete
 
         public void SetAnimation(string animation, Vector2 direction)
         {
@@ -77,6 +79,8 @@ namespace BomberMan2D
             renderer.Stop = stop;
             renderer.Show = render;
         }
+
+        #endregion
 
         private class UpdateBomb : BehaviourEngine.Component, IUpdatable
         {
@@ -124,7 +128,7 @@ namespace BomberMan2D
 
             public StateExplode()
             {
-                timer = new Timer(1.8f);
+                timer = new Timer(2.1f);
             }
 
             public void OnStateEnter()
@@ -143,12 +147,12 @@ namespace BomberMan2D
                 {
                     Owner.locations = GetAdjacentLocation(Owner.Transform.Position);
 
-                    //TODO active Explosions 
+                    Owner.GetComponent<AnimationRenderer>().Enabled = false;
 
                     for (int i = 0; i < Owner.locations.Count; i++)
                     {
-                        Owner.explosionList[i].Active = true;
                         Owner.explosionList[i].Transform.Position = Owner.locations[i];
+                        Owner.explosionList[i].Active             = true;
                     }
 
                     Owner.Exploding = false;
