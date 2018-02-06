@@ -168,7 +168,9 @@ namespace BomberMan2D.Prefabs
         {
             public GameObject Owner { get; set; }
 
-            private Timer timer;
+            private Timer timer { get; set; }
+
+            private bool firstTimeSpawn { get; set; } = true;
 
             public StateDrop( )
             {
@@ -189,13 +191,23 @@ namespace BomberMan2D.Prefabs
                 {
                     //AudioManager.PlayClip(AudioType.SOUND_DROP);
 
-                    GameObject.Spawn(Pool<Bomb>.GetInstance(x =>
+                    Bomb bomb = Pool<Bomb>.GetInstance(x =>
                     {
-                       x.Active = true;
-                       x.Stop = false;
-                       x.Show = true;
-                       x.Transform.Position = new Vector2((int)Owner.Transform.Position.X, (int)Owner.Transform.Position.Y);
-                    }));
+                        if (!firstTimeSpawn)
+                        {
+                            x.Active = true;
+                        }
+                        x.Stop = false;
+                        x.Show = true;
+                        x.Transform.Position = new Vector2((int)Owner.Transform.Position.X, (int)Owner.Transform.Position.Y);
+                    });
+
+                    if(firstTimeSpawn)
+                    {
+                        GameObject.Spawn(bomb);
+                        Console.WriteLine("first spawn time of bomb");
+                        firstTimeSpawn = false;
+                    }
 
                     timer.Start();
                 }

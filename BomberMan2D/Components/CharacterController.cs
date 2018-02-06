@@ -51,14 +51,14 @@ namespace BomberMan2D.Components
 
             if (!play)
             {
-                AudioManager.Pause(AudioType.SOUND_WALK_SLOW);
+                //AudioManager.Pause(AudioType.SOUND_WALK_SLOW);
             }
         }
 
         private void SetDirection(Vector2 dir, AudioType type)
         {
             Direction = dir;
-            AudioManager.PlayClip(type);
+            //AudioManager.PlayClip(type);
             play = true;
         }
     }

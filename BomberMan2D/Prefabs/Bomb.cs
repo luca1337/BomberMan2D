@@ -110,6 +110,7 @@ namespace BomberMan2D
 
             private bool oneTimeSpawn;
             private Timer timer;
+            private bool firstBombSpawned;
 
             public StateExplode()
             {
@@ -136,14 +137,33 @@ namespace BomberMan2D
                     //AudioManager.PlayClip(AudioType.SOUND_EXPLOSION);
                     Owner.locations = GetAdjacentLocation(Owner.Transform.Position);
 
+                    //if (firstIterati) then
+                    //explosionList.Add(toSpawn)
+                    //if !firstIteration then 
+                    //GetInstance(explosion)
+
                     for (int i = 0; i < Owner.locations.Count; i++)
                     {
+                        if (Owner.explosionList.Count <= 0)
+                        {
+                            //can fill explosion list ok
+                            firstBombSpawned = true; 
+                        }
+
+                        //always store the bomb when getting it's instance
                         Explosion toSpawn = Pool<Explosion>.GetInstance(x =>
                         {
                             x.Active = true;
                             x.Transform.Position = Owner.locations[i];
                         });
-                        Owner.explosionList.Add(toSpawn);
+
+                        //start filling 
+                        if (firstBombSpawned)
+                            Owner.explosionList.Add(toSpawn); 
+
+                        //disable the fill list if it has been filled already.
+                        if (Owner.explosionList.Count >= 4)
+                            firstBombSpawned = false; 
                     }
 
                     if (oneTimeSpawn)
@@ -175,8 +195,6 @@ namespace BomberMan2D
                             }
                         );
                     }
-
-                    //Owner.explosionList.Clear();
 
                     #endregion
 
@@ -220,7 +238,7 @@ namespace BomberMan2D
                 if (timer.IsActive)
                     timer.Update();
 
-                (Owner as Bomb).EnableAnimation("Bomb", (Owner as Bomb).Stop, (Owner as Bomb).Show);
+                //(Owner as Bomb).EnableAnimation("Bomb", (Owner as Bomb).Stop, (Owner as Bomb).Show);
 
                 if (!timer.IsActive)
                 {

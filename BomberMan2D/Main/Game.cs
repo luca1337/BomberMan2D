@@ -33,7 +33,7 @@ namespace BomberMan2D
 
             //Load texture and initialize object pools and sounds
             LoadTextures();
-            InitSound();
+            //InitSound();
             ObjectPools();
 
             //Levels
