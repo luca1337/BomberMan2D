@@ -132,8 +132,6 @@ namespace BomberMan2D
             {
                 if (Owner.Exploding)
                 {
-                    Owner.GetComponent<AnimationRenderer>().Enabled = false;
-
                     //AudioManager.PlayClip(AudioType.SOUND_EXPLOSION);
                     Owner.locations = GetAdjacentLocation(Owner.Transform.Position);
 
