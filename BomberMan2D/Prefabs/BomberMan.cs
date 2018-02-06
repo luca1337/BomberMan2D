@@ -193,10 +193,7 @@ namespace BomberMan2D.Prefabs
 
                     Bomb bomb = Pool<Bomb>.GetInstance(x =>
                     {
-                        if (!firstTimeSpawn)
-                        {
                             x.Active = true;
-                        }
                         x.Stop = false;
                         x.Show = true;
                         x.Transform.Position = new Vector2((int)Owner.Transform.Position.X, (int)Owner.Transform.Position.Y);

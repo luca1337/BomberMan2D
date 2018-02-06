@@ -112,6 +112,8 @@ namespace BomberMan2D
             private Timer timer;
             private bool firstBombSpawned;
 
+            private int maxExplosionCount = 5;
+
             public StateExplode()
             {
                 timer = new Timer(1.8f);
@@ -142,11 +144,9 @@ namespace BomberMan2D
 
                     for (int i = 0; i < Owner.locations.Count; i++)
                     {
+                        //can fill explosion list ok
                         if (Owner.explosionList.Count <= 0)
-                        {
-                            //can fill explosion list ok
                             firstBombSpawned = true; 
-                        }
 
                         //always store the bomb when getting it's instance
                         Explosion toSpawn = Pool<Explosion>.GetInstance(x =>
@@ -160,8 +160,8 @@ namespace BomberMan2D
                             Owner.explosionList.Add(toSpawn); 
 
                         //disable the fill list if it has been filled already.
-                        if (Owner.explosionList.Count >= 4)
-                            firstBombSpawned = false; 
+                        if (Owner.explosionList.Count >= maxExplosionCount)
+                            firstBombSpawned = false;
                     }
 
                     if (oneTimeSpawn)
