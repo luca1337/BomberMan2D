@@ -160,7 +160,8 @@ namespace BomberMan2D
                 if (!timer.IsActive)
                 {
                     #region Explosions recycle
-                    for (int i = 0; i < Owner.locations.Count; i++)
+
+                    for (int i = 0; i < Owner.explosionList.Count; i++)
                     {
                         Owner.explosionList[i].Active = false;
                         Owner.explosionList[i].Reset();
