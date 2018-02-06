@@ -63,6 +63,8 @@ namespace BomberMan2D
 
                 explosionList.Add(toAdd);
                 Spawn(toAdd);
+
+                toAdd.Active = false;
             }
         }
 
