@@ -18,6 +18,8 @@ namespace BomberMan2D
     {
         //Property
         public List<Explosion> explosionList = new List<Explosion>();
+        public int ExplosionForce = 5;
+
         public bool Exploding { get; private set; }
         public bool Stop { get; set; }
         public bool Show { get; set; }
@@ -54,6 +56,14 @@ namespace BomberMan2D
             AddComponent(new UpdateBomb(currentState));
 
             #endregion
+
+            for (int i = 0; i < ExplosionForce; i++)
+            {
+                Explosion toAdd = Pool<Explosion>.GetInstance(x => x.Active = false);
+
+                explosionList.Add(toAdd);
+                Spawn(toAdd);
+            }
         }
 
         public void SetAnimation(string animation, Vector2 direction)
@@ -108,28 +118,17 @@ namespace BomberMan2D
             public StateWait Next { get; set; }
             public Bomb Owner { get; set; }
 
-            private bool oneTimeSpawn;
             private Timer timer;
-            private bool firstBombSpawned;
-            private bool firstStart;
-
-            private int maxExplosionCount = 5;
 
             public StateExplode()
             {
                 timer = new Timer(1.8f);
-                oneTimeSpawn = true;
             }
 
             public void OnStateEnter()
             {
                 timer.Start();
                 Owner.Exploding = true;
-
-                for (int i = 0; i < maxExplosionCount; i++)
-                {
-                    Owner.explosionList.Add(new Explosion());
-                }
             }
 
             public void OnStateExit()
@@ -140,31 +139,14 @@ namespace BomberMan2D
             {
                 if (Owner.Exploding)
                 {
-                    //AudioManager.PlayClip(AudioType.SOUND_EXPLOSION);
                     Owner.locations = GetAdjacentLocation(Owner.Transform.Position);
 
-                    //if (firstIterati) then
-                    //explosionList.Add(toSpawn)
-                    //if !firstIteration then 
-                    //GetInstance(explosion)
+                    //TODO active Explosions 
 
                     for (int i = 0; i < Owner.locations.Count; i++)
                     {
-                        //always store the bomb when getting it's instance
-                        Pool<Explosion>.GetInstance(x =>
-                        {
-                            x.Active = true;
-                            x.Transform.Position = Owner.locations[i];
-                        });
-                    }
-
-                    if (oneTimeSpawn)
-                    {
-                        for (int j = 0; j < Owner.explosionList.Count; j++)
-                        {
-                            Spawn(Owner.explosionList[j]);
-                        }
-                        oneTimeSpawn = false;
+                        Owner.explosionList[i].Active = true;
+                        Owner.explosionList[i].Transform.Position = Owner.locations[i];
                     }
 
                     Owner.Exploding = false;
@@ -176,16 +158,10 @@ namespace BomberMan2D
                 if (!timer.IsActive)
                 {
                     #region Explosions recycle
-                    for (int i = 0; i < Owner.explosionList.Count; i++)
+                    for (int i = 0; i < Owner.locations.Count; i++)
                     {
-                        Pool<Explosion>.RecycleInstance
-                        (
-                            Owner.explosionList[i], x =>
-                            {
-                                x.Reset();
-                                x.Active = false;
-                            }
-                        );
+                        Owner.explosionList[i].Active = false;
+                        Owner.explosionList[i].Reset();
                     }
 
                     #endregion
