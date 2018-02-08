@@ -13,6 +13,8 @@ namespace BomberMan2D
 {
     public class OnScreenDisplay : GameObject
     {
+        
+
         public int Score;
         public List<Text2D> text;
         private BoxRenderer background;

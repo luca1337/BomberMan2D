@@ -15,16 +15,16 @@ namespace BehaviourEngine.Test
         public string message;
         public int RenderOffset { get; set; }
 
-
         private TextMesh text;
 
-        public Text2D(string spriteSheetText, string message, Vector2 position, Vector4 color, float horizontalSpacing) : base()
+        public Text2D(string spriteSheetText, string message, Vector2 position, Vector4 color, float horizontalSpacing, Camera camera = null) : base()
         {
             RenderOffset = (int)RenderLayer.Gui;
             text          = new TextMesh(FlyWeight.Get(spriteSheetText));
             text.SetTextColor(color);
             text.SetHorizontalSpacing(horizontalSpacing);
             text.position = position;
+            text.Camera = camera;
             this.message  = message;
         }
   
