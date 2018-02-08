@@ -60,6 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\AStar.cs" />
+    <Compile Include="BoxRenderer.cs" />
+    <Compile Include="OnScreenDisplay.cs" />
     <Compile Include="Prefabs\Bomb.cs" />
     <Compile Include="Components\CameraFollow.cs" />
     <Compile Include="Prefabs\Explosion.cs" />
@@ -83,6 +85,12 @@
     <Compile Include="Prefabs\Tile.cs" />
     <Compile Include="Main\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextMesh.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Text2D.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ballon.dat">
@@ -122,6 +130,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\FlamesPw.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Font.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\Font00.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Grass.dat">

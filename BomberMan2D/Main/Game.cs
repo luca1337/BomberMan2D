@@ -23,6 +23,7 @@ namespace BomberMan2D
             window.SetDefaultOrthographicSize(14);
             window.SetClearColor(0.0f, 0.61f, 0.0f);
             Engine.Init(window);
+            
 
             //do we want physics?
             Physics.Instance.Gravity *= 2f;
@@ -34,6 +35,8 @@ namespace BomberMan2D
             //Load texture and initialize object pools and sounds
             LoadTextures();
             //InitSound();
+            OnScreenDisplay display = new OnScreenDisplay();
+            GameObject.Spawn(display);
             ObjectPools();
 
             //Levels
@@ -62,6 +65,7 @@ namespace BomberMan2D
 
         private static void LoadTextures()
         {
+            FlyWeight.Add("Font01", "Assets/Font.dat");
             FlyWeight.Add("Wall", "Assets/Wall_01.dat");
             FlyWeight.Add("Obstacle", "Assets/Obstacle_01.dat");
             FlyWeight.Add("BomberMan", "Assets/Bombertab1.dat");
