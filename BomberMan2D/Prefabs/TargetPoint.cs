@@ -2,6 +2,7 @@
 using BehaviourEngine.Interfaces;
 using System.Linq;
 using OpenTK;
+using BomberMan2D.Main;
 
 namespace BomberMan2D.Prefabs
 {
@@ -33,7 +34,7 @@ namespace BomberMan2D.Prefabs
             for (int i = 0; i < size; i++)
             {
                 current = new TargetPoint();
-                Game.AddTargetPoint(current);
+                GameManager.AddTargetPoint(current);
                 GameObject.Spawn(current);
             }
         }
@@ -45,7 +46,7 @@ namespace BomberMan2D.Prefabs
             tMin += Time.DeltaTime;
             if (tMin > tMax)
             {
-                Game.GetAllPoints().Where( x => x.GetType() != typeof(Bomberman)).ToList().ForEach(item => (item as GameObject).GetComponent<Transform>().Position = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, Map.GetPowerupSpawnPoint().Count)]);
+                GameManager.GetAllPoints().Where( x => x.GetType() != typeof(Bomberman)).ToList().ForEach(item => (item as GameObject).GetComponent<Transform>().Position = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, Map.GetPowerupSpawnPoint().Count)]);
                 ResetTiming();
             }
         }

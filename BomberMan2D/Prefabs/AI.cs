@@ -2,6 +2,7 @@
 using BehaviourEngine.Interfaces;
 using BomberMan;
 using BomberMan2D.Components;
+using BomberMan2D.Main;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace BomberMan2D.Prefabs
         #region Target
         public IWaypoint Player { get; set; }
         public IWaypoint CurrentTarget { get; set; }
-        public IMap map { get; set; }
+        public IMap Map { get; set; }
         #endregion
 
         #region FSM
@@ -72,9 +73,9 @@ namespace BomberMan2D.Prefabs
 
         private void OnTriggerEnter(Collider2D other)
         {
-            if(other.Owner is Bomberman)
+            if(other.Owner is Explosion)
             {
-                Console.WriteLine(other.Owner);
+                Console.WriteLine("AI Collided With: {0}", other.Owner);
             }
         }
 
@@ -178,7 +179,7 @@ namespace BomberMan2D.Prefabs
                 {
                     if (oneTimeChase)
                     {
-                        next = Game.GetAllPoints()[RandomManager.Instance.Random.Next(0, Game.GetPointsCount())];
+                        next = GameManager.GetAllPoints()[RandomManager.Instance.Random.Next(0, GameManager.GetPointsCount())];
                         Console.WriteLine(next);
                         oneTimeChase = !oneTimeChase;
                     }
@@ -202,6 +203,7 @@ namespace BomberMan2D.Prefabs
 
             }
         }
+
         private class PatrolState : IState
         {
             public ChaseState ChaseState { get; set; }
@@ -242,6 +244,7 @@ namespace BomberMan2D.Prefabs
                 return owner.CheckAgentPath(owner, out patrol);
             }
         }
+
         private class StateIdle : IState
         {
             private AI owner;
@@ -261,27 +264,6 @@ namespace BomberMan2D.Prefabs
             public IState OnStateUpdate()
             {
                 return this;
-            }
-        }
-    }
-
-    public class EnemySpawner : GameObject
-    {
-        IWaypoint Player { get; set; }
-
-        public EnemySpawner(IWaypoint player) : base("AI Spawner")
-        {
-            this.Player = player;
-
-            for (int i = 0; i < Map.GetEnemySpawnPoints().Count(); i++)
-            {
-                AI enemy = Pool<AI>.GetInstance(x =>
-                {
-                    x.Player = Player;
-                    x.Transform.Position = Map.GetEnemySpawnPoints()[RandomManager.Instance.Random.Next(0, Map.GetEnemySpawnPoints().Count())];
-                });
-
-                GameObject.Spawn(enemy);
             }
         }
     }

@@ -36,7 +36,7 @@ namespace BehaviourEngine.Test
         public void Update()
         {
             text.UpdateText(message);
-            Console.WriteLine(message);
+            //Console.WriteLine(message);
         }
     }
 }

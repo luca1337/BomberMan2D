@@ -24,6 +24,7 @@ namespace BomberMan2D.Prefabs
         private WalkDown walkDown;
         private WalkLeft walkLeft;
         private WalkRight walkRight;
+        private StateDie dieState;
         private Idle idle;
         private IState walkState;
         private IState bombState;
@@ -55,19 +56,13 @@ namespace BomberMan2D.Prefabs
             #endregion
 
             #region FSM
-            drop = new StateDrop();
-            walkUp = new WalkUp();
-            walkDown = new WalkDown();
-            walkLeft = new WalkLeft();
-            walkRight = new WalkRight();
-            idle = new Idle();
-
-            drop.Owner = this;
-            walkUp.Owner = this;
-            walkDown.Owner = this;
-            walkLeft.Owner = this;
-            walkRight.Owner = this;
-            idle.Owner = this;
+            drop = new StateDrop(this);
+            walkUp = new WalkUp(this);
+            walkDown = new WalkDown(this);
+            walkLeft = new WalkLeft(this);
+            walkRight = new WalkRight(this);
+            dieState = new StateDie(this);
+            idle = new Idle(this);
 
             //walk up
             walkUp.NextDown = walkDown;
@@ -136,6 +131,11 @@ namespace BomberMan2D.Prefabs
                 powerup = other.Owner as IPowerup;
                 powerup.ApplyPowerUp(this, pType);
             }
+
+            if(other.Owner is AI)
+            {
+                Console.WriteLine("Collided With AI");
+            }
         }
 
         private void EnableAnimation(AnimationType animationType, bool enable)
@@ -166,14 +166,15 @@ namespace BomberMan2D.Prefabs
 
         private class StateDrop : IState
         {
-            public GameObject Owner { get; set; }
+            private Bomberman owner { get; set; }
 
             private Timer timer { get; set; }
 
             private bool firstTimeSpawn { get; set; } = true;
 
-            public StateDrop( )
+            public StateDrop(GameObject owner)
             {
+                this.owner = owner as Bomberman;
                 timer = new Timer(2f);
             }
 
@@ -196,7 +197,7 @@ namespace BomberMan2D.Prefabs
                         x.Active = true;
                         x.GetComponent<AnimationRenderer>().Enabled = true;
                         // Maybe this is the way for spawn in the middle of the cell
-                        x.Transform.Position = new Vector2((int)(Owner.Transform.Position.X + 0.5f), (int)(Owner.Transform.Position.Y + 0.5f));
+                        x.Transform.Position = new Vector2((int)(owner.Transform.Position.X + 0.5f), (int)(owner.Transform.Position.Y + 0.5f));
                     });
 
                     if(firstTimeSpawn)
@@ -222,10 +223,11 @@ namespace BomberMan2D.Prefabs
             public WalkDown NextDown { get; set; }
             public WalkRight NextRight { get; set; }
             public Idle NextIdle { get; set; }
-            public GameObject Owner { get; set; }
+            private Bomberman owner { get; set; }
 
-            public WalkLeft()
+            public WalkLeft(GameObject owner)
             {
+                this.owner = owner as Bomberman;
             }
 
             public void OnStateEnter() => OnStateUpdate();
@@ -236,7 +238,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                (Owner as Bomberman).EnableAnimation(AnimationType.WALK_LEFT, true);
+                owner.EnableAnimation(AnimationType.WALK_LEFT, true);
                 return this;
             }
         }
@@ -247,10 +249,11 @@ namespace BomberMan2D.Prefabs
             public WalkDown NextDown { get; set; }
             public WalkLeft NextLeft { get; set; }
             public Idle NextIdle { get; set; }
-            public GameObject Owner { get; set; }
+            private Bomberman owner { get; set; }
 
-            public WalkRight( )
+            public WalkRight(GameObject owner)
             {
+                this.owner = owner as Bomberman;
             }
 
             public void OnStateEnter()
@@ -264,7 +267,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                (Owner as Bomberman).EnableAnimation(AnimationType.WALK_RIGHT, true);
+                owner.EnableAnimation(AnimationType.WALK_RIGHT, true);
                 return this;
             }
         }
@@ -275,10 +278,11 @@ namespace BomberMan2D.Prefabs
             public WalkDown NextDown { get; set; }
             public WalkRight NextRight { get; set; }
             public Idle NextIdle { get; set; }
-            public GameObject Owner { get; set; }
+            private Bomberman owner { get; set; }
 
-            public WalkUp()
+            public WalkUp(GameObject owner)
             {
+                this.owner = owner as Bomberman;
             }
 
             public void OnStateEnter()
@@ -292,7 +296,7 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                (Owner as Bomberman).EnableAnimation(AnimationType.WALK_UP, true);
+                owner.EnableAnimation(AnimationType.WALK_UP, true);
                 return this;
             }
         }
@@ -304,10 +308,10 @@ namespace BomberMan2D.Prefabs
             public WalkRight NextRight { get; set; }
             public Idle NextIdle { get; set; }
             private Bomberman owner { get; set; }
-            public GameObject Owner { get; set; }
 
-            public WalkDown()
+            public WalkDown(GameObject owner)
             {
+                this.owner = owner as Bomberman;
             }
 
             public void OnStateEnter()
@@ -321,8 +325,31 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                (Owner as Bomberman).EnableAnimation(AnimationType.WALK_DOWN, true);
+                owner.EnableAnimation(AnimationType.WALK_DOWN, true);
                 return this;
+            }
+        }
+
+        private class StateDie : IState
+        {
+            private Bomberman owner { get; set; }
+
+            public StateDie(GameObject owner)
+            {
+                this.owner = owner as Bomberman;
+            }
+
+            public void OnStateEnter()
+            {
+            }
+
+            public void OnStateExit()
+            {
+            }
+
+            public IState OnStateUpdate()
+            {
+                throw new NotImplementedException();
             }
         }
 
@@ -332,10 +359,11 @@ namespace BomberMan2D.Prefabs
             public WalkDown NextDown { get; set; }
             public WalkRight NextRight { get; set; }
             public WalkLeft NextLeft { get; set; }
-            public GameObject Owner { get; set; }
+            private Bomberman owner { get; set; }
 
-            public Idle()
+            public Idle(GameObject owner)
             {
+                this.owner = owner as Bomberman;
             }
 
             public void OnStateEnter()
@@ -375,7 +403,7 @@ namespace BomberMan2D.Prefabs
                 }
                 else
                 {
-                    (Owner as Bomberman).EnableAnimation(AnimationType.IDLE, true);
+                    owner.EnableAnimation(AnimationType.IDLE, true);
                     return this;
                 }
             }
