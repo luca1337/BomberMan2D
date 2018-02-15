@@ -66,6 +66,7 @@
     <Compile Include="Components\BoxRenderer.cs" />
     <Compile Include="Components\EnemySpawner.cs" />
     <Compile Include="Main\GameManager.cs" />
+    <Compile Include="Prefabs\BombPow.cs" />
     <Compile Include="Prefabs\OnScreenDisplay.cs" />
     <Compile Include="Prefabs\Bomb.cs" />
     <Compile Include="Components\CameraFollow.cs" />

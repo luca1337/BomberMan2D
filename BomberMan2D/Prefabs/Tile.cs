@@ -17,7 +17,7 @@ namespace BomberMan2D.Prefabs
 
             this.Transform.Position = position;
             SpriteRenderer Renderer = new SpriteRenderer(FlyWeight.Get(textureName));
-            Renderer.RenderOffset = (int)RenderLayer.Tile;
+            Renderer.RenderOffset   = (int)RenderLayer.Tile;
             AddComponent(Renderer);
 
             if (solidBlock)

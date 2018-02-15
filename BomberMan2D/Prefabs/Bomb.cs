@@ -18,10 +18,12 @@ namespace BomberMan2D
     {
         //Property
         public List<Explosion> explosionList = new List<Explosion>();
-        public int ExplosionForce            = 5;
         public bool Exploding { get; private set; }
-    
+        public bool IsBig;
+
         //Private Field
+        private int bigExplosion               = 9;
+        private int littleExplosion            = 5;
         private AnimationRenderer renderer;
         private List<BoxCollider2D> colliders;
         private List<Vector2> locations;
@@ -35,7 +37,7 @@ namespace BomberMan2D
 
             colliders = new List<BoxCollider2D>();
             locations = new List<Vector2>();
-            renderer = new AnimationRenderer(FlyWeight.Get("Bomb"), 150, 150, 4, new int[] { 0, 1, 2, 3, 2 }, 0.2f, true, false);
+            renderer  = new AnimationRenderer(FlyWeight.Get("Bomb"), 150, 150, 4, new int[] { 0, 1, 2, 3, 2 }, 0.2f, true, false);
             AddComponent(renderer);
 
             #region FSM
@@ -51,10 +53,26 @@ namespace BomberMan2D
 
             #endregion
 
-            for (int i = 0; i < ExplosionForce; i++)
+            ChooseBomb();
+        }
+
+        private void ChooseBomb()
+        {
+            if (!IsBig)
             {
-                Explosion toAdd = Pool<Explosion>.GetInstance(x => x.Active = false);
-                explosionList.Add(toAdd);
+                for (int i = 0; i < littleExplosion; i++)
+                {
+                    Explosion toAdd = Pool<Explosion>.GetInstance(x => x.Active = false);
+                    explosionList.Add(toAdd);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < bigExplosion; i++)
+                {
+                    Explosion toAdd = Pool<Explosion>.GetInstance(x => x.Active = false);
+                    explosionList.Add(toAdd);
+                }
             }
         }
 
