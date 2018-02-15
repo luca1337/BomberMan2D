@@ -1,4 +1,5 @@
-﻿using BehaviourEngine.Interfaces;
+﻿using BehaviourEngine;
+using BehaviourEngine.Interfaces;
 using BomberMan2D.Prefabs;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BomberMan2D
 {
-    public class LevelManager
+    public static class LevelManager
     {
         private static Dictionary<string, Map> maps = new Dictionary<string, Map>();
         public static Map CurrentMap { get; set; }
@@ -26,7 +27,9 @@ namespace BomberMan2D
                 throw new Exception("Key already or not registered yet!");
             }
         }
-
+        public static void RefreshMap(Node[] nodes)
+        {
+        }
         public static IMap Get(string mapName)
         {
             try

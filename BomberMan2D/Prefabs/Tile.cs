@@ -36,6 +36,15 @@ namespace BomberMan2D.Prefabs
             {
                 this.Active = false;
 
+                int xPos = (int)Transform.Position.X;
+                int yPos = (int)Transform.Position.Y;
+                int index = Map.GetIndex(xPos,yPos);
+
+                if (LevelManager.CurrentMap.MapNodes[index] == null)
+                    LevelManager.CurrentMap.MapNodes[index] = new Node(1, new Vector2(xPos, yPos));
+
+                LevelManager.CurrentMap.GenerateNeighborNode();
+
 
                 PowerUp p = Pool<PowerUp>.GetInstance(x =>
                 {

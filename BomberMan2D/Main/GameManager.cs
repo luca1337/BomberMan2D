@@ -162,6 +162,7 @@ namespace BomberMan2D.Main
 
             public IState OnStateUpdate()
             {
+                Node.ShowPath();
                 return this;
             }
         }

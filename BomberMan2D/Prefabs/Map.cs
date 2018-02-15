@@ -12,6 +12,7 @@ namespace BomberMan2D.Prefabs
 {
     public class Map : GameObject, IMap
     {
+        public Node[] MapNodes;
         private int blockSize = 1;
         private static int rows;
         private static int columns;
@@ -20,7 +21,6 @@ namespace BomberMan2D.Prefabs
         private static List<Vector2> powerUpSpawnPoints = new List<Vector2>();
         private static List<Vector2> enemySpawnPoints = new List<Vector2>();
         private bool firstTimeIteration;
-        private Node[] mapNodes;
 
         public Map(string fileName)
         {
@@ -29,7 +29,7 @@ namespace BomberMan2D.Prefabs
             ReadFromFile(fileName);
             GenerateMap();
 
-            mapNodes = new Node[cells.Count];
+            MapNodes = new Node[cells.Count];
             GenerateNodes();
             GenerateNeighborNode();
             LevelManager.Add(fileName, this);
@@ -45,15 +45,15 @@ namespace BomberMan2D.Prefabs
                 }
                 else if (cells[iterator] == 2)
                 {
-                    Spawn(new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize) )), "Obstacle", true));
+                    Spawn(new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))), "Obstacle", true));
                 }
                 else if (cells[iterator] == 5)
                 {
-                    playerSpawnPoint = new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize) ));
+                    playerSpawnPoint = new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize)));
                 }
                 else if (cells[iterator] == 5 || cells[iterator] == 0)
                 {
-                    powerUpSpawnPoints.Add(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize) )));
+                    powerUpSpawnPoints.Add(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))));
                 }
                 else if (cells[iterator] == 12)
                 {
@@ -64,21 +64,20 @@ namespace BomberMan2D.Prefabs
 
         private void GenerateNodes()
         {
-            for (int y = 0; y < rows + 2; y++)
+            for (int y = 2; y < rows + 2; y++)
             {
                 for (int x = 0; x < (columns - 1); x++)
                 {
-                    int index = y * (columns - 1) + x ;
+                    int index = y * (columns - 1) + x;
 
-                    if (cells[index] == 0 || cells[index] == 5 || cells[index] == 12)
-                    {
-                        mapNodes[index] = new Node(1, new Vector2(x , y ));
-                    }
+                    if (cells[index] == 3 ||cells[index] == 2)
+                        MapNodes[index] = null;
+                    else if(cells[index] == 5 || cells[index] == 12 || cells[index] == 0)
+                        MapNodes[index] = new Node(1, new Vector2(x, y));
                 }
             }
         }
-
-        private void GenerateNeighborNode()
+        public void GenerateNeighborNode()
         {
             // Here we move between the indexes
             for (int y = 0; y < rows + 2; y++)
@@ -87,31 +86,66 @@ namespace BomberMan2D.Prefabs
                 {
                     int index = y * (columns - 1) + x;
 
-                    if (mapNodes[index] == null)
+                    if (MapNodes[index] == null)
                         continue;
 
                     // top
                     Node top = GetNodeByIndex(x, y - 1);
                     if (top != null)
-                        mapNodes[index].AddNeighbour(top);
+                        MapNodes[index].AddNeighbour(top);
 
                     // right
                     Node right = GetNodeByIndex(x + 1, y);
                     if (right != null)
-                        mapNodes[index].AddNeighbour(right);
+                        MapNodes[index].AddNeighbour(right);
 
                     // bottom
                     Node bottom = GetNodeByIndex(x, y + 1);
                     if (bottom != null)
-                        mapNodes[index].AddNeighbour(bottom);
+                        MapNodes[index].AddNeighbour(bottom);
 
                     // left
                     Node left = GetNodeByIndex(x - 1, y);
                     if (left != null)
-                        mapNodes[index].AddNeighbour(left);
+                        MapNodes[index].AddNeighbour(left);
                 }
             }
         }
+
+        //private void GenerateNeighborNode()
+        //{
+        //    // Here we move between the indexes
+        //    for (int y = 0; y < rows + 2; y++)
+        //    {
+        //        for (int x = 0; x < (columns - 1); x++)
+        //        {
+        //            int index = y * (columns - 1) + x;
+
+        //            if (MapNodes[index] == null)
+        //                continue;
+
+        //            // top
+        //            Node top = GetNodeByIndex(x, y - 1);
+        //            if (top != null)
+        //                MapNodes[index].AddNeighbour(top);
+
+        //            // right
+        //            Node right = GetNodeByIndex(x + 1, y);
+        //            if (right != null)
+        //                MapNodes[index].AddNeighbour(right);
+
+        //            // bottom
+        //            Node bottom = GetNodeByIndex(x, y + 1);
+        //            if (bottom != null)
+        //                MapNodes[index].AddNeighbour(bottom);
+
+        //            // left
+        //            Node left = GetNodeByIndex(x - 1, y);
+        //            if (left != null)
+        //                MapNodes[index].AddNeighbour(left);
+        //        }
+        //    }
+        //}
 
         public Node GetNodeByIndex(int x, int y)
         {
@@ -122,7 +156,7 @@ namespace BomberMan2D.Prefabs
 
             int index = y  * (columns - 1) + x ;
 
-            return mapNodes[index];
+            return MapNodes[index];
         }
 
         private void ReadFromFile(string csvFileName)
@@ -133,8 +167,10 @@ namespace BomberMan2D.Prefabs
             foreach (string t1 in lines)
             {
                 string[] values = t1.Trim().Split(',', ' ');
+
                 if (columns == 0)
                     columns = values.Length;
+
                 if (firstTimeIteration)
                 {
                     //represent the insertion of two rows
@@ -153,12 +189,12 @@ namespace BomberMan2D.Prefabs
                     string currentVal = values[i].Trim();
                     bool success = int.TryParse(currentVal, out value);
                     if (success)
-                        cells.Add(value);
+                    cells.Add(value);
                 }
             }
         }
 
-        public static bool GetIndex(bool explosion, int x, int y) // for explosion spawn
+        public static bool GetIndexExplosion(bool explosion, int x, int y) // for explosion spawn
         {
             int index = y * (columns - 1) + x ;
 
