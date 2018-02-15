@@ -10,15 +10,17 @@ using BehaviourEngine.Utils;
 
 namespace BomberMan2D.Prefabs
 {
-    public class PowerUp : GameObject, IPowerup
+    public abstract class PowerUp : GameObject
     {
-        public PowerUpType powerUpType;
-        private List<float> speedValues = new List<float>();
+       // public PowerUpType powerUpType;
+        //private List<float> speedValues = new List<float>();
 
         private Rigidbody2D rigidBody;
         public string TextureName;
 
-        public PowerUp()
+     //   public PowerUpType PowerUpType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        protected PowerUp()
         {
             #region LayerMask
             this.Layer = (uint)CollisionLayer.Powerup;
@@ -38,10 +40,10 @@ namespace BomberMan2D.Prefabs
             rigidBody.IsGravityAffected = false;
             AddComponent(rigidBody);
 
-            speedValues = GetRandomFloats(5, 1.5f, 3.4f);
+           // speedValues = GetRandomFloats(5, 1.5f, 3.4f);
         }
 
-        private void OnTriggerEnter(Collider2D other)
+        protected virtual void OnTriggerEnter(Collider2D other)
         {
             if(other.Owner is Bomberman)
             {
@@ -49,18 +51,9 @@ namespace BomberMan2D.Prefabs
             }
         }
 
-        public void OnRecycle()
-        {
-            this.Active = false;
-            rigidBody.Velocity = Vector2.Zero;
-        }
+        public abstract void OnRecycle();
 
-        public void ApplyPowerUp(IPowerupable powerUp, PowerUpType type)
-        {
-            powerUp.ApplyEffect();
-        }
-
-        private List<float> GetRandomFloats(int size, float min, float max)
+        protected List<float> GetRandomFloats(int size, float min, float max)
         {
             List<float> floatList = new List<float>();
 

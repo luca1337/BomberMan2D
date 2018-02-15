@@ -126,13 +126,13 @@ namespace BomberMan2D.Prefabs
 
         private void OnTriggerEnter(Collider2D other)
         {
-            if(other.Owner is IPowerup)
+            if (other.Owner is IPowerup)
             {
                 powerup = other.Owner as IPowerup;
                 powerup.ApplyPowerUp(this, pType);
             }
 
-            if(other.Owner is AI)
+            if (other.Owner is AI)
             {
                 Console.WriteLine("Collided With AI");
             }
@@ -149,19 +149,6 @@ namespace BomberMan2D.Prefabs
                 x.Value.Show = !enable;
                 x.Value.Stop = !enable;
             });
-        }
-
-        public void ApplyEffect()
-        {
-            pType = (powerup as PowerUp).powerUpType;
-            if (pType == PowerUpType.PW_BOMB) { Console.WriteLine("Bomb Powerup"); }
-            else if (pType == PowerUpType.PW_BOMB_PASS) { Console.WriteLine("Bombpass Powerup"); }
-            else if (pType == PowerUpType.PW_DETONATOR) { Console.WriteLine("Detonator Powerup"); }
-            else if (pType == PowerUpType.PW_FLAME) { Console.WriteLine("Flame Powerup"); }
-            else if (pType == PowerUpType.PW_FLAME_PASS) { Console.WriteLine("Flamepass Powerup"); }
-            else if (pType == PowerUpType.PW_MYSTERY) { Console.WriteLine("Mystery Powerup"); }
-            else if (pType == PowerUpType.PW_SPEED) { Console.WriteLine("Speed Powerup"); }
-            else if (pType == PowerUpType.PW_WALL_PASS) { Console.WriteLine("Wallpass Powerup"); }
         }
 
         private class StateDrop : IState

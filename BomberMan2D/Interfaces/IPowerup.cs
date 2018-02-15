@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BehaviourEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace BomberMan2D
 {
     public interface IPowerup
     {
-        void ApplyPowerUp(IPowerupable powerUp, PowerUpType type);
+        void ApplyPowerUp(GameObject gameObject, PowerUpType type);
+        PowerUpType PowerUpType { get; set; }
     }
 }

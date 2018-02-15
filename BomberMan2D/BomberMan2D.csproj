@@ -21,6 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -30,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="aiv-fast2d, Version=1.0.6336.29264, Culture=neutral, processorArchitecture=MSIL">
@@ -82,6 +85,7 @@
     <Compile Include="Prefabs\BomberMan.cs" />
     <Compile Include="Prefabs\Map.cs" />
     <Compile Include="Prefabs\PowerUp.cs" />
+    <Compile Include="Prefabs\SpeedPow.cs" />
     <Compile Include="Prefabs\TargetPoint.cs" />
     <Compile Include="Prefabs\Tile.cs" />
     <Compile Include="Main\Program.cs" />

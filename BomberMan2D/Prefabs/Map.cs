@@ -22,6 +22,7 @@ namespace BomberMan2D.Prefabs
         private static List<Vector2> enemySpawnPoints = new List<Vector2>();
         private bool firstTimeIteration;
 
+
         public Map(string fileName)
         {
             firstTimeIteration = true;
