@@ -49,7 +49,7 @@ namespace BomberMan2D.Prefabs
 
                 IPowerup p = Pool<IPowerup>.GetInstance(x =>
                 {
-                    x.PowerUpType = (PowerUpType.PW_SPEED);
+                    x.PowerUpType = (PowerUpType.PW_BOMB);
                     x.SetPosition(this.Transform.Position);
                 });
                     

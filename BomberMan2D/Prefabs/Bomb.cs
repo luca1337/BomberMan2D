@@ -19,7 +19,7 @@ namespace BomberMan2D
         //Property
         public List<Explosion> explosionList = new List<Explosion>();
         public bool Exploding { get; private set; }
-        public bool IsBig;
+        public  bool IsBig;
 
         //Private Field
         private int bigExplosion               = 9;
@@ -53,7 +53,50 @@ namespace BomberMan2D
 
             #endregion
 
-            ChooseBomb();
+            for (int i = 0; i < bigExplosion; i++)
+            {
+                Explosion toAdd = Pool<Explosion>.GetInstance(x => x.Active = false);
+                explosionList.Add(toAdd);
+            }
+            // ChooseBomb();
+        }
+
+        public  List<Vector2> GetAdjacentLocation(Vector2 from)
+        {
+            List<Vector2> adjacentLocation = new List<Vector2>();
+
+            if (Map.GetIndexExplosion(true, (int)from.X, (int)from.Y))
+                adjacentLocation.Add(new Vector2(from.X, from.Y));
+
+            if (Map.GetIndexExplosion(true, (int)from.X - 1, (int)from.Y))
+                adjacentLocation.Add(new Vector2(from.X - 1, from.Y));
+
+            if (Map.GetIndexExplosion(true, (int)from.X, (int)from.Y - 1))
+                adjacentLocation.Add(new Vector2(from.X, from.Y - 1));
+
+            if (Map.GetIndexExplosion(true, (int)from.X + 1, (int)from.Y))
+                adjacentLocation.Add(new Vector2(from.X + 1, from.Y));
+
+            if (Map.GetIndexExplosion(true, (int)from.X, (int)from.Y + 1))
+                adjacentLocation.Add(new Vector2(from.X, from.Y + 1));
+
+
+            if (IsBig)
+            {
+                if (Map.GetIndexExplosion(true, (int)from.X - 2, (int)from.Y) && Map.GetIndexExplosion(true, (int)from.X - 1, (int)from.Y))
+                    adjacentLocation.Add(new Vector2(from.X - 2, from.Y));
+
+                if (Map.GetIndexExplosion(true, (int)from.X, (int)from.Y - 2) && Map.GetIndexExplosion(true, (int)from.X, (int)from.Y - 1))
+                    adjacentLocation.Add(new Vector2(from.X, from.Y - 2));
+
+                if (Map.GetIndexExplosion(true, (int)from.X + 2, (int)from.Y) && Map.GetIndexExplosion(true, (int)from.X + 1, (int)from.Y))
+                    adjacentLocation.Add(new Vector2(from.X + 2, from.Y));
+
+                if (Map.GetIndexExplosion(true, (int)from.X, (int)from.Y + 2) && Map.GetIndexExplosion(true, (int)from.X, (int)from.Y + 1))
+                    adjacentLocation.Add(new Vector2(from.X, from.Y + 2));
+            }
+
+            return adjacentLocation;
         }
 
         private void ChooseBomb()
@@ -91,28 +134,6 @@ namespace BomberMan2D
             }
         }
 
-        public static List<Vector2> GetAdjacentLocation(Vector2 from)
-        {
-            List<Vector2> adjacentLocation = new List<Vector2>();
-
-            if (Map.GetIndexExplosion(true, (int)from.X, (int)from.Y))
-                adjacentLocation.Add(new Vector2(from.X, from.Y));
-
-            if (Map.GetIndexExplosion(true, (int)from.X - 1, (int)from.Y))
-                adjacentLocation.Add(new Vector2(from.X - 1, from.Y));
-
-            if (Map.GetIndexExplosion(true, (int)from.X, (int)from.Y - 1))
-                adjacentLocation.Add(new Vector2(from.X, from.Y - 1));
-
-            if (Map.GetIndexExplosion(true, (int)from.X + 1, (int)from.Y))
-                adjacentLocation.Add(new Vector2(from.X + 1, from.Y));
-
-            if (Map.GetIndexExplosion(true, (int)from.X, (int)from.Y + 1))
-                adjacentLocation.Add(new Vector2(from.X, from.Y + 1));
-
-            return adjacentLocation;
-        }
-
         private class StateExplode : IState
         {
             public StateWait Next { get; set; }
@@ -139,7 +160,7 @@ namespace BomberMan2D
             {
                 if (owner.Exploding)
                 {
-                    owner.locations = GetAdjacentLocation(owner.Transform.Position);
+                    owner.locations = owner.GetAdjacentLocation(owner.Transform.Position);
 
                     owner.GetComponent<AnimationRenderer>().Enabled = false;
 
