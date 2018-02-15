@@ -26,6 +26,7 @@ namespace BomberMan2D.Prefabs
             this.Layer = (uint)CollisionLayer.Powerup;
             #endregion
 
+            texture = FlyWeight.Get("Speed_PW");
             SpriteRenderer renderer = new SpriteRenderer(texture);
             renderer.RenderOffset = (int)RenderLayer.Powerup;
             AddComponent(renderer);
@@ -42,13 +43,7 @@ namespace BomberMan2D.Prefabs
            // speedValues = GetRandomFloats(5, 1.5f, 3.4f);
         }
 
-        protected virtual void OnTriggerEnter(Collider2D other)
-        {
-            if(other.Owner is Bomberman)
-            {
-                Pool<PowerUp>.RecycleInstance(this, p => p.OnRecycle());
-            }
-        }
+        protected abstract void OnTriggerEnter(Collider2D other);
 
         public abstract void OnRecycle();
 
