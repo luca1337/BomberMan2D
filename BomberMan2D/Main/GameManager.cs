@@ -88,10 +88,13 @@ namespace BomberMan2D.Main
 
         private static void SetupObjectPools()
         {
-            Pool<PowerUp>.Register(() => new PowerUp(), 100);
             Pool<Bomb>.Register(() => new Bomb(), 100);
             Pool<Explosion>.Register(() => new Explosion(), 100);
             Pool<AI>.Register(() => new AI(), 100);
+
+            //powerups
+            Pool<IPowerup>.Register(() => new SpeedPow(), 50);
+
         }
 
         private static void SetupSounds()

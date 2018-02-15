@@ -45,15 +45,15 @@ namespace BomberMan2D.Prefabs
 
                 LevelManager.CurrentMap.GenerateNeighborNode();
 
+                int randomPw = RandomManager.Instance.Random.Next(0, Enum.GetNames(typeof(PowerUpType)).Length);
 
-                PowerUp p = Pool<PowerUp>.GetInstance(x =>
+                IPowerup p = Pool<IPowerup>.GetInstance(x =>
                 {
-                    x.powerUpType = PowerUpType.PW_WALL_PASS;
-                    x.GetComponent<SpriteRenderer>().SetTexture("Wallpass_PW");
-                    x.Transform.Position = this.Transform.Position;
+                    x.PowerUpType =(PowerUpType)randomPw;
+                    x.SetPosition(this.Transform.Position);
                 });
                     
-                GameObject.Spawn(p);
+                GameObject.Spawn(p as GameObject);
             }
         }
     }

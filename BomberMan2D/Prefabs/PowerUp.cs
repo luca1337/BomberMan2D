@@ -16,7 +16,7 @@ namespace BomberMan2D.Prefabs
         //private List<float> speedValues = new List<float>();
 
         private Rigidbody2D rigidBody;
-        public string TextureName;
+        protected Texture texture;
 
      //   public PowerUpType PowerUpType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -26,8 +26,7 @@ namespace BomberMan2D.Prefabs
             this.Layer = (uint)CollisionLayer.Powerup;
             #endregion
 
-            TextureName = "Speed_PW";
-            SpriteRenderer renderer = new SpriteRenderer(FlyWeight.Get(TextureName));
+            SpriteRenderer renderer = new SpriteRenderer(texture);
             renderer.RenderOffset = (int)RenderLayer.Powerup;
             AddComponent(renderer);
 

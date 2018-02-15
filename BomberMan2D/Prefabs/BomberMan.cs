@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BomberMan2D.Prefabs
 {
-    public class Bomberman : GameObject, IPowerupable, IWaypoint
+    public class Bomberman : GameObject, IWaypoint
     {
         #region Animations
         private Dictionary<AnimationType, AnimationRenderer> playerAnimations = new Dictionary<AnimationType, AnimationRenderer>();
