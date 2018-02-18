@@ -47,10 +47,10 @@ namespace BomberMan2D.Prefabs
 
                 int randomPw = RandomManager.Instance.Random.Next(0, Enum.GetNames(typeof(PowerUpType)).Length);
 
-                IPowerup p = Pool<IPowerup>.GetInstance(x =>
+                IPowerup p = Pool<IPowerup>.GetInstance(item =>
                 {
-                    x.PowerUpType = (PowerUpType.PW_SPEED);
-                    x.SetPosition(this.Transform.Position);
+                    item.PowerUpType = PowerUpType.PW_SPEED;
+                    item.SetPosition(Transform.Position);
                 });
                     
                 GameObject.Spawn(p as GameObject);

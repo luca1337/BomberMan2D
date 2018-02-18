@@ -12,13 +12,8 @@ namespace BomberMan2D.Prefabs
 {
     public abstract class PowerUp : GameObject
     {
-       // public PowerUpType powerUpType;
-        //private List<float> speedValues = new List<float>();
-
         private Rigidbody2D rigidBody;
         protected Texture texture;
-
-     //   public PowerUpType PowerUpType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         protected PowerUp()
         {
@@ -39,8 +34,6 @@ namespace BomberMan2D.Prefabs
             rigidBody = new Rigidbody2D();
             rigidBody.IsGravityAffected = false;
             AddComponent(rigidBody);
-
-           // speedValues = GetRandomFloats(5, 1.5f, 3.4f);
         }
 
         protected abstract void OnTriggerEnter(Collider2D other);
