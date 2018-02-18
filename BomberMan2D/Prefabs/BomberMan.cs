@@ -135,7 +135,7 @@ namespace BomberMan2D.Prefabs
             if (other.Owner is IPowerup)
             {
                 powerup = other.Owner as IPowerup;
-                powerup.ApplyPowerUp(this, pType);
+                powerup.ApplyPowerUp(this);
             }
 
             if (other.Owner is AI)

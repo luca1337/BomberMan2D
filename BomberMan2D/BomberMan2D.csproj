@@ -84,7 +84,6 @@
     <Compile Include="Components\FSMUpdater.cs" />
     <Compile Include="Main\Game.cs" />
     <Compile Include="Interfaces\IPowerup.cs" />
-    <Compile Include="Interfaces\IPowerupable.cs" />
     <Compile Include="Enums\PowerUpType.cs" />
     <Compile Include="Prefabs\BomberMan.cs" />
     <Compile Include="Prefabs\Map.cs" />

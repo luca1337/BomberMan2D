@@ -3,23 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Aiv.Fast2D;
 using BehaviourEngine;
 using OpenTK;
 
 namespace BomberMan2D.Prefabs
 {
-    public class BombPow : PowerUp, IPowerup
+    public class BombPow : GameObject, IPowerup
     {
-        public PowerUpType PowerUpType { get ; set ; }
+        private Rigidbody2D rigidBody;
 
         public BombPow() : base()
         {
-            this.texture = FlyWeight.Get("Bomb_PW");
-            PowerUpType = PowerUpType.PW_BOMB;
+            #region LayerMask
+            this.Layer = (uint)CollisionLayer.Powerup;
+            #endregion
+
+            SpriteRenderer renderer = new SpriteRenderer(FlyWeight.Get("Bomb_PW"));
+            renderer.RenderOffset = (int)RenderLayer.Powerup;
+            AddComponent(renderer);
+
+            BoxCollider2D collider2D = new BoxCollider2D(new Vector2(1, 1));
+            collider2D.CollisionMode = CollisionMode.Trigger;
+            collider2D.TriggerEnter += OnTriggerEnter; ;
+            AddComponent(collider2D);
+
+            rigidBody = new Rigidbody2D();
+            rigidBody.IsGravityAffected = false;
+            AddComponent(rigidBody);
         }
-        public void ApplyPowerUp(GameObject gameObject, PowerUpType type)
+
+        private void OnTriggerEnter(Collider2D other)
         {
-            this.PowerUpType = type;
+            if (other.Owner is Bomberman)
+            {
+                OnRecycle();
+            }
+        }
+
+        public void ApplyPowerUp(GameObject gameObject)
+        {
             if (gameObject is Bomberman)
                 (gameObject as Bomberman).CurrentExplosion = 1;
         }

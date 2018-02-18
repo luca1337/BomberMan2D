@@ -8,30 +8,30 @@ using System.Threading.Tasks;
 
 namespace BomberMan2D
 {
-    public static class GlobalFactory
+    public static class GlobalFactory<T>
     {
-        private static Dictionary<Type, Pool> pools;
+        private static Dictionary<Type, Pool<T>> pools;
         static GlobalFactory()
         {
-            pools = new Dictionary<Type, Pool>();
+            pools = new Dictionary<Type, Pool<T>>();
         }
 
-        public static void RegisterPool(Type type, Func<IPoolable> allocator)
+        public static void RegisterPool(Type type, Func<T> allocator)
         {
             if (pools.ContainsKey(type))
                 throw new Exception("Pool already registered");
 
-            pools.Add(type, new Pool(allocator));
+            pools.Add(type, new Pool<T>(allocator));
         }
 
-        public static IPoolable Get(Type type)
+        public static T Get(Type type)
         {
             if (!pools.ContainsKey(type))
                 throw new Exception("Pool isn't registered");
             return pools[type].Get();
         }
 
-        public static void Recycle(Type type, IPoolable toRecycle)
+        public static void Recycle(Type type, T toRecycle)
         {
             if (!pools.ContainsKey(type))
                 throw new Exception("Pool isn't registered");
@@ -39,34 +39,33 @@ namespace BomberMan2D
             pools[type].Recycle(toRecycle);
         }
 
-        private class Pool
+        private class Pool<T>
         {
-            private Queue<IPoolable> instances;
-            private Func<IPoolable> allocator;
-            public Pool(Func<IPoolable> allocator)
+            private Queue<T> instances;
+            private Func<T> allocator;
+            public Pool(Func<T> allocator)
             {
-                instances = new Queue<IPoolable>();
+                instances = new Queue<T>();
                 this.allocator = allocator;
             }
 
-            public IPoolable Get()
+            public T Get(Action<T> onGet = null)
             {
-                IPoolable toReturn;
-                if (instances.Count == 0)
-                {
-                    toReturn = allocator.Invoke();
-                }
-                else
-                {
-                    toReturn = instances.Dequeue();
-                }
-                toReturn.OnGet();
+                if (instances == null)
+                    throw new Exception("Pool is not registered");
+
+                T toReturn = instances.Count == 0 ? allocator.Invoke() : instances.Dequeue();
+
+                onGet?.Invoke(toReturn);
                 return toReturn;
             }
 
-            public void Recycle(IPoolable toRecycle)
+            public void Recycle(T toRecycle, Action<T> onRecycle = null)
             {
-                toRecycle.OnRecycle();
+                if (instances == null)
+                    throw new Exception("Pool is not registered");
+
+                onRecycle?.Invoke(toRecycle);
                 instances.Enqueue(toRecycle);
             }
         }

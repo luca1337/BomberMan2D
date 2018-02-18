@@ -1,4 +1,5 @@
-﻿using BomberMan2D.Prefabs;
+﻿using BomberMan2D.Interfaces;
+using BomberMan2D.Prefabs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,8 @@ namespace BomberMan2D
         static PowerUpFactory()
         {
             //init all pools and add them to the dictionary
-            GlobalFactory.RegisterPool(typeof(SpeedPow), () => new SpeedPow());
-            GlobalFactory.RegisterPool(typeof(BombPow), () => new BombPow());
+            GlobalFactory<SpeedPow>.RegisterPool(typeof(SpeedPow), () => new SpeedPow());
+            GlobalFactory<BombPow>.RegisterPool(typeof(BombPow), () => new BombPow());
         }
 
         public static IPowerup Get(PowerUpType type)
@@ -22,10 +23,10 @@ namespace BomberMan2D
             switch (type)
             {
                 case PowerUpType.PW_SPEED:
-                    toReturn = GlobalFactory.Get(typeof(SpeedPow)) as IPowerup;
+                    toReturn = GlobalFactory<SpeedPow>.Get(typeof(SpeedPow)) as IPowerup;
                     break;
                 case PowerUpType.PW_BOMB:
-                    toReturn = GlobalFactory.Get(typeof(BombPow)) as IPowerup;
+                    toReturn = GlobalFactory<BombPow>.Get(typeof(BombPow)) as IPowerup;
                     break;
                 case PowerUpType.PW_BOMB_PASS:
                     break;
