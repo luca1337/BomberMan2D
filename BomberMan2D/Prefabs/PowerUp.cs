@@ -10,7 +10,7 @@ using BehaviourEngine.Utils;
 
 namespace BomberMan2D.Prefabs
 {
-    public abstract class PowerUp : GameObject
+    public class PowerUp : GameObject
     {
         private Rigidbody2D rigidBody;
         protected Texture texture;
@@ -36,20 +36,9 @@ namespace BomberMan2D.Prefabs
             AddComponent(rigidBody);
         }
 
-        protected abstract void OnTriggerEnter(Collider2D other);
-
-        public abstract void OnRecycle();
-
-        protected List<float> GetRandomFloats(int size, float min, float max)
+        protected virtual void OnTriggerEnter(Collider2D other)
         {
-            List<float> floatList = new List<float>();
 
-            for (int i = 0; i < size; i++)
-            {
-                floatList.Add(Utils.GenerateRandomFloatInRange(min, max));
-            }
-
-            return floatList;
         }
     }
 }

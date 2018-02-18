@@ -65,7 +65,10 @@
     <Compile Include="AI\AStar.cs" />
     <Compile Include="Components\BoxRenderer.cs" />
     <Compile Include="Components\EnemySpawner.cs" />
+    <Compile Include="GlobalFactory.cs" />
+    <Compile Include="Interfaces\IPoolable.cs" />
     <Compile Include="Main\GameManager.cs" />
+    <Compile Include="PowerUpFactory.cs" />
     <Compile Include="Prefabs\BombPow.cs" />
     <Compile Include="Prefabs\OnScreenDisplay.cs" />
     <Compile Include="Prefabs\Bomb.cs" />

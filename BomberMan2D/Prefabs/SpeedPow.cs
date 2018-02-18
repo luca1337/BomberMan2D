@@ -25,20 +25,16 @@ namespace BomberMan2D.Prefabs
             (gameObject as Bomberman).GetComponent<CharacterController>().Speed = 3.0f;
         }
 
-        public override void OnRecycle()
+        public void OnGet()
         {
-            this.Active = false;
+            this.Active = true;
+        }
+
+        public void OnRecycle()
+        {
+            this.Active ^= this.Active;
             this.Transform.Position = Vector2.Zero;
         }
-
-        protected override void OnTriggerEnter(Collider2D other)
-        {
-            if (other.Owner is Bomberman)
-            {
-                Pool<IPowerup>.RecycleInstance(this, p => (p as SpeedPow).OnRecycle());
-            }
-        }
-
         public void SetPosition(Vector2 position)
         {
             this.Transform.Position = position;

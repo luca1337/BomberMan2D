@@ -93,8 +93,7 @@ namespace BomberMan2D.Main
             Pool<AI>.Register(() => new AI(), 100);
 
             //powerups
-           // Pool<IPowerup>.Register(() => new SpeedPow(), 50);
-            Pool<IPowerup>.Register(() => new BombPow(), 50);
+            //Pool<PowerUp>.Register(() => new PowerUp(), 50);
 
         }
 

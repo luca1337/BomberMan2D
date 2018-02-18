@@ -24,24 +24,20 @@ namespace BomberMan2D.Prefabs
                 (gameObject as Bomberman).CurrentExplosion = 1;
         }
 
-        public override void OnRecycle()
-        {
-            this.Active = false;
-            this.Transform.Position = Vector2.Zero;
-        }
-
         public void SetPosition(Vector2 position)
         {
             this.Transform.Position = position;
         }
 
-        protected override void OnTriggerEnter(Collider2D other)
+        public void OnGet()
         {
-            if (other.Owner is Bomberman)
-            {
-                Pool<IPowerup>.RecycleInstance(this, p => (p as BombPow).OnRecycle());
-            }
-            Console.WriteLine("isActive");
+            this.Active = true;
+        }
+
+        public void OnRecycle()
+        {
+            this.Active = false;
+            this.Transform.Position = Vector2.Zero;
         }
     }
 }

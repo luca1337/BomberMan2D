@@ -45,13 +45,14 @@ namespace BomberMan2D.Prefabs
 
                 LevelManager.CurrentMap.GenerateNeighborNode();
 
+                //this is the random to generate our powerups..
                 int randomPw = RandomManager.Instance.Random.Next(0, Enum.GetNames(typeof(PowerUpType)).Length);
 
-                IPowerup p = Pool<IPowerup>.GetInstance(x =>
-                {
-                    x.PowerUpType = (PowerUpType.PW_BOMB);
-                    x.SetPosition(this.Transform.Position);
-                });
+                //once the random is thrown we can generate it
+                //at the moment we only have 2 active powerups so 
+                //we make some test using the first one on the enum
+                IPowerup p = PowerUpFactory.Get(PowerUpType.PW_BOMB);
+                p.SetPosition(this.Transform.Position);
                     
                 GameObject.Spawn(p as GameObject);
             }

@@ -1,4 +1,5 @@
 ﻿using BehaviourEngine;
+using BomberMan2D.Interfaces;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,9 @@ using System.Threading.Tasks;
 
 namespace BomberMan2D
 {
-    public interface IPowerup
+    public interface IPowerup : IPoolable
     {
         void ApplyPowerUp(GameObject gameObject, PowerUpType type);
         void SetPosition(Vector2 position);
-        PowerUpType PowerUpType { get; set; }
     }
 }
