@@ -38,6 +38,12 @@ namespace BomberMan2D.Prefabs
         private PowerUpType pType { get; set; }
         #endregion
 
+        public int CurrentExplosion = 0;
+
+        private int littleExp = 0;
+        private int bigExp    = 1;
+
+
         public Bomberman() : base("BomberMan")
         {
             #region LayerMask
@@ -177,8 +183,6 @@ namespace BomberMan2D.Prefabs
             {
                 if (Input.IsKeyDown(KeyCode.Space) && !timer.IsActive)
                 {
-                    //AudioManager.PlayClip(AudioType.SOUND_DROP);
-
                     Bomb bomb = Pool<Bomb>.GetInstance(x =>
                     {
                         x.Active = true;
@@ -186,6 +190,12 @@ namespace BomberMan2D.Prefabs
                         // Maybe this is the way for spawn in the middle of the cell
                         x.Transform.Position = new Vector2((int)(owner.Transform.Position.X + 0.5f), (int)(owner.Transform.Position.Y + 0.5f));
                     });
+                    //AudioManager.PlayClip(AudioType.SOUND_DROP);
+                    if (owner.CurrentExplosion == 0)
+                        bomb.IsBig = false;
+                    else
+                        bomb.IsBig = true;
+              
 
                     if(firstTimeSpawn)
                     {

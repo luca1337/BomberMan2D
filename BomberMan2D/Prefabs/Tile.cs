@@ -17,7 +17,7 @@ namespace BomberMan2D.Prefabs
 
             this.Transform.Position = position;
             SpriteRenderer Renderer = new SpriteRenderer(FlyWeight.Get(textureName));
-            Renderer.RenderOffset = (int)RenderLayer.Tile;
+            Renderer.RenderOffset   = (int)RenderLayer.Tile;
             AddComponent(Renderer);
 
             if (solidBlock)
@@ -47,10 +47,10 @@ namespace BomberMan2D.Prefabs
 
                 int randomPw = RandomManager.Instance.Random.Next(0, Enum.GetNames(typeof(PowerUpType)).Length);
 
-                IPowerup p = Pool<IPowerup>.GetInstance(item =>
+                IPowerup p = Pool<IPowerup>.GetInstance(x =>
                 {
-                    item.PowerUpType = PowerUpType.PW_SPEED;
-                    item.SetPosition(Transform.Position);
+                    x.PowerUpType = (PowerUpType.PW_BOMB);
+                    x.SetPosition(this.Transform.Position);
                 });
                     
                 GameObject.Spawn(p as GameObject);
