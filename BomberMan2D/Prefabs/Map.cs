@@ -46,7 +46,7 @@ namespace BomberMan2D.Prefabs
                 }
                 else if (cells[iterator] == 2)
                 {
-                    Spawn(new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))), "Obstacle", true));
+                    Spawn(new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))), "Obstacle", false));
                 }
                 else if (cells[iterator] == 5)
                 {

@@ -13,21 +13,22 @@ namespace BomberMan2D.Prefabs
     {
         public Tile(Vector2 position, string textureName, bool solidBlock)
         {
-            this.Layer = (uint)CollisionLayer.Wall;
+            if(solidBlock)
+                this.Layer = (uint)CollisionLayer.SolidWall;
+            else
+                this.Layer = (uint)CollisionLayer.Wall;
+            
 
             this.Transform.Position = position;
             SpriteRenderer Renderer = new SpriteRenderer(FlyWeight.Get(textureName));
             Renderer.RenderOffset   = (int)RenderLayer.Tile;
             AddComponent(Renderer);
 
-            if (solidBlock)
-            {
-                BoxCollider2D collider = new BoxCollider2D(new Vector2(1, 1));
-                collider.TriggerEnter += OnTriggerEnter;
-                AddComponent(collider);
+            BoxCollider2D collider = new BoxCollider2D(new Vector2(1, 1));
+            collider.TriggerEnter += OnTriggerEnter;
+            AddComponent(collider);
 
-                AddComponent(new BoxCollider2DRenderer(new Vector4(-1f, 1f, -1f, 0f)));
-            }
+            AddComponent(new BoxCollider2DRenderer(new Vector4(-1f, 1f, -1f, 0f)));
         }
 
         private void OnTriggerEnter(Collider2D other)
