@@ -57,8 +57,10 @@ namespace BomberMan2D.Main
             //do we want physics?
             Physics.Instance.Gravity *= 2f;
 
-            LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.Wall + (uint)CollisionLayer.Powerup);
-            LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.Wall);
+            LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.SolidWall | (uint)CollisionLayer.Powerup);
+            LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.SolidWall);
+
+
         }
         private static void SetupLevels()
         {
@@ -160,7 +162,6 @@ namespace BomberMan2D.Main
 
             public void OnStateExit()
             {
-                throw new NotImplementedException();
             }
 
             public IState OnStateUpdate()

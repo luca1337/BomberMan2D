@@ -87,7 +87,6 @@
     <Compile Include="Enums\PowerUpType.cs" />
     <Compile Include="Prefabs\BomberMan.cs" />
     <Compile Include="Prefabs\Map.cs" />
-    <Compile Include="Prefabs\PowerUp.cs" />
     <Compile Include="Prefabs\SpeedPow.cs" />
     <Compile Include="Prefabs\TargetPoint.cs" />
     <Compile Include="Prefabs\Tile.cs" />
@@ -96,6 +95,7 @@
     <Compile Include="Components\Text2D.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="WallPass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ballon.dat">

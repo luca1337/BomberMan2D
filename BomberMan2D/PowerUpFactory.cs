@@ -15,6 +15,7 @@ namespace BomberMan2D
             //init all pools and add them to the dictionary
             GlobalFactory<SpeedPow>.RegisterPool(typeof(SpeedPow), () => new SpeedPow());
             GlobalFactory<BombPow>.RegisterPool(typeof(BombPow), () => new BombPow());
+            GlobalFactory<WallPass>.RegisterPool(typeof(WallPass), () => new WallPass());
         }
 
         public static IPowerup Get(PowerUpType type)
@@ -35,6 +36,7 @@ namespace BomberMan2D
                 case PowerUpType.PW_FLAME_PASS:
                     break;
                 case PowerUpType.PW_WALL_PASS:
+                    toReturn = GlobalFactory<WallPass>.Get(typeof(WallPass)) as IPowerup;
                     break;
                 case PowerUpType.PW_MYSTERY:
                     break;

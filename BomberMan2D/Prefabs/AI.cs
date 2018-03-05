@@ -210,7 +210,7 @@ namespace BomberMan2D.Prefabs
             private AI owner;
             private GameObject target;
             private IState patrol;
-
+            private  Node pos;
             public PatrolState(AI owner)
             {
                 this.owner = owner;
@@ -227,8 +227,18 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                if (owner.IsInRadius(out target))
+                //TODO : to fix
+                if (target is Bomberman)
                 {
+                   pos  = LevelManager.CurrentMap.GetNodeByIndex((int)target.Transform.Position.X, (int)target.Transform.Position.Y);
+                    if (pos == null)
+                        Console.WriteLine(" Null");
+                }
+                  
+               
+                if (owner.IsInRadius(out target) && pos != null )
+                {
+
                     if (target is Bomberman)
                     {
                         owner.CurrentTarget = target as IWaypoint;

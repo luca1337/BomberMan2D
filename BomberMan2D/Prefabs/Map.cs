@@ -13,6 +13,8 @@ namespace BomberMan2D.Prefabs
     public class Map : GameObject, IMap
     {
         public Node[] MapNodes;
+        public List<Tile> WalkablePass;
+
         private int blockSize = 1;
         private static int rows;
         private static int columns;
@@ -25,6 +27,7 @@ namespace BomberMan2D.Prefabs
 
         public Map(string fileName)
         {
+            WalkablePass = new List<Tile>();
             firstTimeIteration = true;
             cells              = new List<int>();
             ReadFromFile(fileName);
@@ -46,7 +49,9 @@ namespace BomberMan2D.Prefabs
                 }
                 else if (cells[iterator] == 2)
                 {
-                    Spawn(new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))), "Obstacle", false));
+                    Tile walkable = new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))), "Obstacle", true);
+                    WalkablePass.Add(walkable);
+                    Spawn(walkable);
                 }
                 else if (cells[iterator] == 5)
                 {

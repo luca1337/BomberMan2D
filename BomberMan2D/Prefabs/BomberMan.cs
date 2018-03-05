@@ -143,6 +143,7 @@ namespace BomberMan2D.Prefabs
             {
                 Console.WriteLine("Collided With AI");
             }
+
         }
 
         private void EnableAnimation(AnimationType animationType, bool enable)
