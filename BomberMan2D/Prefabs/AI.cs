@@ -131,15 +131,21 @@ namespace BomberMan2D.Prefabs
 
         public bool IsInRadius(out GameObject target)
         {
-            float distance = ((Player as GameObject).Transform.Position - this.Transform.Position).Length;
+            target = null;
+
+
+            float distance = ((Player as Bomberman).Transform.Position - this.Transform.Position).Length;
+
+            if ((Player as Bomberman).IsBadIndex) return false;
+
+            Console.WriteLine();
 
             if (distance < radius)
             {
-                target = Player as GameObject;
+                target = Player as Bomberman;
                 return true;
             }
 
-            target = null;
             return false;
         }
 
@@ -228,15 +234,15 @@ namespace BomberMan2D.Prefabs
             public IState OnStateUpdate()
             {
                 //TODO : to fix
-                if (target is Bomberman)
+                /*if (target is Bomberman)
                 {
                    pos  = LevelManager.CurrentMap.GetNodeByIndex((int)target.Transform.Position.X, (int)target.Transform.Position.Y);
                     if (pos == null)
                         Console.WriteLine(" Null");
-                }
+                }*/
                   
                
-                if (owner.IsInRadius(out target) && pos != null )
+                if (owner.IsInRadius(out target))
                 {
 
                     if (target is Bomberman)

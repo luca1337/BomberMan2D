@@ -36,6 +36,22 @@ namespace BomberMan2D.Prefabs
         #region Powerups
         private IPowerup powerup { get; set; }
         private PowerUpType pType { get; set; }
+        public bool IsBadIndex
+        {
+            get
+            {
+                float PosX = this.Transform.Position.X + 0.5f;
+                float PosY = this.Transform.Position.Y;
+
+                int index = Map.GetLevelEnumeratedIndex((int)PosX, (int)PosY);
+
+                Console.WriteLine(index);
+
+                if (index == 2)
+                    return true;
+                return false;
+            }
+        }
         #endregion
 
         public int CurrentExplosion = 0;

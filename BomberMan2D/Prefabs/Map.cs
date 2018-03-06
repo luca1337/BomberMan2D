@@ -118,41 +118,6 @@ namespace BomberMan2D.Prefabs
             }
         }
 
-        //private void GenerateNeighborNode()
-        //{
-        //    // Here we move between the indexes
-        //    for (int y = 0; y < rows + 2; y++)
-        //    {
-        //        for (int x = 0; x < (columns - 1); x++)
-        //        {
-        //            int index = y * (columns - 1) + x;
-
-        //            if (MapNodes[index] == null)
-        //                continue;
-
-        //            // top
-        //            Node top = GetNodeByIndex(x, y - 1);
-        //            if (top != null)
-        //                MapNodes[index].AddNeighbour(top);
-
-        //            // right
-        //            Node right = GetNodeByIndex(x + 1, y);
-        //            if (right != null)
-        //                MapNodes[index].AddNeighbour(right);
-
-        //            // bottom
-        //            Node bottom = GetNodeByIndex(x, y + 1);
-        //            if (bottom != null)
-        //                MapNodes[index].AddNeighbour(bottom);
-
-        //            // left
-        //            Node left = GetNodeByIndex(x - 1, y);
-        //            if (left != null)
-        //                MapNodes[index].AddNeighbour(left);
-        //        }
-        //    }
-        //}
-
         public Node GetNodeByIndex(int x, int y)
         {
             if (x < 0 || x  > (columns - 1))
@@ -163,6 +128,13 @@ namespace BomberMan2D.Prefabs
             int index = y  * (columns - 1) + x ;
 
             return MapNodes[index];
+        }
+
+        public static int GetLevelEnumeratedIndex(int x, int y)
+        {
+            int index = y * (columns - 1) + x;
+
+            return cells[index];
         }
 
         private void ReadFromFile(string csvFileName)
@@ -191,9 +163,8 @@ namespace BomberMan2D.Prefabs
 
                 for (int i = 0; i < values.Length; i++)
                 {
-                    int value;
                     string currentVal = values[i].Trim();
-                    bool success = int.TryParse(currentVal, out value);
+                    bool success = int.TryParse(currentVal, out int value);
                     if (success)
                     cells.Add(value);
                 }
