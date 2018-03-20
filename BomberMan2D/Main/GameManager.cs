@@ -2,11 +2,13 @@
 using BehaviourEngine.Interfaces;
 using BomberMan2D.Components;
 using BomberMan2D.Prefabs;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace BomberMan2D.Main
 {
@@ -62,6 +64,7 @@ namespace BomberMan2D.Main
 
 
         }
+
         private static void SetupLevels()
         {
             GameObject.Spawn(new Map("Levels/Level00.csv"));
@@ -86,6 +89,7 @@ namespace BomberMan2D.Main
             FlyWeight.Add("Wallpass_PW", "Assets/WallpassPw.dat");
             FlyWeight.Add("Speed_PW", "Assets/SpeedPw.dat");
             FlyWeight.Add("Flame_PW", "Assets/FlamesPw.dat");
+            FlyWeight.Add("MainScreen", "Assets/mainscreen.dat");
         }
 
         private static void SetupObjectPools()
@@ -125,6 +129,9 @@ namespace BomberMan2D.Main
 
         private static void DeployAllGameObjects()
         {
+            //main menu
+            GameObject.Spawn(new Menu());
+
             //OSD
             GameObject.Spawn(new OnScreenDisplay());
 

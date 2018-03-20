@@ -27,7 +27,7 @@ namespace BomberMan2D.Prefabs
             collider.TriggerEnter += OnTriggerEnter;
             AddComponent(collider);
 
-            AddComponent(new BoxCollider2DRenderer(new Vector4(-1f, 1f, -1f, 0f)));
+            //AddComponent(new BoxCollider2DRenderer(new Vector4(-1f, 1f, -1f, 0f)));
         }
 
         private void OnTriggerEnter(Collider2D other)

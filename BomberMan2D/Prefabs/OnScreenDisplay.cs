@@ -20,9 +20,11 @@ namespace BomberMan2D
         public OnScreenDisplay() : base("GUI")
         {
             Score = 0;
-            text = new List<Text2D>();
-            text.Add(new Text2D("Font01", string.Format("Time {0}", 1), new Vector2(1, 0.5f), new Vector4(0f, 0f, 0f, 0f), 0.7f, new Camera()));
-            text.Add(new Text2D("Font01", Score.ToString(), new Vector2(BehaviourEngine.Graphics.Instance.Window.OrthoWidth / 2, 0.5f), new Vector4(0f, 0f, 0f, 0f), 0.7f, new Camera()));
+            text = new List<Text2D>
+            {
+                new Text2D("Font01", string.Format("Time {0}", 1), new Vector2(1, 0.5f), new Vector4(0f, 0f, 0f, 0f), 0.7f, new Camera()),
+                new Text2D("Font01", Score.ToString(), new Vector2(BehaviourEngine.Graphics.Instance.Window.OrthoWidth / 2, 0.5f), new Vector4(0f, 0f, 0f, 0f), 0.7f, new Camera())
+            };
 
             text.ToList().ForEach(x => AddComponent(x));
 

@@ -27,6 +27,11 @@ namespace BehaviourEngine.Test
             text.Camera = camera;
             this.message  = message;
         }
+
+        public void SetTextColor(Vector4 newColor)
+        {
+            text.SetTextColor(newColor);
+        }
   
         public virtual void Draw()
         {
@@ -36,7 +41,6 @@ namespace BehaviourEngine.Test
         public void Update()
         {
             text.UpdateText(message);
-            //Console.WriteLine(message);
         }
     }
 }

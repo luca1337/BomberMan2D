@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Aiv.Fast2D;
+using Aiv.Fast2D.Utils.TextureHelper;
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BehaviourEngine.Utils;

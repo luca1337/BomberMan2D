@@ -49,6 +49,8 @@ namespace BomberMan2D.Prefabs
             aiAnimation = new AnimationRenderer(FlyWeight.Get("AI"), ((int)(float)Math.Floor(18.5f)), 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false);
             AddComponent(aiAnimation);
 
+            aiAnimation.RenderOffset = (int)RenderLayer.AI;
+
             patrol = new PatrolState(this);
             idle = new StateIdle(this);
             chase = new ChaseState(this);
@@ -66,7 +68,7 @@ namespace BomberMan2D.Prefabs
             collider.TriggerEnter += OnTriggerEnter;
             AddComponent(collider);
 
-            AddComponent(new BoxCollider2DRenderer(new Vector4(-1f, -1f, 1f, 0f)));
+            //AddComponent(new BoxCollider2DRenderer(new Vector4(-1f, -1f, 1f, 0f)));
 
             AddComponent(new FSMUpdater(states));
         }
@@ -233,15 +235,6 @@ namespace BomberMan2D.Prefabs
 
             public IState OnStateUpdate()
             {
-                //TODO : to fix
-                /*if (target is Bomberman)
-                {
-                   pos  = LevelManager.CurrentMap.GetNodeByIndex((int)target.Transform.Position.X, (int)target.Transform.Position.Y);
-                    if (pos == null)
-                        Console.WriteLine(" Null");
-                }*/
-                  
-               
                 if (owner.IsInRadius(out target))
                 {
 

@@ -41,13 +41,11 @@ namespace BomberMan2D.Prefabs
             get
             {
                 float PosX = this.Transform.Position.X + 0.5f;
-                float PosY = this.Transform.Position.Y;
+                float PosY = this.Transform.Position.Y + 0.5f;
 
                 int index = Map.GetLevelEnumeratedIndex((int)PosX, (int)PosY);
 
-                Console.WriteLine(index);
-
-                if (index == 2)
+                if (index == 2) // Walkable wall index
                     return true;
                 return false;
             }
@@ -164,14 +162,14 @@ namespace BomberMan2D.Prefabs
 
         private void EnableAnimation(AnimationType animationType, bool enable)
         {
-            KeyValuePair<AnimationType, AnimationRenderer> first = playerAnimations.Single(x => x.Key == animationType);
+            KeyValuePair<AnimationType, AnimationRenderer> first = playerAnimations.Single(a => a.Key == animationType);
             first.Value.Show = enable; first.Value.Stop = !enable;
 
-            IEnumerable<KeyValuePair<AnimationType, AnimationRenderer>> second = playerAnimations.Where(x => x.Key != animationType);
-            second.ToList().ForEach(x =>
+            IEnumerable<KeyValuePair<AnimationType, AnimationRenderer>> second = playerAnimations.Where(a => a.Key != animationType);
+            second.ToList().ForEach(a =>
             {
-                x.Value.Show = !enable;
-                x.Value.Stop = !enable;
+                a.Value.Show = !enable;
+                a.Value.Stop = !enable;
             });
         }
 
