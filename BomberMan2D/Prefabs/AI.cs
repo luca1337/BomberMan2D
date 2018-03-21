@@ -70,7 +70,7 @@ namespace BomberMan2D.Prefabs
 
             //AddComponent(new BoxCollider2DRenderer(new Vector4(-1f, -1f, 1f, 0f)));
 
-            AddComponent(new FSMUpdater(states));
+            AddComponent(new FSMUpdater(states, currentState));
         }
 
         private void OnTriggerEnter(Collider2D other)

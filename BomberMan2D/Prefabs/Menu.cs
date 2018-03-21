@@ -41,6 +41,18 @@ namespace BomberMan2D.Prefabs
         {
             this.menuTexts = menuTexts;
         }
+        public IState ChangeScene(IState NextState, IState currentState)
+        {
+            if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.Space))
+            {
+                currentState.OnStateExit();
+                NextState.OnStateEnter();
+                return NextState;
+            }
+            else
+                return currentState;
+
+        }
 
         public void Update()
         {

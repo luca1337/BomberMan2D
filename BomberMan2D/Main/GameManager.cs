@@ -37,21 +37,30 @@ namespace BomberMan2D.Main
         public GameManager() : base("GameManager")
         {
             SetupState setupState = new SetupState(this);
-            LoopState loopState = new LoopState(this);
-            LoseState loseState = new LoseState(this);
-            WinState winState = new WinState(this);
+            MenuState menuState   = new MenuState(this);
+            LoopState loopState   = new LoopState(this);
             PauseState pauseState = new PauseState(this);
+            LoseState loseState   = new LoseState(this);
+            WinState winState     = new WinState(this);
 
-            setupState.Next = loopState;
-            loopState.NextWin = winState;
-            loopState.NextLose = loseState;
+            //Link State
+            setupState.Menu       = menuState;
+            menuState.Loop        = loopState;
+            loopState.NextWin     = winState;
+            loopState.NextLose    = loseState;
+            loopState.NextPause   = pauseState;
 
             setupState.OnStateEnter();
             currentState = setupState.OnStateUpdate();
 
-            states.Add(currentState);
+            states.Add(setupState);
+            states.Add(menuState);
+            states.Add(loopState);
+            states.Add(pauseState);
+            states.Add(winState);
+            states.Add(loseState);
 
-            AddComponent(new FSMUpdater(states));
+            AddComponent(new FSMUpdater(states, currentState));
         }
 
         private static void SetupCollisionsRulesAndPhysics()
@@ -61,14 +70,9 @@ namespace BomberMan2D.Main
 
             LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.SolidWall | (uint)CollisionLayer.Powerup);
             LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.SolidWall);
-
-
         }
 
-        private static void SetupLevels()
-        {
-            GameObject.Spawn(new Map("Levels/Level00.csv"));
-        }
+      
 
         private static void SetupTextures()
         {
@@ -127,28 +131,11 @@ namespace BomberMan2D.Main
             AudioManager.AddClip("Sounds/03_Stage_Theme.ogg", AudioType.SOUND_BACKGROUND);
         }
 
-        private static void DeployAllGameObjects()
-        {
-            //main menu
-            GameObject.Spawn(new Menu());
 
-            //OSD
-            GameObject.Spawn(new OnScreenDisplay());
-
-            //Player
-            Bomberman bomberMan = new Bomberman();
-            GameObject.Spawn(bomberMan, Map.GetPlayerSpawnPoint());
-
-            //AI
-            GameObject.Spawn(new EnemySpawner(bomberMan));
-
-            //TargetPoints
-            GameObject.Spawn(new TargetSpawner(5, 3.5f));
-        }
 
         private class SetupState : IState
         {
-            public LoopState Next { get; set; }
+            public MenuState Menu { get; set; }
             private GameManager owner { get; set; }
 
             public SetupState(GameObject owner)
@@ -161,10 +148,6 @@ namespace BomberMan2D.Main
                 GameManager.SetupCollisionsRulesAndPhysics();
                 GameManager.SetupTextures();
                 GameManager.SetupObjectPools();
-
-                GameManager.SetupLevels();
-
-                GameManager.DeployAllGameObjects();
             }
 
             public void OnStateExit()
@@ -173,15 +156,48 @@ namespace BomberMan2D.Main
 
             public IState OnStateUpdate()
             {
+                Menu.OnStateEnter();
+                return Menu;
               //  Node.ShowPath();
-                return this;
             }
         }
+
+        private class MenuState : IState
+        {
+            public LoopState Loop { get; set; }
+
+            private GameManager owner { get; set; }
+            private Menu mainMenu; 
+
+            public MenuState(GameObject owner)
+            {
+                this.owner = owner as GameManager;
+  
+            }
+
+            public void OnStateEnter()
+            {
+                mainMenu = new Menu();
+                GameManager.Spawn(mainMenu);
+            }
+
+            public void OnStateExit()
+            {
+                mainMenu.Active = false;
+            }
+
+            public IState OnStateUpdate()
+            {
+                return mainMenu.GetComponent<UpdateMenu>().ChangeScene(Loop, this);
+            }
+        }
+
 
         private class LoopState : IState
         {
             public WinState NextWin { get; set; }
             public LoseState NextLose { get; set; }
+            public PauseState NextPause { get; set; }
 
             private GameManager owner { get; set; }
 
@@ -192,17 +208,38 @@ namespace BomberMan2D.Main
 
             public void OnStateEnter()
             {
-                throw new NotImplementedException();
+                LoadLevels();
+                LoadGameObjects();
             }
 
             public void OnStateExit()
             {
-                throw new NotImplementedException();
             }
 
             public IState OnStateUpdate()
             {
-                throw new NotImplementedException();
+                return this;
+            }
+
+            private static void LoadLevels()
+            {
+                GameObject.Spawn(new Map("Levels/Level00.csv"));
+            }
+
+            private static void LoadGameObjects()
+            {
+                //OSD
+                GameObject.Spawn(new OnScreenDisplay());
+
+                //Player
+                Bomberman bomberMan = new Bomberman();
+                GameObject.Spawn(bomberMan, Map.GetPlayerSpawnPoint());
+
+                //AI
+                GameObject.Spawn(new EnemySpawner(bomberMan));
+
+                //TargetPoints
+                GameObject.Spawn(new TargetSpawner(5, 3.5f));
             }
         }
 

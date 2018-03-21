@@ -16,6 +16,7 @@ namespace BomberMan2D
 {
     public sealed class Game
     {
+        private static GameManager manager;
         public static void Init()
         {
             #region Context
@@ -24,9 +25,10 @@ namespace BomberMan2D
             window.SetClearColor(0.0f, 0.61f, 0.0f);
             Engine.Init(window);
             #endregion
+            manager = new GameManager();
 
             #region GameManager
-            GameObject.Spawn(new GameManager());
+            GameObject.Spawn(manager);
             #endregion
         }
 

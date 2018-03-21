@@ -11,18 +11,17 @@ namespace BomberMan2D.Components
     public class FSMUpdater : Component, IUpdatable
     {
         private List<IState> states = new List<IState>();
-        private delegate void AnimationHandler();
+        private IState currentState;
 
-        public FSMUpdater(List<IState> states)
+        public FSMUpdater(List<IState> states, IState currentState)
         {
             this.states = states;
+            this.currentState = currentState;
         }
-
-        public void UpdateState(IState state) => states.Add(state);
 
         public void Update()
         {
-            states.ForEach(item => item.OnStateUpdate());
+            currentState.OnStateUpdate();
         }
     }
 }

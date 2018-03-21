@@ -129,7 +129,7 @@ namespace BomberMan2D.Prefabs
 
             #region Components
             AddComponent(new Components.CharacterController());
-            AddComponent(new Components.FSMUpdater(states));
+            AddComponent(new Components.FSMUpdater(states, walkState));
 
             BoxCollider2D collider2D = new BoxCollider2D(new Vector2(0.5f, 0.5f));
             collider2D.CollisionMode = CollisionMode.Collision;
