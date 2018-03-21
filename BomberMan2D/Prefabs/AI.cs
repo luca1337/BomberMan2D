@@ -98,31 +98,7 @@ namespace BomberMan2D.Prefabs
         {
             state = null;
 
-            if (owner.CurrentPath == null)
-                return state;
-
-            if (owner.CurrentPath.Count == 0)
-            {
-                owner.CurrentPath = null;
-                return state;
-            }
-
-            if (!owner.Computed)
-            {
-                Vector2 targetPos = owner.CurrentPath[0].Position;
-                if (targetPos != owner.Transform.Position)
-                {
-                    Vector2 direction = (targetPos - owner.Transform.Position).Normalized();
-                    owner.Transform.Position += direction * 1.5f * Time.DeltaTime;
-                }
-
-                float distance = (targetPos - owner.Transform.Position).Length;
-
-                if (distance <= 0.1f)
-                {
-                    owner.CurrentPath.RemoveAt(0);
-                }
-            }
+            
 
             return state;
         }
@@ -197,7 +173,31 @@ namespace BomberMan2D.Prefabs
                     if ((next.Location - owner.Transform.Position).Length < 1f || owner.CurrentPath == null)
                         oneTimeChase = !oneTimeChase;
 
-                    return owner.CheckAgentPath(owner, out chase);
+                    if (owner.CurrentPath == null)
+                        return this;
+
+                    if (owner.CurrentPath.Count == 0)
+                    {
+                        owner.CurrentPath = null;
+                        return this;
+                    }
+
+                    if (!owner.Computed)
+                    {
+                        Vector2 targetPos = owner.CurrentPath[0].Position;
+                        if (targetPos != owner.Transform.Position)
+                        {
+                            Vector2 direction = (targetPos - owner.Transform.Position).Normalized();
+                            owner.Transform.Position += direction * 1.5f * Time.DeltaTime;
+                        }
+
+                        float distance = (targetPos - owner.Transform.Position).Length;
+
+                        if (distance <= 0.1f)
+                        {
+                            owner.CurrentPath.RemoveAt(0);
+                        }
+                    }
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace BomberMan2D.Prefabs
                     NextPatrol.OnStateEnter();
                     return NextPatrol;
                 }
-
+                return this;
             }
         }
 
@@ -252,6 +252,5 @@ namespace BomberMan2D.Prefabs
                 return owner.CheckAgentPath(owner, out patrol);
             }
         }
-
     }
 }
