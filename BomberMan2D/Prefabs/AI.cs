@@ -38,10 +38,9 @@ namespace BomberMan2D.Prefabs
 
         #region FSM
         private PatrolState patrol;
-        private StateIdle idle;
         private ChaseState chase;
+
         private IState currentState;
-        private List<IState> states = new List<IState>();
         #endregion
 
         public AI() : base("AI")
@@ -52,7 +51,6 @@ namespace BomberMan2D.Prefabs
             aiAnimation.RenderOffset = (int)RenderLayer.AI;
 
             patrol = new PatrolState(this);
-            idle = new StateIdle(this);
             chase = new ChaseState(this);
 
             patrol.ChaseState = chase;
@@ -61,8 +59,6 @@ namespace BomberMan2D.Prefabs
             patrol.OnStateEnter();
             currentState = patrol;
 
-            states.Add(currentState);
-
             BoxCollider2D collider = new BoxCollider2D(new Vector2(1, 1));
             collider.CollisionMode = CollisionMode.Trigger;
             collider.TriggerEnter += OnTriggerEnter;
@@ -70,7 +66,7 @@ namespace BomberMan2D.Prefabs
 
             //AddComponent(new BoxCollider2DRenderer(new Vector4(-1f, -1f, 1f, 0f)));
 
-            AddComponent(new FSMUpdater(states, currentState));
+            AddComponent(new FSMUpdater(currentState));
         }
 
         private void OnTriggerEnter(Collider2D other)
@@ -154,7 +150,7 @@ namespace BomberMan2D.Prefabs
         private class ChaseState : IState
         {
             public PatrolState NextPatrol { get; set; }
-            public StateIdle NextIdle { get; set; }
+
             private IWaypoint next;
 
             private IState chase;
@@ -168,13 +164,12 @@ namespace BomberMan2D.Prefabs
             {
                 this.owner = owner;
                 next = owner.CurrentTarget;
-                chase = this;
+              
                 oneTimeChase = true;
             }
 
             public void OnStateEnter()
             {
-                OnStateUpdate();
             }
 
             public void OnStateExit()
@@ -185,13 +180,14 @@ namespace BomberMan2D.Prefabs
             {
                 if (!owner.IsInRadius(out target))
                 {
+                    chase = this;
+
                     if (oneTimeChase)
                     {
                         next = GameManager.GetAllPoints()[RandomManager.Instance.Random.Next(0, GameManager.GetPointsCount())];
                         Console.WriteLine(next);
                         oneTimeChase = !oneTimeChase;
                     }
-
 
                     if (next is TargetPoint && target != next)
                     {
@@ -205,6 +201,7 @@ namespace BomberMan2D.Prefabs
                 }
                 else
                 {
+                    OnStateExit();
                     NextPatrol.OnStateEnter();
                     return NextPatrol;
                 }
@@ -215,6 +212,7 @@ namespace BomberMan2D.Prefabs
         private class PatrolState : IState
         {
             public ChaseState ChaseState { get; set; }
+
             private AI owner;
             private GameObject target;
             private IState patrol;
@@ -222,7 +220,6 @@ namespace BomberMan2D.Prefabs
             public PatrolState(AI owner)
             {
                 this.owner = owner;
-                patrol = this;
             }
 
             public void OnStateEnter()
@@ -237,6 +234,7 @@ namespace BomberMan2D.Prefabs
             {
                 if (owner.IsInRadius(out target))
                 {
+                    patrol = this;
 
                     if (target is Bomberman)
                     {
@@ -246,6 +244,7 @@ namespace BomberMan2D.Prefabs
                 }
                 else
                 {
+                    this.OnStateExit();
                     ChaseState.OnStateEnter();
                     return ChaseState;
                 }
@@ -254,26 +253,5 @@ namespace BomberMan2D.Prefabs
             }
         }
 
-        private class StateIdle : IState
-        {
-            private AI owner;
-            public StateIdle(AI owner)
-            {
-                this.owner = owner;
-            }
-
-            public void OnStateEnter()
-            {
-            }
-
-            public void OnStateExit()
-            {
-            }
-
-            public IState OnStateUpdate()
-            {
-                return this;
-            }
-        }
     }
 }

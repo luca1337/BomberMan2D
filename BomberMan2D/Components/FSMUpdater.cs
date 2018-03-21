@@ -10,12 +10,10 @@ namespace BomberMan2D.Components
 {
     public class FSMUpdater : Component, IUpdatable
     {
-        private List<IState> states = new List<IState>();
         private IState currentState;
 
-        public FSMUpdater(List<IState> states, IState currentState)
+        public FSMUpdater(IState currentState)
         {
-            this.states = states;
             this.currentState = currentState;
         }
 

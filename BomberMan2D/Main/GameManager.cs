@@ -15,8 +15,7 @@ namespace BomberMan2D.Main
 {
     public class GameManager : GameObject
     {
-        List<IState> states = new List<IState>();
-        IState currentState = null;
+        private IState currentState;
 
         private static List<IWaypoint> targetPoints = new List<IWaypoint>();
 
@@ -45,23 +44,16 @@ namespace BomberMan2D.Main
             WinState winState = new WinState(this);
 
             //Link State
-            setupState.Menu = menuState;
-            menuState.Loop = loopState;
+            setupState.MenuState   = menuState;
+            menuState.Loop    = loopState;
             loopState.NextWin = winState;
             loopState.NextLose = loseState;
             loopState.NextPause = pauseState;
 
             setupState.OnStateEnter();
-            currentState = setupState.OnStateUpdate();
+            currentState = setupState;
 
-            states.Add(setupState);
-            states.Add(menuState);
-            states.Add(loopState);
-            states.Add(pauseState);
-            states.Add(winState);
-            states.Add(loseState);
-
-            AddComponent(new FSMUpdater(states, currentState));
+            AddComponent(new FSMUpdater(currentState));
         }
 
         private static void SetupCollisionsRulesAndPhysics()
@@ -136,7 +128,8 @@ namespace BomberMan2D.Main
 
         private class SetupState : IState
         {
-            public MenuState Menu { get; set; }
+            public MenuState MenuState { get; set; }
+          
             private GameManager owner { get; set; }
 
             public SetupState(GameObject owner)
@@ -157,8 +150,8 @@ namespace BomberMan2D.Main
 
             public IState OnStateUpdate()
             {
-                Menu.OnStateEnter();
-                return Menu;
+                MenuState.OnStateEnter();
+                return MenuState;
                 //  Node.ShowPath();
             }
         }
@@ -180,13 +173,22 @@ namespace BomberMan2D.Main
             public void OnStateEnter()
             {
                 if (mainMenu == null)
+                {
                     mainMenu = new Menu();
+                    GameManager.Spawn(mainMenu);
+                }
+                else
+                    mainMenu.Active = true;
 
                 if (menuBg == null)
+                {
                     menuBg = new MenuBackground();
+                    GameObject.Spawn(menuBg);
+                }
+                else
+                    menuBg.Active = true;
 
-                GameObject.Spawn(menuBg);
-                GameManager.Spawn(mainMenu);
+
             }
 
             public void OnStateExit()
@@ -203,6 +205,7 @@ namespace BomberMan2D.Main
                     Loop.OnStateEnter();
                     return Loop;
                 }
+
                 return this;
             }
         }
@@ -250,11 +253,11 @@ namespace BomberMan2D.Main
                 Bomberman bomberMan = new Bomberman();
                 GameObject.Spawn(bomberMan, Map.GetPlayerSpawnPoint());
 
+                ////TargetPoints
+                GameObject.Spawn(new TargetSpawner(5, 3.5f));
+
                 //AI
                 GameObject.Spawn(new EnemySpawner(bomberMan));
-
-                //TargetPoints
-                GameObject.Spawn(new TargetSpawner(5, 3.5f));
             }
         }
 
