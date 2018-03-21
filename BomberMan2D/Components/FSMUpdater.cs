@@ -21,7 +21,7 @@ namespace BomberMan2D.Components
 
         public void Update()
         {
-            currentState.OnStateUpdate();
+            currentState = currentState.OnStateUpdate();
         }
     }
 }

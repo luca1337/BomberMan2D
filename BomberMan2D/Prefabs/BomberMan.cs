@@ -76,19 +76,19 @@ namespace BomberMan2D.Prefabs
             #endregion
 
             #region FSM
-            drop = new StateDrop(this);
-            walkUp = new WalkUp(this);
-            walkDown = new WalkDown(this);
-            walkLeft = new WalkLeft(this);
-            walkRight = new WalkRight(this);
-            dieState = new StateDie(this);
-            idle = new Idle(this);
+            drop       = new StateDrop(this);
+            walkUp     = new WalkUp(this);
+            walkDown   = new WalkDown(this);
+            walkLeft   = new WalkLeft(this);
+            walkRight  = new WalkRight(this);
+            dieState   = new StateDie(this);
+            idle       = new Idle(this);
 
             //walk up
-            walkUp.NextDown = walkDown;
-            walkUp.NextLeft = walkLeft;
+            walkUp.NextDown  = walkDown;
+            walkUp.NextLeft  = walkLeft;
             walkUp.NextRight = walkRight;
-            walkUp.NextIdle = idle;
+            walkUp.NextIdle  = idle;
 
             //walk down
             walkDown.NextUp = walkUp;
@@ -381,7 +381,7 @@ namespace BomberMan2D.Prefabs
 
             public void OnStateEnter()
             {
-                OnStateUpdate();
+
             }
 
             public void OnStateExit()

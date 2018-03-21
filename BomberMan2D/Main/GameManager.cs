@@ -1,4 +1,5 @@
-﻿using BehaviourEngine;
+﻿using Aiv.Fast2D.Utils.Input;
+using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BomberMan2D.Components;
 using BomberMan2D.Prefabs;
@@ -37,18 +38,18 @@ namespace BomberMan2D.Main
         public GameManager() : base("GameManager")
         {
             SetupState setupState = new SetupState(this);
-            MenuState menuState   = new MenuState(this);
-            LoopState loopState   = new LoopState(this);
+            MenuState menuState = new MenuState(this);
+            LoopState loopState = new LoopState(this);
             PauseState pauseState = new PauseState(this);
-            LoseState loseState   = new LoseState(this);
-            WinState winState     = new WinState(this);
+            LoseState loseState = new LoseState(this);
+            WinState winState = new WinState(this);
 
             //Link State
-            setupState.Menu       = menuState;
-            menuState.Loop        = loopState;
-            loopState.NextWin     = winState;
-            loopState.NextLose    = loseState;
-            loopState.NextPause   = pauseState;
+            setupState.Menu = menuState;
+            menuState.Loop = loopState;
+            loopState.NextWin = winState;
+            loopState.NextLose = loseState;
+            loopState.NextPause = pauseState;
 
             setupState.OnStateEnter();
             currentState = setupState.OnStateUpdate();
@@ -72,7 +73,7 @@ namespace BomberMan2D.Main
             LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.SolidWall);
         }
 
-      
+
 
         private static void SetupTextures()
         {
@@ -158,7 +159,7 @@ namespace BomberMan2D.Main
             {
                 Menu.OnStateEnter();
                 return Menu;
-              //  Node.ShowPath();
+                //  Node.ShowPath();
             }
         }
 
@@ -167,28 +168,42 @@ namespace BomberMan2D.Main
             public LoopState Loop { get; set; }
 
             private GameManager owner { get; set; }
-            private Menu mainMenu; 
+            private Menu mainMenu;
+            private MenuBackground menuBg;
 
             public MenuState(GameObject owner)
             {
                 this.owner = owner as GameManager;
-  
+
             }
 
             public void OnStateEnter()
             {
-                mainMenu = new Menu();
+                if (mainMenu == null)
+                    mainMenu = new Menu();
+
+                if (menuBg == null)
+                    menuBg = new MenuBackground();
+
+                GameObject.Spawn(menuBg);
                 GameManager.Spawn(mainMenu);
             }
 
             public void OnStateExit()
             {
+                menuBg.Active = false;
                 mainMenu.Active = false;
             }
 
             public IState OnStateUpdate()
             {
-                return mainMenu.GetComponent<UpdateMenu>().ChangeScene(Loop, this);
+                if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.Space))
+                {
+                    this.OnStateExit();
+                    Loop.OnStateEnter();
+                    return Loop;
+                }
+                return this;
             }
         }
 
@@ -244,7 +259,7 @@ namespace BomberMan2D.Main
         }
 
         private class WinState : IState
-        { 
+        {
             private GameManager owner { get; set; }
 
             public WinState(GameObject owner)

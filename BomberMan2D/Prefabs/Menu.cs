@@ -28,7 +28,7 @@ namespace BomberMan2D.Prefabs
 
             AddComponent(new UpdateMenu(menuTexts));
 
-            GameObject.Spawn(new MenuBackground());
+      
         }
     }
 
@@ -41,19 +41,19 @@ namespace BomberMan2D.Prefabs
         {
             this.menuTexts = menuTexts;
         }
-        public IState ChangeScene(IState NextState, IState currentState)
-        {
-            if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.Space))
-            {
-                currentState.OnStateExit();
-                NextState.OnStateEnter();
-                currentState = NextState.OnStateUpdate();
-                return NextState;
-            }
-            else
-                return currentState;
+        //public IState ChangeScene( IState NextState, IState currentState)
+        //{
+        //    if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.Space))
+        //    {
+        //        currentState.OnStateExit();
+        //        currentState = NextState.OnStateUpdate();
+        //        currentState.OnStateEnter();
+        //        return currentState;
+        //    }
+        //    else
+        //        return currentState;
 
-        }
+        //}
 
         public void Update()
         {
