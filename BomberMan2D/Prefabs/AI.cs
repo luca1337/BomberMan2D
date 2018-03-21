@@ -40,7 +40,6 @@ namespace BomberMan2D.Prefabs
         private PatrolState patrol;
         private ChaseState chase;
 
-        private IState currentState;
         #endregion
 
         public AI() : base("AI")
@@ -50,15 +49,15 @@ namespace BomberMan2D.Prefabs
 
             aiAnimation.RenderOffset = (int)RenderLayer.AI;
 
+            //Create state
             patrol = new PatrolState(this);
             chase = new ChaseState(this);
 
+            //Link state
             patrol.ChaseState = chase;
             chase.NextPatrol = patrol;
 
-            patrol.OnStateEnter();
-            currentState = patrol;
-
+            //Box collider
             BoxCollider2D collider = new BoxCollider2D(new Vector2(1, 1));
             collider.CollisionMode = CollisionMode.Trigger;
             collider.TriggerEnter += OnTriggerEnter;
@@ -66,7 +65,8 @@ namespace BomberMan2D.Prefabs
 
             //AddComponent(new BoxCollider2DRenderer(new Vector4(-1f, -1f, 1f, 0f)));
 
-            AddComponent(new FSMUpdater(currentState));
+            patrol.OnStateEnter();
+            AddComponent(new FSMUpdater(patrol));
         }
 
         private void OnTriggerEnter(Collider2D other)
@@ -129,8 +129,6 @@ namespace BomberMan2D.Prefabs
 
             private IWaypoint next;
 
-            private IState chase;
-
             private AI owner { get; set; }
 
             private GameObject target;
@@ -140,7 +138,6 @@ namespace BomberMan2D.Prefabs
             {
                 this.owner = owner;
                 next = owner.CurrentTarget;
-              
                 oneTimeChase = true;
             }
 
@@ -156,7 +153,6 @@ namespace BomberMan2D.Prefabs
             {
                 if (!owner.IsInRadius(out target))
                 {
-                    chase = this;
 
                     if (oneTimeChase)
                     {
@@ -182,22 +178,8 @@ namespace BomberMan2D.Prefabs
                         return this;
                     }
 
-                    if (!owner.Computed)
-                    {
-                        Vector2 targetPos = owner.CurrentPath[0].Position;
-                        if (targetPos != owner.Transform.Position)
-                        {
-                            Vector2 direction = (targetPos - owner.Transform.Position).Normalized();
-                            owner.Transform.Position += direction * 1.5f * Time.DeltaTime;
-                        }
-
-                        float distance = (targetPos - owner.Transform.Position).Length;
-
-                        if (distance <= 0.1f)
-                        {
-                            owner.CurrentPath.RemoveAt(0);
-                        }
-                    }
+                    DoPath();
+                   
                 }
                 else
                 {
@@ -207,6 +189,27 @@ namespace BomberMan2D.Prefabs
                 }
                 return this;
             }
+
+            private void DoPath()
+            {
+                if (!owner.Computed)
+                {
+                    Vector2 targetPos = owner.CurrentPath[0].Position;
+                    if (targetPos != owner.Transform.Position)
+                    {
+                        Vector2 direction = (targetPos - owner.Transform.Position).Normalized();
+                        owner.Transform.Position += direction * 1.5f * Time.DeltaTime;
+                    }
+
+                    float distance = (targetPos - owner.Transform.Position).Length;
+
+                    if (distance <= 0.1f)
+                    {
+                        owner.CurrentPath.RemoveAt(0);
+                    }
+                }
+            }
+
         }
 
         private class PatrolState : IState
@@ -215,7 +218,6 @@ namespace BomberMan2D.Prefabs
 
             private AI owner;
             private GameObject target;
-            private IState patrol;
             private  Node pos;
             public PatrolState(AI owner)
             {
@@ -234,8 +236,6 @@ namespace BomberMan2D.Prefabs
             {
                 if (owner.IsInRadius(out target))
                 {
-                    patrol = this;
-
                     if (target is Bomberman)
                     {
                         owner.CurrentTarget = target as IWaypoint;
@@ -258,6 +258,13 @@ namespace BomberMan2D.Prefabs
                     return this;
                 }
 
+                DoPath();
+          
+                return this;
+            }
+
+            private void DoPath()
+            {
                 if (!owner.Computed)
                 {
                     Vector2 targetPos = owner.CurrentPath[0].Position;
@@ -274,7 +281,6 @@ namespace BomberMan2D.Prefabs
                         owner.CurrentPath.RemoveAt(0);
                     }
                 }
-                return this;
             }
         }
     }
