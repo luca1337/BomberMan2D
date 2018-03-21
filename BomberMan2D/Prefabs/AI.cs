@@ -249,7 +249,32 @@ namespace BomberMan2D.Prefabs
                     return ChaseState;
                 }
 
-                return owner.CheckAgentPath(owner, out patrol);
+                if (owner.CurrentPath == null)
+                    return this;
+
+                if (owner.CurrentPath.Count == 0)
+                {
+                    owner.CurrentPath = null;
+                    return this;
+                }
+
+                if (!owner.Computed)
+                {
+                    Vector2 targetPos = owner.CurrentPath[0].Position;
+                    if (targetPos != owner.Transform.Position)
+                    {
+                        Vector2 direction = (targetPos - owner.Transform.Position).Normalized();
+                        owner.Transform.Position += direction * 1.5f * Time.DeltaTime;
+                    }
+
+                    float distance = (targetPos - owner.Transform.Position).Length;
+
+                    if (distance <= 0.1f)
+                    {
+                        owner.CurrentPath.RemoveAt(0);
+                    }
+                }
+                return this;
             }
         }
     }
