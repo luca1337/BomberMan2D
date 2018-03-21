@@ -47,6 +47,7 @@ namespace BomberMan2D.Prefabs
             {
                 currentState.OnStateExit();
                 NextState.OnStateEnter();
+                currentState = NextState.OnStateUpdate();
                 return NextState;
             }
             else
