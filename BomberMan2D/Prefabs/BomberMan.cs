@@ -15,6 +15,7 @@ namespace BomberMan2D.Prefabs
     public class Bomberman : GameObject, IWaypoint
     {
         public Vector2 Location { get; set; }
+        public bool Invulnerability { get; set; }
 
         //Animations
         private Dictionary<AnimationType, AnimationRenderer> playerAnimations = new Dictionary<AnimationType, AnimationRenderer>();
@@ -22,6 +23,7 @@ namespace BomberMan2D.Prefabs
         //Bomb drop
         private StateDrop drop;
 
+        
         #region Powerups
 
         public int CurrentExplosion = 0;
@@ -90,6 +92,8 @@ namespace BomberMan2D.Prefabs
 
             #endregion
 
+       
+
         }
 
         private void OnTriggerEnter(Collider2D other)
@@ -100,7 +104,7 @@ namespace BomberMan2D.Prefabs
                 powerup.ApplyPowerUp(this);
             }
 
-            if (other.Owner is AI)
+            if (other.Owner is AI && !Invulnerability)
             {
                foreach (Component item in Components)
                {
@@ -177,8 +181,9 @@ namespace BomberMan2D.Prefabs
                     timer.Start();
                 }
 
+                //Maybe no restart
                 if (timer.IsActive)
-                    timer.Update();
+                    timer.Update(true);
 
                 return this;
             }
