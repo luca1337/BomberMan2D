@@ -14,7 +14,6 @@ namespace BomberMan2D
     public class Mystery : GameObject, IPowerup
     {
         private Rigidbody2D rigidBody;
-        private InvulnerabilityManager manager;
         private bool oneTime = true;
 
         public Mystery() : base()
@@ -51,11 +50,6 @@ namespace BomberMan2D
         {
             (gameObject as Bomberman).Invulnerability = true;
 
-            if (oneTime)
-            {
-                manager = new InvulnerabilityManager(gameObject as Bomberman);
-                AddComponent(manager);
-            }
         }
 
         public void OnGet()
@@ -81,7 +75,7 @@ namespace BomberMan2D
 
         public InvulnerabilityManager(Bomberman toBoostUp)
         {
-            timer = new Timer(4f);
+            timer = new Timer(2f);
             player = toBoostUp;
         }
 
@@ -95,7 +89,7 @@ namespace BomberMan2D
 
             if (timer.IsOver())
             {
-                player.Invulnerability = true;
+                player.Invulnerability = false;
                 timer.Stop(true);
             }
         }

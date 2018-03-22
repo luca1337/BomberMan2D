@@ -23,7 +23,8 @@ namespace BomberMan2D.Prefabs
         //Bomb drop
         private StateDrop drop;
 
-        
+        private InvulnerabilityManager manager;
+
         #region Powerups
 
         public int CurrentExplosion = 0;
@@ -87,6 +88,8 @@ namespace BomberMan2D.Prefabs
 
             AddComponent(new Components.CameraFollow());
 
+            manager = new InvulnerabilityManager(this);
+            AddComponent(manager);
             #endregion
 
        
