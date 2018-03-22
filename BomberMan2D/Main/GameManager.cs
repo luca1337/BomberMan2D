@@ -249,7 +249,6 @@ namespace BomberMan2D.Main
             private Map map;
 
             private Timer timer;
-            private bool activeTimer;
 
             public LoopState(GameObject owner)
             {

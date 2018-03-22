@@ -46,9 +46,6 @@ namespace BomberMan2D.Prefabs
         private IPowerup powerup { get; set; }
         private PowerUpType pType { get; set; }
 
-        private int littleExp = 0;
-        private int bigExp    = 1;
-
         #endregion
 
         public Bomberman() : base("BomberMan")
