@@ -22,8 +22,8 @@ namespace BomberMan2D
             #region LayerMask
             this.Layer = (uint) CollisionLayer.Powerup;
             #endregion
-
-            SpriteRenderer renderer = new SpriteRenderer(FlyWeight.Get("Speed_PW"));
+            //ChangeTexture
+            SpriteRenderer renderer = new SpriteRenderer(FlyWeight.Get("Mystery_PW"));
             renderer.RenderOffset = (int) RenderLayer.Powerup;
             AddComponent(renderer);
 

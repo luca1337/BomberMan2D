@@ -52,7 +52,7 @@ namespace BomberMan2D.Prefabs
                 //once the random is thrown we can generate it
                 //at the moment we only have 2 active powerups so 
                 //we make some test using the first one on the enum
-                IPowerup p = PowerUpFactory.Get(PowerUpType.PW_WALL_PASS);
+                IPowerup p = PowerUpFactory.Get(PowerUpType.PW_MYSTERY);
                 p.SetPosition(this.Transform.Position);
                     
                 GameObject.Spawn(p as GameObject);

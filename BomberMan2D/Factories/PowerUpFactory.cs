@@ -17,6 +17,7 @@ namespace BomberMan2D.Factories
             GlobalFactory<SpeedPow>.RegisterPool(typeof(SpeedPow), () => new SpeedPow());
             GlobalFactory<BombPow>.RegisterPool(typeof(BombPow), () => new BombPow());
             GlobalFactory<WallPass>.RegisterPool(typeof(WallPass), () => new WallPass());
+            GlobalFactory<Mystery>.RegisterPool(typeof(Mystery), () => new Mystery());
         }
 
         public static IPowerup Get(PowerUpType type)
@@ -40,6 +41,7 @@ namespace BomberMan2D.Factories
                     toReturn = GlobalFactory<WallPass>.Get(typeof(WallPass));
                     break;
                 case PowerUpType.PW_MYSTERY:
+                    toReturn = GlobalFactory<Mystery>.Get(typeof(Mystery));
                     break;
                 case PowerUpType.PW_DETONATOR:
                     break;
