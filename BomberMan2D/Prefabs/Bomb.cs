@@ -9,6 +9,7 @@ using Aiv.Fast2D.Utils.Input;
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BomberMan;
+using BomberMan2D.Components;
 using BomberMan2D.Prefabs;
 using OpenTK;
 
@@ -29,7 +30,7 @@ namespace BomberMan2D
         private List<Vector2> locations;
         private StateExplode explode;
         private StateWait wait;
-        private IState currentState;
+     //   private IState currentState;
 
         public Bomb() : base("Bomb")
         {
@@ -41,15 +42,14 @@ namespace BomberMan2D
             AddComponent(renderer);
 
             #region FSM
-            wait = new StateWait(this);
+            wait    = new StateWait(this);
             explode = new StateExplode(this);
 
             explode.Next = wait;
-            wait.Next = explode;
+            wait.Next    = explode;
 
             wait.OnStateEnter();
-            currentState = wait;
-            AddComponent(new UpdateBomb(currentState));
+            AddComponent(new FSMUpdater(wait));
 
             #endregion
 
@@ -119,27 +119,29 @@ namespace BomberMan2D
             }
         }
 
-        private class UpdateBomb : BehaviourEngine.Component, IUpdatable
-        {
-            private IState currentState;
+        //private class UpdateBomb : BehaviourEngine.Component, IUpdatable
+        //{
+        //    private IState currentState;
 
-            public UpdateBomb(IState state) : base()
-            {
-                this.currentState = state;
-            }
+        //    public UpdateBomb(IState state) : base()
+        //    {
+        //        this.currentState = state;
+        //    }
 
-            public void Update()
-            {
-                currentState = currentState.OnStateUpdate();
-            }
-        }
+        //    public void Update()
+        //    {
+        //        currentState = currentState.OnStateUpdate();
+        //    }
+        //}
 
         private class StateExplode : IState
         {
             public StateWait Next { get; set; }
+
             private Bomb owner;
             private Timer timer;
             private bool oneTimeSpawn = true;
+
             public StateExplode(Bomb owner)
             {
                 this.owner = owner;
@@ -205,6 +207,7 @@ namespace BomberMan2D
                         }
                     );
 
+                    OnStateExit();
                     Next.OnStateEnter();
                     return Next;
                 }

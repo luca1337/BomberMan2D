@@ -69,11 +69,11 @@ namespace BomberMan2D.Prefabs
             //Bomb fsm
             drop = new StateDrop(this);
             drop.OnStateEnter();
+            AddComponent(new Components.FSMUpdater(drop));
 
             #region Components
 
             AddComponent(new Components.CharacterController());
-            AddComponent(new Components.FSMUpdater(drop));
             AddComponent(new UpdateAnimation(this));
           
             //Collider
@@ -102,12 +102,12 @@ namespace BomberMan2D.Prefabs
 
             if (other.Owner is AI)
             {
-                foreach (Component item in Components)
-                {
-                    item.Enabled = false;
-                }
-
-                this.Active = false;
+               foreach (Component item in Components)
+               {
+                   item.Enabled = false;
+               }
+        
+               this.Active = false;
 
                 Console.WriteLine("Collided With AI");
             }

@@ -181,7 +181,13 @@ namespace BomberMan2D.Main
                     GameManager.Spawn(mainMenu);
                 }
                 else
+                {
                     mainMenu.Active = true;
+                    foreach (Component item in mainMenu.Components)
+                    {
+                        item.Enabled = true;
+                    }
+                }
 
                 if (menuBg == null)
                 {
@@ -189,7 +195,13 @@ namespace BomberMan2D.Main
                     GameObject.Spawn(menuBg);
                 }
                 else
+                {
                     menuBg.Active = true;
+                    foreach (Component item in menuBg.Components)
+                    {
+                        item.Enabled = true;
+                    }
+                }
 
 
             }
@@ -197,7 +209,16 @@ namespace BomberMan2D.Main
             public void OnStateExit()
             {
                 menuBg.Active = false;
+                foreach (Component item in menuBg.Components)
+                {
+                    item.Enabled = false;
+                }
+
                 mainMenu.Active = false;
+                foreach (Component item in mainMenu.Components)
+                {
+                    item.Enabled = false;
+                }
             }
 
             public IState OnStateUpdate()
@@ -228,6 +249,7 @@ namespace BomberMan2D.Main
             private Map map;
 
             private Timer timer;
+            private bool activeTimer;
 
             public LoopState(GameObject owner)
             {
@@ -244,9 +266,28 @@ namespace BomberMan2D.Main
             public void OnStateExit()
             {
                 gui.Active            = false;
+                foreach (Component item in gui.Components)
+                {
+                    item.Enabled = false;
+                }
+
                 targetSpawner.Active = false;
+                foreach (Component item in targetSpawner.Components)
+                {
+                    item.Enabled = false;
+                }
+
                 enemySpawner.Active = false;
+                foreach (Component item in enemySpawner.Components)
+                {
+                    item.Enabled = false;
+                }
+
                 map.Active = false;
+                foreach (Component item in map.Components)
+                {
+                    item.Enabled = false;
+                }
             }
 
             public IState OnStateUpdate()
@@ -254,9 +295,10 @@ namespace BomberMan2D.Main
                 if (bomberMan.Active == false)
                     timer.Update();
 
-                if (bomberMan.Active == false && timer.IsOver())
+                Console.WriteLine(timer.currentTime);
+                if (timer.IsOver())
                 {
-                    timer.Stop();
+                    timer.Stop(true);
                     OnStateExit();
                     NextLose.OnStateEnter();
                     return NextLose;
@@ -273,7 +315,13 @@ namespace BomberMan2D.Main
                     GameObject.Spawn(map);
                 }
                 else
+                {
                     map.Active = true;
+                    foreach (Component item in map.Components)
+                    {
+                        item.Enabled = false;
+                    }
+                }
             }
 
             private void LoadGameObjects()
@@ -285,7 +333,13 @@ namespace BomberMan2D.Main
                     GameObject.Spawn(gui);
                 }
                 else
+                {
                     gui.Active = true;
+                    foreach (Component item in gui.Components)
+                    {
+                        item.Enabled = false;
+                    }
+                }
 
                 //Player
                 if (bomberMan == null)
@@ -309,7 +363,13 @@ namespace BomberMan2D.Main
                     GameObject.Spawn(targetSpawner);
                 }
                 else
+                {
                     targetSpawner.Active = true;
+                    foreach (Component item in targetSpawner.Components)
+                    {
+                        item.Enabled = false;
+                    }
+                }
 
                 //AI
                 if (enemySpawner == null)
@@ -318,7 +378,13 @@ namespace BomberMan2D.Main
                     GameObject.Spawn(enemySpawner);
                 }
                 else
+                {
                     enemySpawner.Active = true;
+                    foreach (Component item in enemySpawner.Components)
+                    {
+                        item.Enabled = false;
+                    }
+                }
             }
         }
 
@@ -367,13 +433,23 @@ namespace BomberMan2D.Main
                     GameObject.Spawn(loseBg);
                 }
                 else
+                {
                     loseBg.Active = true;
+                    foreach (Component item in loseBg.Components)
+                    {
+                        item.Enabled = true;
+                    }
+                }
 
             }
 
             public void OnStateExit()
             {
                 loseBg.Active = false;
+                foreach (Component item in loseBg.Components)
+                {
+                    item.Enabled = false;
+                }
             }
 
             public IState OnStateUpdate()
