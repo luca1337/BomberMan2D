@@ -205,7 +205,6 @@
     <None Include="Levels\Level00.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
     <None Include="Sounds\03_Stage_Theme.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
