@@ -185,7 +185,7 @@ namespace BomberMan2D
                 }
 
                 if (timer.IsActive)
-                    timer.Update();
+                    timer.Update(false);
 
                 if (!timer.IsActive)
                 {
@@ -240,7 +240,7 @@ namespace BomberMan2D
             public IState OnStateUpdate()
             {
                 if (timer.IsActive)
-                    timer.Update();
+                    timer.Update(false);
 
                 if (!timer.IsActive)
                 {

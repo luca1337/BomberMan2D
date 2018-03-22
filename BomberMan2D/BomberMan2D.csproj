@@ -73,6 +73,7 @@
     <Compile Include="Components\EnemySpawner.cs" />
     <Compile Include="GlobalFactory.cs" />
     <Compile Include="Interfaces\IPoolable.cs" />
+    <Compile Include="Invulnerability.cs" />
     <Compile Include="Main\GameManager.cs" />
     <Compile Include="PowerUpFactory.cs" />
     <Compile Include="Prefabs\BombPow.cs" />
@@ -125,6 +126,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\BombsPw.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\bomb_drop.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Box2D.dat">

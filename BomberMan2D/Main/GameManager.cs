@@ -76,7 +76,7 @@ namespace BomberMan2D.Main
             FlyWeight.Add("BomberMan", "Assets/Bombertab1.dat");
             FlyWeight.Add("Speed", "Assets/Speed.dat");
             FlyWeight.Add("Health", "Assets/Health.dat");
-            FlyWeight.Add("Bomb", "Assets/Bomb.dat");
+            FlyWeight.Add("Bomb", "Assets/bomb_drop.dat");
             FlyWeight.Add("Explosion", "Assets/Explosion.dat");
             FlyWeight.Add("AI", "Assets/ballon.dat");
             FlyWeight.Add("Bomb_PW", "Assets/BombsPw.dat");
@@ -293,7 +293,7 @@ namespace BomberMan2D.Main
             public IState OnStateUpdate()
             {
                 if (bomberMan.Active == false)
-                    timer.Update();
+                    timer.Update(false);
 
                 Console.WriteLine(timer.currentTime);
                 if (timer.IsOver())
