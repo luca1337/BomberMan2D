@@ -8,7 +8,7 @@ using BehaviourEngine;
 using BomberMan2D.Components;
 using OpenTK;
 
-namespace BomberMan2D.Prefabs
+namespace BomberMan2D.Prefabs.Powerups
 {
     public class SpeedPow : GameObject, IPowerup
     {

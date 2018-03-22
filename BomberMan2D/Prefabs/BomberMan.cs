@@ -195,50 +195,15 @@ namespace BomberMan2D.Prefabs
             public void Update()
             {
                 if (Input.IsKeyPressed(KeyCode.S))
-                {
-                    bomberman.EnableAnimation(AnimationType.WALK_UP,    false);
-                    bomberman.EnableAnimation(AnimationType.WALK_RIGHT, false);
-                    bomberman.EnableAnimation(AnimationType.WALK_LEFT,  false);
-                    bomberman.EnableAnimation(AnimationType.IDLE, false);
-
                     bomberman.EnableAnimation(AnimationType.WALK_DOWN, true);
-                }
                 else if (Input.IsKeyPressed(KeyCode.W))
-                {
-                    bomberman.EnableAnimation(AnimationType.WALK_DOWN, false);
-                    bomberman.EnableAnimation(AnimationType.WALK_RIGHT, false);
-                    bomberman.EnableAnimation(AnimationType.WALK_LEFT, false);
-                    bomberman.EnableAnimation(AnimationType.IDLE, false);
-
                     bomberman.EnableAnimation(AnimationType.WALK_UP, true);
-                }
                 else if (Input.IsKeyPressed(KeyCode.D))
-                {
-                    bomberman.EnableAnimation(AnimationType.WALK_DOWN, false);
-                    bomberman.EnableAnimation(AnimationType.WALK_UP, false);
-                    bomberman.EnableAnimation(AnimationType.WALK_LEFT, false);
-                    bomberman.EnableAnimation(AnimationType.IDLE, false);
-
                     bomberman.EnableAnimation(AnimationType.WALK_RIGHT, true);
-                }
                 else if (Input.IsKeyPressed(KeyCode.A))
-                {
-                    bomberman.EnableAnimation(AnimationType.WALK_DOWN, false);
-                    bomberman.EnableAnimation(AnimationType.WALK_UP, false);
-                    bomberman.EnableAnimation(AnimationType.WALK_RIGHT, false);
-                    bomberman.EnableAnimation(AnimationType.IDLE, false);
-
                     bomberman.EnableAnimation(AnimationType.WALK_LEFT, true);
-                }
                 else
-                {
-                    bomberman.EnableAnimation(AnimationType.WALK_DOWN, false);
-                    bomberman.EnableAnimation(AnimationType.WALK_UP, false);
-                    bomberman.EnableAnimation(AnimationType.WALK_RIGHT, false);
-                    bomberman.EnableAnimation(AnimationType.WALK_LEFT, false);
-
                     bomberman.EnableAnimation(AnimationType.IDLE, true);
-                }
             }
         }
     }

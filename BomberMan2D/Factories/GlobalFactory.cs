@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BomberMan2D
+namespace BomberMan2D.Factories
 {
     public static class GlobalFactory<T>
     {

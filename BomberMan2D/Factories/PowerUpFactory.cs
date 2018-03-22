@@ -1,12 +1,13 @@
 ﻿using BomberMan2D.Interfaces;
 using BomberMan2D.Prefabs;
+using BomberMan2D.Prefabs.Powerups;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BomberMan2D
+namespace BomberMan2D.Factories
 {
     public static class PowerUpFactory
     {

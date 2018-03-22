@@ -7,7 +7,7 @@ using Aiv.Fast2D;
 using BehaviourEngine;
 using OpenTK;
 
-namespace BomberMan2D.Prefabs
+namespace BomberMan2D.Prefabs.Powerups
 {
     public class BombPow : GameObject, IPowerup
     {

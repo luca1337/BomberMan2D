@@ -9,7 +9,7 @@ using BehaviourEngine.Utils;
 using BehaviourEngine;
 using BomberMan2D.Prefabs;
 
-namespace BomberMan2D
+namespace BomberMan2D.Prefabs.Powerups
 {
     public class WallPass : GameObject, IPowerup
     {
