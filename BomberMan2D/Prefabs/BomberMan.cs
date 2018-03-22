@@ -3,6 +3,7 @@ using Aiv.Fast2D.Utils.Input;
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BomberMan;
+using BomberMan2D.Factories;
 using OpenTK;
 using System;
 using System.Collections.Generic;
@@ -157,14 +158,21 @@ namespace BomberMan2D.Prefabs
             {
                 if (Input.IsKeyDown(KeyCode.Space) && !timer.IsActive)
                 {
-                    Bomb bomb = Pool<Bomb>.GetInstance(x =>
-                    {
-                        x.Active = true;
-                        x.GetComponent<AnimationRenderer>().Enabled = true;
-                        // Maybe this is the way for spawn in the middle of the cell
-                        x.Transform.Position = new Vector2((int)(owner.Transform.Position.X + 0.5f), (int)(owner.Transform.Position.Y + 0.5f));
-                    });
+                    //Bomb bomb = Pool<Bomb>.GetInstance(x =>
+                    //{
+                    //    x.Active = true;
+                    //    x.GetComponent<AnimationRenderer>().Enabled = true;
+                    //    // Maybe this is the way for spawn in the middle of the cell
+                    //    x.Transform.Position = new Vector2((int)(owner.Transform.Position.X + 0.5f), (int)(owner.Transform.Position.Y + 0.5f));
+                    //});
+
+                    Bomb bomb = GlobalFactory<Bomb>.Get(typeof(Bomb));
+                    bomb.Active = true;
+                    bomb.GetComponent<AnimationRenderer>().Enabled = true;
+                    bomb.Transform.Position = new Vector2((int)(owner.Transform.Position.X + 0.5f), (int)(owner.Transform.Position.Y + 0.5f));
+
                     //AudioManager.PlayClip(AudioType.SOUND_DROP);
+
                     if (owner.CurrentExplosion == 0)
                         bomb.IsBig = false;
                     else
@@ -178,7 +186,7 @@ namespace BomberMan2D.Prefabs
                         firstTimeSpawn = false;
                     }
 
-                    timer.Start();
+                    timer.Start(true);
                 }
 
                 //Maybe no restart

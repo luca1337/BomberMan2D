@@ -2,6 +2,7 @@
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BomberMan2D.Components;
+using BomberMan2D.Factories;
 using BomberMan2D.Prefabs;
 using NUnit.Framework;
 using System;
@@ -98,6 +99,7 @@ namespace BomberMan2D.Main
             Pool<Explosion>.Register(() => new Explosion(), 100);
             Pool<AI>.Register(() => new AI(), 100);
 
+            GlobalFactory<Bomb>.RegisterPool(typeof(Bomb), () => new Bomb());
             //powerups
             //Pool<PowerUp>.Register(() => new PowerUp(), 50);
 

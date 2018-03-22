@@ -10,6 +10,7 @@ using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BomberMan;
 using BomberMan2D.Components;
+using BomberMan2D.Factories;
 using BomberMan2D.Prefabs;
 using OpenTK;
 
@@ -105,7 +106,8 @@ namespace BomberMan2D
             {
                 for (int i = 0; i < littleExplosion; i++)
                 {
-                    Explosion toAdd = Pool<Explosion>.GetInstance(x => x.Active = false);
+                    Explosion toAdd = GlobalFactory<Explosion>.Get(typeof(Explosion));
+                    toAdd.Active = false;
                     explosionList.Add(toAdd);
                 }
             }
@@ -113,26 +115,12 @@ namespace BomberMan2D
             {
                 for (int i = 0; i < bigExplosion; i++)
                 {
-                    Explosion toAdd = Pool<Explosion>.GetInstance(x => x.Active = false);
+                    Explosion toAdd = GlobalFactory<Explosion>.Get(typeof(Explosion));
+                    toAdd.Active = false;
                     explosionList.Add(toAdd);
                 }
             }
         }
-
-        //private class UpdateBomb : BehaviourEngine.Component, IUpdatable
-        //{
-        //    private IState currentState;
-
-        //    public UpdateBomb(IState state) : base()
-        //    {
-        //        this.currentState = state;
-        //    }
-
-        //    public void Update()
-        //    {
-        //        currentState = currentState.OnStateUpdate();
-        //    }
-        //}
 
         private class StateExplode : IState
         {
@@ -150,7 +138,7 @@ namespace BomberMan2D
 
             public void OnStateEnter()
             {
-                timer.Start();
+                timer.Start(true);
                 owner.Exploding = true;
             }
 
@@ -199,13 +187,16 @@ namespace BomberMan2D
 
                     #endregion
 
-                    Pool<Bomb>.RecycleInstance
-                    (
-                        owner, x =>
-                        {
-                            x.Active = false;
-                        }
-                    );
+                    owner.Active = false;
+                    GlobalFactory<Bomb>.Recycle(typeof(Bomb), owner);
+                    
+                   // Pool<Bomb>.RecycleInstance
+                   // (
+                   //     owner, x =>
+                   //     {
+                   //         x.Active = false;
+                   //     }
+                   // );
 
                     OnStateExit();
                     Next.OnStateEnter();
@@ -230,7 +221,7 @@ namespace BomberMan2D
 
             public void OnStateEnter()
             {
-                timer.Start();
+                timer.Start(true);
             }
 
             public void OnStateExit()
