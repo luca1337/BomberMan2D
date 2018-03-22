@@ -25,10 +25,10 @@ namespace BomberMan2D.Factories
             switch (type)
             {
                 case PowerUpType.PW_SPEED:
-                    toReturn = GlobalFactory<SpeedPow>.Get(typeof(SpeedPow)) as IPowerup;
+                    toReturn = GlobalFactory<SpeedPow>.Get(typeof(SpeedPow));
                     break;
                 case PowerUpType.PW_BOMB:
-                    toReturn = GlobalFactory<BombPow>.Get(typeof(BombPow)) as IPowerup;
+                    toReturn = GlobalFactory<BombPow>.Get(typeof(BombPow));
                     break;
                 case PowerUpType.PW_BOMB_PASS:
                     break;
@@ -37,7 +37,7 @@ namespace BomberMan2D.Factories
                 case PowerUpType.PW_FLAME_PASS:
                     break;
                 case PowerUpType.PW_WALL_PASS:
-                    toReturn = GlobalFactory<WallPass>.Get(typeof(WallPass)) as IPowerup;
+                    toReturn = GlobalFactory<WallPass>.Get(typeof(WallPass));
                     break;
                 case PowerUpType.PW_MYSTERY:
                     break;

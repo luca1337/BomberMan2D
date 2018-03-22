@@ -71,9 +71,10 @@
     <Compile Include="AI\AStar.cs" />
     <Compile Include="Components\BoxRenderer.cs" />
     <Compile Include="Components\EnemySpawner.cs" />
+    <Compile Include="Enums\EnemyType.cs" />
+    <Compile Include="Factories\EnemyFactory.cs" />
     <Compile Include="Factories\GlobalFactory.cs" />
     <Compile Include="Interfaces\IPoolable.cs" />
-    <Compile Include="Invulnerability.cs" />
     <Compile Include="Main\GameManager.cs" />
     <Compile Include="Factories\PowerUpFactory.cs" />
     <Compile Include="Prefabs\Enemies\Balloom.cs" />
@@ -135,9 +136,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\BombsPw.dat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="Assets\bomb_drop.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Box2D.dat">
