@@ -12,9 +12,9 @@ namespace BomberMan2D.Prefabs
     {
         private SpriteRenderer image;
 
-        public MenuBackground() : base("Menu Background")
+        public MenuBackground(string nameTexture) : base("Menu Background")
         {
-            image = new SpriteRenderer(FlyWeight.Get("MainScreen"));
+            image = new SpriteRenderer(FlyWeight.Get(nameTexture));
             image.RenderOffset = (int)RenderLayer.Gui2;
             AddComponent(image);
             this.Transform.Scale = new Vector2(Graphics.Instance.Window.OrthoWidth, Graphics.Instance.Window.OrthoHeight);

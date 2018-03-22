@@ -14,25 +14,18 @@ namespace BomberMan2D.Prefabs
 {
     public class Bomberman : GameObject, IWaypoint
     {
-        #region Animations
-        private Dictionary<AnimationType, AnimationRenderer> playerAnimations = new Dictionary<AnimationType, AnimationRenderer>();
-        #endregion
-
-        #region FSM
-        private StateDrop drop;
-        private WalkUp   walkUp;
-        private WalkDown walkDown;
-        private WalkLeft walkLeft;
-        private WalkRight walkRight;
-        private StateDie dieState;
-        private Idle idle;
-
         public Vector2 Location { get; set; }
-        #endregion
+
+        //Animations
+        private Dictionary<AnimationType, AnimationRenderer> playerAnimations = new Dictionary<AnimationType, AnimationRenderer>();
+
+        //Bomb drop
+        private StateDrop drop;
 
         #region Powerups
-        private IPowerup powerup { get; set; }
-        private PowerUpType pType { get; set; }
+
+        public int CurrentExplosion = 0;
+     
         public bool IsBadIndex
         {
             get
@@ -47,19 +40,19 @@ namespace BomberMan2D.Prefabs
                 return false;
             }
         }
-        #endregion
 
-        public int CurrentExplosion = 0;
+        private IPowerup powerup { get; set; }
+        private PowerUpType pType { get; set; }
 
         private int littleExp = 0;
         private int bigExp    = 1;
 
+        #endregion
 
         public Bomberman() : base("BomberMan")
         {
-            #region LayerMask
+            // LayerMask
             this.Layer = (uint)CollisionLayer.BomberMan;
-            #endregion
 
             #region Animations
             playerAnimations.Add(AnimationType.WALK_RIGHT, new AnimationRenderer(FlyWeight.Get("BomberMan"), 68, 88, 7, new int[] { 35, 35, 36, 36, 37, 37, 37 }, 0.04f, false, true));
@@ -72,59 +65,17 @@ namespace BomberMan2D.Prefabs
             playerAnimations.ToList().ForEach(item => item.Value.RenderOffset = (int)RenderLayer.BomberMan);
             #endregion
 
-            #region FSM
-            drop       = new StateDrop(this);
-            walkUp     = new WalkUp(this);
-            walkDown   = new WalkDown(this);
-            walkLeft   = new WalkLeft(this);
-            walkRight  = new WalkRight(this);
-            dieState   = new StateDie(this);
-            idle       = new Idle(this);
 
-            //walk up
-            walkUp.NextDown  = walkDown;
-            walkUp.NextLeft  = walkLeft;
-            walkUp.NextRight = walkRight;
-            walkUp.NextIdle  = idle;
-
-            //walk down
-            walkDown.NextUp = walkUp;
-            walkDown.NextLeft = walkLeft;
-            walkDown.NextRight = walkRight;
-            walkDown.NextIdle = idle;
-
-            //walk left
-            walkLeft.NextUp = walkUp;
-            walkLeft.NextDown = walkDown;
-            walkLeft.NextRight = walkRight;
-            walkLeft.NextIdle = idle;
-
-            //walk right
-            walkRight.NextLeft = walkLeft;
-            walkRight.NextUp = walkUp;
-            walkRight.NextDown = walkDown;
-            walkRight.NextIdle = idle;
-
-            //idle
-            idle.NextDown = walkDown;
-            idle.NextUp = walkUp;
-            idle.NextLeft = walkLeft;
-            idle.NextRight = walkRight;
-
-            //assign current state
-            idle.OnStateEnter();
-
-            //bomb fsm
+            //Bomb fsm
+            drop = new StateDrop(this);
             drop.OnStateEnter();
 
-
-            #endregion
-
             #region Components
-            AddComponent(new Components.CharacterController());
-            AddComponent(new Components.FSMUpdater(idle));
-            AddComponent(new Components.FSMUpdater(drop));
 
+            AddComponent(new Components.CharacterController());
+            AddComponent(new Components.FSMUpdater(drop));
+            AddComponent(new UpdateAnimation(this));
+          
             //Collider
             BoxCollider2D collider2D = new BoxCollider2D(new Vector2(0.5f, 0.5f));
             collider2D.CollisionMode = CollisionMode.Collision;
@@ -133,11 +84,12 @@ namespace BomberMan2D.Prefabs
 
             Rigidbody2D rigidBody = new Rigidbody2D();
             rigidBody.IsGravityAffected = false;
-
             AddComponent(rigidBody);
+
             AddComponent(new Components.CameraFollow());
 
             #endregion
+
         }
 
         private void OnTriggerEnter(Collider2D other)
@@ -150,6 +102,13 @@ namespace BomberMan2D.Prefabs
 
             if (other.Owner is AI)
             {
+                foreach (Component item in Components)
+                {
+                    item.Enabled = false;
+                }
+
+                this.Active = false;
+
                 Console.WriteLine("Collided With AI");
             }
 
@@ -225,209 +184,60 @@ namespace BomberMan2D.Prefabs
             }
         }
 
-
-
         private class UpdateAnimation : Component, IUpdatable
         {
-            private Bomberman bomb;
+            private Bomberman bomberman;
 
             public UpdateAnimation(Bomberman toUpdate)
             {
-
+                this.bomberman = toUpdate;
             }
             public void Update()
             {
-            }
-        }
-        private class WalkLeft : IState
-        {
-            public WalkUp NextUp { get; set; }
-            public WalkDown NextDown { get; set; }
-            public WalkRight NextRight { get; set; }
-            public Idle NextIdle { get; set; }
-            private Bomberman owner { get; set; }
-
-            public WalkLeft(GameObject owner)
-            {
-                this.owner = owner as Bomberman;
-            }
-
-            public void OnStateEnter() => OnStateUpdate();
-
-            public void OnStateExit()
-            {
-            }
-
-            public IState OnStateUpdate()
-            {
-                owner.EnableAnimation(AnimationType.WALK_LEFT, true);
-                return this;
-            }
-        }
-
-        private class WalkRight : IState
-        {
-            public WalkUp NextUp { get; set; }
-            public WalkDown NextDown { get; set; }
-            public WalkLeft NextLeft { get; set; }
-            public Idle NextIdle { get; set; }
-            private Bomberman owner { get; set; }
-
-            public WalkRight(GameObject owner)
-            {
-                this.owner = owner as Bomberman;
-            }
-
-            public void OnStateEnter()
-            {
-            }
-
-            public void OnStateExit()
-            {
-            }
-
-            public IState OnStateUpdate()
-            {
-                owner.EnableAnimation(AnimationType.WALK_RIGHT, true);
-                return this;
-            }
-        }
-
-        private class WalkUp : IState
-        {
-            public WalkLeft NextLeft { get; set; }
-            public WalkDown NextDown { get; set; }
-            public WalkRight NextRight { get; set; }
-            public Idle NextIdle { get; set; }
-            private Bomberman owner { get; set; }
-
-            public WalkUp(GameObject owner)
-            {
-                this.owner = owner as Bomberman;
-            }
-
-            public void OnStateEnter()
-            {
-            }
-
-            public void OnStateExit()
-            {
-            }
-
-            public IState OnStateUpdate()
-            {
-                owner.EnableAnimation(AnimationType.WALK_UP, true);
-                return this;
-            }
-        }
-
-        private class WalkDown : IState
-        {
-            public WalkUp NextUp { get; set; }
-            public WalkLeft NextLeft { get; set; }
-            public WalkRight NextRight { get; set; }
-            public Idle NextIdle { get; set; }
-            private Bomberman owner { get; set; }
-
-            public WalkDown(GameObject owner)
-            {
-                this.owner = owner as Bomberman;
-            }
-
-            public void OnStateEnter()
-            {
-               
-            }
-
-            public void OnStateExit()
-            {
-
-            }
-
-            public IState OnStateUpdate()
-            {
-                owner.EnableAnimation(AnimationType.WALK_DOWN, true);
-                return this;
-            }
-        }
-
-        private class StateDie : IState
-        {
-            private Bomberman owner { get; set; }
-
-            public StateDie(GameObject owner)
-            {
-                this.owner = owner as Bomberman;
-            }
-
-            public void OnStateEnter()
-            {
-            }
-
-            public void OnStateExit()
-            {
-            }
-
-            public IState OnStateUpdate()
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class Idle : IState
-        {
-            public WalkUp NextUp { get; set; }
-            public WalkDown NextDown { get; set; }
-            public WalkRight NextRight { get; set; }
-            public WalkLeft NextLeft { get; set; }
-
-            private Bomberman owner { get; set; }
-
-            public Idle(GameObject owner)
-            {
-                this.owner = owner as Bomberman;
-            }
-
-            public void OnStateEnter()
-            {
-
-            }
-
-            public void OnStateExit()
-            {
-                owner.EnableAnimation(AnimationType.IDLE, false);
-            }
-
-            public IState OnStateUpdate()
-            {
                 if (Input.IsKeyPressed(KeyCode.S))
                 {
-                    OnStateExit();
-                    NextDown.OnStateEnter();
-                    return NextDown;
+                    bomberman.EnableAnimation(AnimationType.WALK_UP,    false);
+                    bomberman.EnableAnimation(AnimationType.WALK_RIGHT, false);
+                    bomberman.EnableAnimation(AnimationType.WALK_LEFT,  false);
+                    bomberman.EnableAnimation(AnimationType.IDLE, false);
+
+                    bomberman.EnableAnimation(AnimationType.WALK_DOWN, true);
                 }
                 else if (Input.IsKeyPressed(KeyCode.W))
                 {
-                    OnStateExit();
-                    NextUp.OnStateEnter();
-                    return NextUp;
+                    bomberman.EnableAnimation(AnimationType.WALK_DOWN, false);
+                    bomberman.EnableAnimation(AnimationType.WALK_RIGHT, false);
+                    bomberman.EnableAnimation(AnimationType.WALK_LEFT, false);
+                    bomberman.EnableAnimation(AnimationType.IDLE, false);
+
+                    bomberman.EnableAnimation(AnimationType.WALK_UP, true);
                 }
                 else if (Input.IsKeyPressed(KeyCode.D))
                 {
-                    OnStateExit();
-                    NextRight.OnStateEnter();
-                    return NextRight;
+                    bomberman.EnableAnimation(AnimationType.WALK_DOWN, false);
+                    bomberman.EnableAnimation(AnimationType.WALK_UP, false);
+                    bomberman.EnableAnimation(AnimationType.WALK_LEFT, false);
+                    bomberman.EnableAnimation(AnimationType.IDLE, false);
+
+                    bomberman.EnableAnimation(AnimationType.WALK_RIGHT, true);
                 }
                 else if (Input.IsKeyPressed(KeyCode.A))
                 {
-                    OnStateExit();
-                    NextLeft.OnStateEnter();
-                    return NextLeft;
+                    bomberman.EnableAnimation(AnimationType.WALK_DOWN, false);
+                    bomberman.EnableAnimation(AnimationType.WALK_UP, false);
+                    bomberman.EnableAnimation(AnimationType.WALK_RIGHT, false);
+                    bomberman.EnableAnimation(AnimationType.IDLE, false);
+
+                    bomberman.EnableAnimation(AnimationType.WALK_LEFT, true);
                 }
                 else
                 {
-                    owner.EnableAnimation(AnimationType.IDLE, true);
-                    return this;
+                    bomberman.EnableAnimation(AnimationType.WALK_DOWN, false);
+                    bomberman.EnableAnimation(AnimationType.WALK_UP, false);
+                    bomberman.EnableAnimation(AnimationType.WALK_RIGHT, false);
+                    bomberman.EnableAnimation(AnimationType.WALK_LEFT, false);
+
+                    bomberman.EnableAnimation(AnimationType.IDLE, true);
                 }
             }
         }

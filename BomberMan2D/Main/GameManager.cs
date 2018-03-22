@@ -44,11 +44,12 @@ namespace BomberMan2D.Main
             WinState winState = new WinState(this);
 
             //Link State
-            setupState.MenuState   = menuState;
-            menuState.Loop    = loopState;
+            setupState.MenuState = menuState;
+            menuState.Loop = loopState;
             loopState.NextWin = winState;
             loopState.NextLose = loseState;
             loopState.NextPause = pauseState;
+            loseState.Retry = menuState;
 
             setupState.OnStateEnter();
             currentState = setupState;
@@ -87,6 +88,8 @@ namespace BomberMan2D.Main
             FlyWeight.Add("Speed_PW", "Assets/SpeedPw.dat");
             FlyWeight.Add("Flame_PW", "Assets/FlamesPw.dat");
             FlyWeight.Add("MainScreen", "Assets/mainscreen.dat");
+            FlyWeight.Add("Lose", "Assets/Lose.dat");
+
         }
 
         private static void SetupObjectPools()
@@ -129,7 +132,7 @@ namespace BomberMan2D.Main
         private class SetupState : IState
         {
             public MenuState MenuState { get; set; }
-          
+
             private GameManager owner { get; set; }
 
             public SetupState(GameObject owner)
@@ -182,7 +185,7 @@ namespace BomberMan2D.Main
 
                 if (menuBg == null)
                 {
-                    menuBg = new MenuBackground();
+                    menuBg = new MenuBackground("MainScreen");
                     GameObject.Spawn(menuBg);
                 }
                 else
@@ -218,10 +221,18 @@ namespace BomberMan2D.Main
             public PauseState NextPause { get; set; }
 
             private GameManager owner { get; set; }
+            private Bomberman bomberMan;
+            private OnScreenDisplay gui;
+            private EnemySpawner enemySpawner;
+            private TargetSpawner targetSpawner;
+            private Map map;
+
+            private Timer timer;
 
             public LoopState(GameObject owner)
             {
                 this.owner = owner as GameManager;
+                timer      = new Timer(0.6f);
             }
 
             public void OnStateEnter()
@@ -232,32 +243,82 @@ namespace BomberMan2D.Main
 
             public void OnStateExit()
             {
+                gui.Active            = false;
+                targetSpawner.Active = false;
+                enemySpawner.Active = false;
+                map.Active = false;
             }
 
             public IState OnStateUpdate()
             {
+                if (bomberMan.Active == false)
+                    timer.Update();
+
+                if (bomberMan.Active == false && timer.IsOver())
+                {
+                    timer.Stop();
+                    OnStateExit();
+                    NextLose.OnStateEnter();
+                    return NextLose;
+                }
+
                 return this;
             }
 
-            private static void LoadLevels()
+            private void LoadLevels()
             {
-                GameObject.Spawn(new Map("Levels/Level00.csv"));
+                if (map == null)
+                {
+                    map = new Map("Levels/Level00.csv");
+                    GameObject.Spawn(map);
+                }
+                else
+                    map.Active = true;
             }
 
-            private static void LoadGameObjects()
+            private void LoadGameObjects()
             {
                 //OSD
-                GameObject.Spawn(new OnScreenDisplay());
+                if (gui == null)
+                {
+                    gui = new OnScreenDisplay();
+                    GameObject.Spawn(gui);
+                }
+                else
+                    gui.Active = true;
 
                 //Player
-                Bomberman bomberMan = new Bomberman();
-                GameObject.Spawn(bomberMan, Map.GetPlayerSpawnPoint());
+                if (bomberMan == null)
+                {
+                    bomberMan = new Bomberman();
+                    GameObject.Spawn(bomberMan, Map.GetPlayerSpawnPoint());
+                }
+                else
+                {
+                    bomberMan.Active = true;
+                    foreach (Component item in bomberMan.Components)
+                    {
+                        item.Enabled = true;
+                    }
+                }
 
-                ////TargetPoints
-                GameObject.Spawn(new TargetSpawner(5, 3.5f));
+                //TargetPoints
+                if (targetSpawner == null)
+                {
+                    targetSpawner = new TargetSpawner(5, 3.5f);
+                    GameObject.Spawn(targetSpawner);
+                }
+                else
+                    targetSpawner.Active = true;
 
                 //AI
-                GameObject.Spawn(new EnemySpawner(bomberMan));
+                if (enemySpawner == null)
+                {
+                    enemySpawner = new EnemySpawner(bomberMan);
+                    GameObject.Spawn(enemySpawner);
+                }
+                else
+                    enemySpawner.Active = true;
             }
         }
 
@@ -288,7 +349,10 @@ namespace BomberMan2D.Main
 
         private class LoseState : IState
         {
+            public MenuState Retry { get; set; }
+
             private GameManager owner { get; set; }
+            private MenuBackground loseBg;
 
             public LoseState(GameObject owner)
             {
@@ -297,17 +361,31 @@ namespace BomberMan2D.Main
 
             public void OnStateEnter()
             {
-                throw new NotImplementedException();
+                if (loseBg == null)
+                {
+                    loseBg = new MenuBackground("Lose");
+                    GameObject.Spawn(loseBg);
+                }
+                else
+                    loseBg.Active = true;
+
             }
 
             public void OnStateExit()
             {
-                throw new NotImplementedException();
+                loseBg.Active = false;
             }
 
             public IState OnStateUpdate()
             {
-                throw new NotImplementedException();
+                if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.Space))
+                {
+                    OnStateExit();
+                    Retry.OnStateEnter();
+                    return Retry;
+                }
+
+                return this;
             }
         }
 

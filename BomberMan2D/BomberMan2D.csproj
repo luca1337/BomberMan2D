@@ -157,6 +157,9 @@
     <None Include="Assets\Health.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Assets\Lose.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Assets\mainscreen.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
