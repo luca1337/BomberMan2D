@@ -106,6 +106,7 @@
     <Compile Include="Enums\PowerUpType.cs" />
     <Compile Include="Prefabs\BomberMan.cs" />
     <Compile Include="Prefabs\Map.cs" />
+    <Compile Include="Prefabs\Powerups\Mystery.cs" />
     <Compile Include="Prefabs\Powerups\SpeedPow.cs" />
     <Compile Include="Prefabs\TargetPoint.cs" />
     <Compile Include="Prefabs\Tile.cs" />
@@ -136,6 +137,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\BombsPw.dat">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Assets\bomb_drop.dat">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Assets\Box2D.dat">
