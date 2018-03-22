@@ -20,15 +20,12 @@ namespace BomberMan2D.Prefabs
 
         #region FSM
         private StateDrop drop;
-        private WalkUp walkUp;
+        private WalkUp   walkUp;
         private WalkDown walkDown;
         private WalkLeft walkLeft;
         private WalkRight walkRight;
         private StateDie dieState;
         private Idle idle;
-        private IState walkState;
-        private IState bombState;
-        private List<IState> states = new List<IState>();
 
         public Vector2 Location { get; set; }
         #endregion
@@ -116,21 +113,19 @@ namespace BomberMan2D.Prefabs
 
             //assign current state
             idle.OnStateEnter();
-            walkState = idle;
 
             //bomb fsm
             drop.OnStateEnter();
-            bombState = drop;
 
-            states.Add(walkState);
-            states.Add(drop);
 
             #endregion
 
             #region Components
             AddComponent(new Components.CharacterController());
-            AddComponent(new Components.FSMUpdater(walkState));
+            AddComponent(new Components.FSMUpdater(idle));
+            AddComponent(new Components.FSMUpdater(drop));
 
+            //Collider
             BoxCollider2D collider2D = new BoxCollider2D(new Vector2(0.5f, 0.5f));
             collider2D.CollisionMode = CollisionMode.Collision;
             collider2D.TriggerEnter += OnTriggerEnter;
@@ -230,6 +225,20 @@ namespace BomberMan2D.Prefabs
             }
         }
 
+
+
+        private class UpdateAnimation : Component, IUpdatable
+        {
+            private Bomberman bomb;
+
+            public UpdateAnimation(Bomberman toUpdate)
+            {
+
+            }
+            public void Update()
+            {
+            }
+        }
         private class WalkLeft : IState
         {
             public WalkUp NextUp { get; set; }
@@ -271,7 +280,6 @@ namespace BomberMan2D.Prefabs
 
             public void OnStateEnter()
             {
-                OnStateUpdate();
             }
 
             public void OnStateExit()
@@ -300,7 +308,6 @@ namespace BomberMan2D.Prefabs
 
             public void OnStateEnter()
             {
-                OnStateUpdate();
             }
 
             public void OnStateExit()
@@ -329,11 +336,12 @@ namespace BomberMan2D.Prefabs
 
             public void OnStateEnter()
             {
-                OnStateUpdate();
+               
             }
 
             public void OnStateExit()
             {
+
             }
 
             public IState OnStateUpdate()
@@ -372,6 +380,7 @@ namespace BomberMan2D.Prefabs
             public WalkDown NextDown { get; set; }
             public WalkRight NextRight { get; set; }
             public WalkLeft NextLeft { get; set; }
+
             private Bomberman owner { get; set; }
 
             public Idle(GameObject owner)
@@ -386,31 +395,32 @@ namespace BomberMan2D.Prefabs
 
             public void OnStateExit()
             {
-
+                owner.EnableAnimation(AnimationType.IDLE, false);
             }
 
             public IState OnStateUpdate()
             {
                 if (Input.IsKeyPressed(KeyCode.S))
                 {
+                    OnStateExit();
                     NextDown.OnStateEnter();
                     return NextDown;
                 }
-
                 else if (Input.IsKeyPressed(KeyCode.W))
                 {
+                    OnStateExit();
                     NextUp.OnStateEnter();
                     return NextUp;
                 }
-
                 else if (Input.IsKeyPressed(KeyCode.D))
                 {
+                    OnStateExit();
                     NextRight.OnStateEnter();
                     return NextRight;
                 }
-
                 else if (Input.IsKeyPressed(KeyCode.A))
                 {
+                    OnStateExit();
                     NextLeft.OnStateEnter();
                     return NextLeft;
                 }
