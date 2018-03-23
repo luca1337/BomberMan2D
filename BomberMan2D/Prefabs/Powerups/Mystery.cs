@@ -76,14 +76,14 @@ namespace BomberMan2D
 
         public InvulnerabilityManager(Bomberman toBoostUp)
         {
-            timer = new Timer(2f);
+            timer = new Timer(10f);
             player = toBoostUp;
         }
 
         public void Update()
         {
             if (player.Invulnerability)
-                timer.Start();
+                timer.Start(false);
 
             if (timer.IsActive)
                 timer.Update(false);
