@@ -23,8 +23,8 @@
 #x86/
 bld/
 #[Bb]in/
-[Bb]in/Debug/Assets
-[Bb]in/Debug/Levels
+[Bb]in/Debug/Assets/
+[Bb]in/Debug/Levels/
 [Oo]bj/
 [Ll]og/
 
@@ -82,6 +82,7 @@ artifacts/
 *.config
 *.xml
 *.csv
+*.exe
 
 # Chutzpah Test files
 _Chutzpah*
