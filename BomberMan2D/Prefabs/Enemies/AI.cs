@@ -11,6 +11,7 @@ using BomberMan;
 using BomberMan2D.Components;
 using BomberMan2D.Main;
 using OpenTK;
+using Aiv.Fast2D;
 
 namespace BomberMan2D.Prefabs.Enemies
 {
@@ -35,22 +36,27 @@ namespace BomberMan2D.Prefabs.Enemies
 
         #region Renderer
         public abstract AnimationRenderer renderer { get; protected set; }
-        #endregion       
+
+        #endregion
 
         #region FSM
         private PatrolState patrolState;
         private ChaseState chaseState;
         #endregion
 
-        #region Global Private Vars
-        private float radius = 4f;
+        #region Interface Vars
+        public abstract float Radius { get; set; }
+        public abstract ulong Score { get; set; }
+        public abstract float Speed { get; set; }
+        public abstract Transform RefTransform { get; }
         #endregion
 
         #region Constructor
-        protected AI(string name) : base(name)
+        protected AI(string name, Texture tex, int width, int height, int tilesPerRow, int[] keyFrames, float frameLength, bool show, bool stop) : base(name)
         {
-            renderer.RenderOffset = (int)RenderLayer.AI;
+            renderer = new AnimationRenderer(tex, width, height, tilesPerRow, keyFrames, frameLength, show, stop);
             AddComponent(renderer);
+            renderer.RenderOffset = (int)RenderLayer.AI;
 
             patrolState = new PatrolState(this);
             chaseState = new ChaseState(this);
@@ -70,13 +76,7 @@ namespace BomberMan2D.Prefabs.Enemies
         #endregion
 
         #region Collision Events
-        public virtual void OnTriggerEnter(Collider2D other)
-        {
-            if (other.Owner is Explosion)
-            {
-                Console.WriteLine("Collidng with explosion");
-            }
-        }
+        public abstract void OnTriggerEnter(Collider2D other);
         #endregion
 
         #region Pathfinding
@@ -117,15 +117,17 @@ namespace BomberMan2D.Prefabs.Enemies
             }
         }
 
-        public virtual bool IsInRadius(GameObject target)
+        public virtual bool IsInRadius(out GameObject target)
         {
+            target = null;
+
             float distance = ((Player as Bomberman).Transform.Position - this.Transform.Position).Length;
 
             if ((Player as Bomberman).IsBadIndex) return false;
 
             Console.WriteLine();
 
-            if (distance < radius)
+            if (distance < Radius)
             {
                 target = Player as Bomberman;
                 return true;
@@ -162,17 +164,15 @@ namespace BomberMan2D.Prefabs.Enemies
 
             public void OnStateEnter()
             {
-                throw new NotImplementedException();
             }
 
             public void OnStateExit()
             {
-                throw new NotImplementedException();
             }
 
             public IState OnStateUpdate()
             {
-                if (owner.IsInRadius(target))
+                if (owner.IsInRadius(out target))
                 {
                     if (target is Bomberman)
                     {
@@ -220,17 +220,15 @@ namespace BomberMan2D.Prefabs.Enemies
 
             public void OnStateEnter()
             {
-                throw new NotImplementedException();
             }
 
             public void OnStateExit()
             {
-                throw new NotImplementedException();
             }
 
             public IState OnStateUpdate()
             {
-                if (!owner.IsInRadius(target))
+                if (!owner.IsInRadius(out target))
                 {
                     if (oneTimeChase)
                     {
@@ -269,6 +267,5 @@ namespace BomberMan2D.Prefabs.Enemies
             }
         }
         #endregion
-
     }
 }

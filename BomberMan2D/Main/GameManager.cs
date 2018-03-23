@@ -99,7 +99,6 @@ namespace BomberMan2D.Main
         {
             Pool<Bomb>.Register(() => new Bomb(), 100);
             Pool<Explosion>.Register(() => new Explosion(), 100);
-            //Pool<AI>.Register(() => new AI(), 100);
 
             GlobalFactory<Bomb>.RegisterPool(typeof(Bomb), () => new Bomb());
             //powerups
