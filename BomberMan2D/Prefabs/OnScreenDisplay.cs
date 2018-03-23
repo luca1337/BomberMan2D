@@ -7,7 +7,8 @@ using Aiv.Fast2D;
 using OpenTK;
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
-using BehaviourEngine.Test;
+using BehaviourEngine.Components;
+using BomberMan2D.Components;
 
 namespace BomberMan2D.Prefabs
 {

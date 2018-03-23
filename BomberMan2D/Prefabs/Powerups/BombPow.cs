@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Aiv.Fast2D;
 using BehaviourEngine;
 using OpenTK;
+using BomberMan2D.Enums;
 
 namespace BomberMan2D.Prefabs.Powerups
 {

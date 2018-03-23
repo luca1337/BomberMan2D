@@ -9,6 +9,8 @@ using OpenTK;
 using BehaviourEngine.Interfaces;
 using BomberMan;
 using static BehaviourEngine.Collider2D;
+using BomberMan2D.Enums;
+using BomberMan2D.Components;
 
 namespace BomberMan2D
 {

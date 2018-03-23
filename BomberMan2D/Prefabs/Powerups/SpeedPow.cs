@@ -7,6 +7,7 @@ using Aiv.Fast2D;
 using BehaviourEngine;
 using BomberMan2D.Components;
 using OpenTK;
+using BomberMan2D.Enums;
 
 namespace BomberMan2D.Prefabs.Powerups
 {
