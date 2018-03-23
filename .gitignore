@@ -23,11 +23,8 @@
 #x86/
 bld/
 #[Bb]in/
-<<<<<<< HEAD
 [Bb]in/Debug/Assets/
 [Bb]in/Debug/Levels/
-=======
->>>>>>> parent of 39c452d... Updateg .gitignore
 [Oo]bj/
 [Ll]og/
 
@@ -83,12 +80,9 @@ artifacts/
 *.svclog
 *.scc
 *.config
-<<<<<<< HEAD
 *.xml
 *.csv
 *.exe
-=======
->>>>>>> parent of 39c452d... Updateg .gitignore
 
 # Chutzpah Test files
 _Chutzpah*
