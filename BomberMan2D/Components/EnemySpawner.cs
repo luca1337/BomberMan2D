@@ -25,7 +25,7 @@ namespace BomberMan2D.Components
                     x.Transform.Position = Map.GetEnemySpawnPoints()[RandomManager.Instance.Random.Next(0, Map.GetEnemySpawnPoints().Count())];
                 });*/
 
-                GameObject.Spawn(enemy);
+                //GameObject.Spawn(enemy);
             }
         }
     }

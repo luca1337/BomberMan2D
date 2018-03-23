@@ -13,26 +13,21 @@ namespace BomberMan2D.Prefabs.Enemies
 {
     public class Minvo : AI
     {
-        public override AnimationRenderer renderer { get; protected set; }
+        public override Transform RefTransform => throw new NotImplementedException();
 
-        public Minvo() : base("Minvo")
+        public override ulong Score => throw new NotImplementedException();
+
+        public override float Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override float Radius { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public Minvo() : base("Minvo", FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false)
         {
-            renderer = new AnimationRenderer(FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false);
+
         }
 
         public override void OnTriggerEnter(Collider2D other)
         {
-            base.OnTriggerEnter(other);
-        }
-
-        public override void OnGet()
-        {
-            base.OnGet();
-        }
-
-        public override void OnRecycle()
-        {
-            base.OnRecycle();
+            throw new NotImplementedException();
         }
     }
 }

@@ -11,6 +11,7 @@ using BomberMan;
 using BomberMan2D.Components;
 using BomberMan2D.Main;
 using OpenTK;
+using Aiv.Fast2D;
 
 namespace BomberMan2D.Prefabs.Enemies
 {
@@ -34,23 +35,30 @@ namespace BomberMan2D.Prefabs.Enemies
         #endregion
 
         #region Renderer
-        public abstract AnimationRenderer renderer { get; protected set; }
-        #endregion       
+        protected AnimationRenderer Renderer { get; private set; }
+
+        public abstract Transform RefTransform { get; }
+
+
+        #endregion
 
         #region FSM
         private PatrolState patrolState;
         private ChaseState chaseState;
         #endregion
 
-        #region Global Private Vars
-        private float radius = 4f;
+        #region Interface Vars
+        public abstract ulong Score { get; }
+        public abstract float Speed { get; set; }
+        public abstract float Radius { get; set; }
         #endregion
 
         #region Constructor
-        protected AI(string name) : base(name)
+        protected AI(string name, Texture tex, int width, int height, int tilesPerRow, int[] keyFrames, float frameLength, bool show, bool stop) : base(name)
         {
-            renderer.RenderOffset = (int)RenderLayer.AI;
-            AddComponent(renderer);
+            Renderer = new AnimationRenderer(tex, width, height, tilesPerRow, keyFrames, frameLength, show, stop);
+            Renderer.RenderOffset = (int)RenderLayer.AI;
+            AddComponent(Renderer);
 
             patrolState = new PatrolState(this);
             chaseState = new ChaseState(this);
@@ -70,13 +78,7 @@ namespace BomberMan2D.Prefabs.Enemies
         #endregion
 
         #region Collision Events
-        public virtual void OnTriggerEnter(Collider2D other)
-        {
-            if (other.Owner is Explosion)
-            {
-                Console.WriteLine("Collidng with explosion");
-            }
-        }
+        public abstract void OnTriggerEnter(Collider2D other);
         #endregion
 
         #region Pathfinding
@@ -97,7 +99,7 @@ namespace BomberMan2D.Prefabs.Enemies
             CurrentPath = AStar.GetPath(item, pX, pY, x, y);
         }
 
-        public virtual void DoPath()
+        public virtual void ExecutePath()
         {
             if (!Computed)
             {
@@ -105,7 +107,7 @@ namespace BomberMan2D.Prefabs.Enemies
                 if (targetPos != Transform.Position)
                 {
                     Vector2 direction = (targetPos - Transform.Position).Normalized();
-                    Transform.Position += direction * 1.5f * Time.DeltaTime;
+                    Transform.Position += direction * Speed * Time.DeltaTime;
                 }
 
                 float distance = (targetPos - Transform.Position).Length;
@@ -125,7 +127,7 @@ namespace BomberMan2D.Prefabs.Enemies
 
             Console.WriteLine();
 
-            if (distance < radius)
+            if (distance < Radius)
             {
                 target = Player as Bomberman;
                 return true;
@@ -153,7 +155,7 @@ namespace BomberMan2D.Prefabs.Enemies
             private AI owner { get; set; }
             public ChaseState Next { get; set; }
 
-            private GameObject target;
+            private GameObject target = null;
 
             public PatrolState(AI owner)
             {
@@ -196,7 +198,7 @@ namespace BomberMan2D.Prefabs.Enemies
                     return this;
                 }
 
-                owner.DoPath();
+                owner.ExecutePath();
 
                 return this;
             }
@@ -208,7 +210,7 @@ namespace BomberMan2D.Prefabs.Enemies
             public PatrolState Next { get; set; }
 
             private IWaypoint next;
-            private GameObject target;
+            private GameObject target = null;
             private bool oneTimeChase;
 
             public ChaseState(AI owner)
@@ -256,7 +258,7 @@ namespace BomberMan2D.Prefabs.Enemies
                         return this;
                     }
 
-                    owner.DoPath();
+                    owner.ExecutePath();
 
                 }
                 else

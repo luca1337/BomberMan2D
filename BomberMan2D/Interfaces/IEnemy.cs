@@ -25,7 +25,9 @@ namespace BomberMan2D.Interfaces
         /// <summary>
         /// void method that just incapsulate the execution path for the Enemy to the target.
         /// </summary>
-        void DoPath();
+        void ExecutePath();
+
+        Transform RefTransform { get; }
 
         /// <summary>
         /// Player which will be the out target.
@@ -36,5 +38,20 @@ namespace BomberMan2D.Interfaces
         /// Target that enemy will switch to, from player to a generic target point around the map.
         /// </summary>
         IWaypoint Target { get; set; }
+
+        /// <summary>
+        /// Score that each enemy will give when killed.
+        /// </summary>
+        ulong Score { get; }
+
+        /// <summary>
+        /// Speed that tells how fast the enemy will move.
+        /// </summary>
+        float Speed { get; set; }
+
+        /// <summary>
+        /// Radius of the enemy that will turn him to move towards the target.
+        /// </summary>
+        float Radius { get; set; }
     }
 }

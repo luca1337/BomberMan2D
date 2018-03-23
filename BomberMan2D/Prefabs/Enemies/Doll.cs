@@ -13,27 +13,21 @@ namespace BomberMan2D.Prefabs.Enemies
 {
     public class Doll : AI
     {
-        public override AnimationRenderer renderer { get; protected set; }
+        public override Transform RefTransform => throw new NotImplementedException();
 
-        public Doll() : base("Doll")
+        public override ulong Score => throw new NotImplementedException();
+
+        public override float Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override float Radius { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public Doll() : base("Doll", FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false)
         {
-            renderer = new AnimationRenderer(FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false);
+
         }
 
         public override void OnTriggerEnter(Collider2D other)
         {
-            base.OnTriggerEnter(other);
+            throw new NotImplementedException();
         }
-
-        public override void OnGet()
-        {
-            base.OnGet();
-        }
-
-        public override void OnRecycle()
-        {
-            base.OnRecycle();
-        }
-
     }
 }

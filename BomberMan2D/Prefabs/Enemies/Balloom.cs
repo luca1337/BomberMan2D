@@ -10,26 +10,20 @@ namespace BomberMan2D.Prefabs.Enemies
 {
     public class Balloom : AI
     {
-        public override AnimationRenderer renderer { get; protected set; }
+        public override Transform RefTransform => this.Transform;
 
-        public Balloom() : base("Balloom")
+        public override ulong Score { get { return 10; } }
+        public override float Speed { get; set; } = 1.5f;
+        public override float Radius { get; set; } = 4.0f;
+
+        public Balloom() : base("Balloom", FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false)
         {
-            renderer = new AnimationRenderer(FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false);
+
         }
 
         public override void OnTriggerEnter(Collider2D other)
         {
-            base.OnTriggerEnter(other);
-        }
 
-        public override void OnGet()
-        {
-            base.OnGet();
-        }
-
-        public override void OnRecycle()
-        {
-            base.OnRecycle();
         }
     }
 }
