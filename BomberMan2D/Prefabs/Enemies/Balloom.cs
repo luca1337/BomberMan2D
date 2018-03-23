@@ -15,7 +15,7 @@ namespace BomberMan2D.Prefabs.Enemies
 
         public override ulong Score { get; set; }
         public override float Speed { get; set; }
-        public override float Radius { get; set; }
+        public override float Radius { get; set; } = 4f;
 
         public override Transform RefTransform => this.Transform;
 
