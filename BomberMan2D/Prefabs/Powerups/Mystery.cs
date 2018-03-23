@@ -15,7 +15,6 @@ namespace BomberMan2D
     public class Mystery : GameObject, IPowerup
     {
         private Rigidbody2D rigidBody;
-        private bool oneTime = true;
 
         public Mystery() : base()
         {

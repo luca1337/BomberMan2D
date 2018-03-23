@@ -5,12 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
+using BomberMan2D.AI;
 using BomberMan2D.Interfaces;
 
 namespace BomberMan2D.Prefabs.Enemies
 {
     public class Kondoria : GameObject, IEnemy, IPathfind
     {
+        public Bomberman Player { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IWaypoint Target { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public List<Node> CurrentPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public bool Computed => throw new NotImplementedException();
@@ -30,7 +33,7 @@ namespace BomberMan2D.Prefabs.Enemies
             throw new NotImplementedException();
         }
 
-        public bool IsInRadius(out GameObject target)
+        public bool IsInRadius(GameObject target)
         {
             throw new NotImplementedException();
         }

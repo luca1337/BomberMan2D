@@ -39,28 +39,28 @@ namespace BomberMan2D.Factories
             pools[type].Recycle(toRecycle);
         }
 
-        private class Pool<T>
+        private class Pool<K>
         {
-            private Queue<T> instances;
-            private Func<T> allocator;
-            public Pool(Func<T> allocator)
+            private Queue<K> instances;
+            private Func<K> allocator;
+            public Pool(Func<K> allocator)
             {
-                instances = new Queue<T>();
+                instances = new Queue<K>();
                 this.allocator = allocator;
             }
 
-            public T Get(Action<T> onGet = null)
+            public K Get(Action<K> onGet = null)
             {
                 if (instances == null)
                     throw new Exception("Pool is not registered");
 
-                T toReturn = instances.Count == 0 ? allocator.Invoke() : instances.Dequeue();
+                K toReturn = instances.Count == 0 ? allocator.Invoke() : instances.Dequeue();
 
                 onGet?.Invoke(toReturn);
                 return toReturn;
             }
 
-            public void Recycle(T toRecycle, Action<T> onRecycle = null)
+            public void Recycle(K toRecycle, Action<K> onRecycle = null)
             {
                 if (instances == null)
                     throw new Exception("Pool is not registered");

@@ -95,7 +95,6 @@
     <Compile Include="Prefabs\Explosion.cs" />
     <Compile Include="AI\IWaypoint.cs" />
     <Compile Include="Main\LevelManager.cs" />
-    <Compile Include="Prefabs\Enemies\AI.cs" />
     <Compile Include="Enums\AnimationType.cs" />
     <Compile Include="Enums\CollisionLayer.cs" />
     <Compile Include="Components\BoxCollider2DRenderer.cs" />
