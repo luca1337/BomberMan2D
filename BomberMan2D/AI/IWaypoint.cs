@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
 
-namespace BomberMan2D
+namespace BomberMan2D.AI
 {
     public interface IWaypoint
     {

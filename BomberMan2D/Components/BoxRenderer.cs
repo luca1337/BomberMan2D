@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using OpenTK;
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
-using BehaviourEngine.Test;
 using Aiv.Fast2D;
 
 
-namespace BomberMan2D
+namespace BomberMan2D.Components
 {
     public class BoxRenderer : Component, IDrawable
     {

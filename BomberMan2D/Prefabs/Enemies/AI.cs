@@ -1,6 +1,7 @@
 ﻿using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BomberMan;
+using BomberMan2D.AI;
 using BomberMan2D.Components;
 using BomberMan2D.Main;
 using OpenTK;

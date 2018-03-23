@@ -1,4 +1,5 @@
-﻿using BomberMan2D.Interfaces;
+﻿using BomberMan2D.Enums;
+using BomberMan2D.Interfaces;
 using BomberMan2D.Prefabs;
 using BomberMan2D.Prefabs.Powerups;
 using System;

@@ -7,6 +7,7 @@ using BehaviourEngine;
 using OpenTK;
 using System.IO;
 using BehaviourEngine.Interfaces;
+using BomberMan2D.Main;
 
 namespace BomberMan2D.Prefabs
 {

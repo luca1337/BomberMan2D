@@ -3,6 +3,8 @@ using Aiv.Fast2D.Utils.Input;
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BomberMan;
+using BomberMan2D.AI;
+using BomberMan2D.Enums;
 using OpenTK;
 using System;
 using System.Collections.Generic;

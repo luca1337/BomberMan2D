@@ -12,7 +12,7 @@ using BomberMan2D.Main;
 using BomberMan2D.Prefabs;
 using OpenTK;
 
-namespace BomberMan2D
+namespace BomberMan2D.Main
 {
     public sealed class Game
     {

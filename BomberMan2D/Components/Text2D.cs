@@ -8,7 +8,7 @@ using OpenTK;
 using BehaviourEngine.Interfaces;
 using BehaviourEngine.Renderer;
 
-namespace BehaviourEngine.Test
+namespace BehaviourEngine.Components
 {
     public class Text2D : Component , IUpdatable, IDrawable
     {

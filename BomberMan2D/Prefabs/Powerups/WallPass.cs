@@ -8,6 +8,8 @@ using OpenTK;
 using BehaviourEngine.Utils;
 using BehaviourEngine;
 using BomberMan2D.Prefabs;
+using BomberMan2D.Main;
+using BomberMan2D.Enums;
 
 namespace BomberMan2D.Prefabs.Powerups
 {

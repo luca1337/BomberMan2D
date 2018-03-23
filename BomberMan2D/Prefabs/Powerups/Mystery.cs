@@ -8,6 +8,7 @@ using OpenTK;
 using BomberMan2D.Prefabs;
 using BomberMan2D.Components;
 using BehaviourEngine.Interfaces;
+using BomberMan2D.Enums;
 
 namespace BomberMan2D
 {

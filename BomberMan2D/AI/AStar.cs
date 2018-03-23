@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BomberMan2D
+namespace BomberMan2D.AI
 {
     public static class AStar
     {

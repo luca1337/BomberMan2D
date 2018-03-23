@@ -1,6 +1,8 @@
 ﻿using BehaviourEngine;
 using BehaviourEngine.Utils;
+using BomberMan2D.Enums;
 using BomberMan2D.Factories;
+using BomberMan2D.Main;
 using OpenTK;
 using System;
 using System.Collections.Generic;

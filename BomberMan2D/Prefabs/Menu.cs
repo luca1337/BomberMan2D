@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using OpenTK;
 using BehaviourEngine.Interfaces;
 using Aiv.Fast2D.Utils.Input;
+using BehaviourEngine.Components;
 
 namespace BomberMan2D.Prefabs
 {

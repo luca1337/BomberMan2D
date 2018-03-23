@@ -13,7 +13,7 @@ using BomberMan2D.Components;
 using BomberMan2D.Prefabs;
 using OpenTK;
 
-namespace BomberMan2D
+namespace BomberMan2D.Prefabs
 {
     public class Bomb : GameObject
     {

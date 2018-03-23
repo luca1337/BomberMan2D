@@ -1,7 +1,7 @@
 ﻿using BehaviourEngine;
 using EngineBuilder;
 
-namespace BomberMan2D
+namespace BomberMan2D.Main
 {
     class Program
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BomberMan2D
+namespace BomberMan2D.Components
 {
     public class BoxCollider2DRenderer : SpriteRenderer, IStartable
     {

@@ -9,7 +9,7 @@ using BehaviourEngine;
 using BehaviourEngine.Interfaces;
 using BehaviourEngine.Test;
 
-namespace BomberMan2D
+namespace BomberMan2D.Prefabs
 {
     public class OnScreenDisplay : GameObject
     {
