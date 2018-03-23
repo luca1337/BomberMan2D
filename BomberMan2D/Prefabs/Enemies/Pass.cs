@@ -13,21 +13,26 @@ namespace BomberMan2D.Prefabs.Enemies
 {
     public class Pass : AI
     {
-        public override AnimationRenderer renderer { get; protected set; }
+        public override AnimationRenderer renderer { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
 
-        public override ulong Score { get; set; }
-        public override float Speed { get; set; }
-        public override float Radius { get; set; }
-        public override Transform RefTransform => this.Transform;
-
-        public Pass() : base("Pass", FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false)
+        public Pass() : base("Pass")
         {
-
+            renderer = new AnimationRenderer(FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false);
         }
 
         public override void OnTriggerEnter(Collider2D other)
         {
+            base.OnTriggerEnter(other);
+        }
 
+        public override void OnGet()
+        {
+            base.OnGet();
+        }
+
+        public override void OnRecycle()
+        {
+            base.OnRecycle();
         }
     }
 }

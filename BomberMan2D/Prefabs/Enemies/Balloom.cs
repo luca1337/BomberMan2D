@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BomberMan;
 using BehaviourEngine;
-using Aiv.Fast2D;
 
 namespace BomberMan2D.Prefabs.Enemies
 {
@@ -13,20 +12,24 @@ namespace BomberMan2D.Prefabs.Enemies
     {
         public override AnimationRenderer renderer { get; protected set; }
 
-        public override ulong Score { get; set; }
-        public override float Speed { get; set; }
-        public override float Radius { get; set; }
-
-        public override Transform RefTransform => this.Transform;
-
-        public Balloom() : base("Balloom", FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false)
+        public Balloom() : base("Balloom")
         {
-            
+            renderer = new AnimationRenderer(FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false);
         }
 
         public override void OnTriggerEnter(Collider2D other)
         {
+            base.OnTriggerEnter(other);
+        }
 
+        public override void OnGet()
+        {
+            base.OnGet();
+        }
+
+        public override void OnRecycle()
+        {
+            base.OnRecycle();
         }
     }
 }

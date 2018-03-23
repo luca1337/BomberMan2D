@@ -15,8 +15,7 @@ namespace BomberMan2D.Factories
         {
             // .. register pools here
 
-            GlobalFactory<IEnemy>.RegisterPool(typeof(Balloom), () => new Balloom());
-            GlobalFactory<IEnemy>.RegisterPool(typeof(Doll), () => new Doll());
+            GlobalFactory<Prefabs.Enemies.AI>.RegisterPool(typeof(Prefabs.Enemies.Doll), () => new Prefabs.Enemies.Doll());
 
             // ..
         }
