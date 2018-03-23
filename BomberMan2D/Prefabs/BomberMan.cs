@@ -107,7 +107,7 @@ namespace BomberMan2D.Prefabs
                 powerup.ApplyPowerUp(this);
             }
 
-            if (other.Owner is AI && !Invulnerability)
+            if (other.Owner is Prefabs.Enemies.AI && !Invulnerability)
             {
                foreach (Component item in Components)
                {

@@ -5,47 +5,34 @@ using System.Text;
 using System.Threading.Tasks;
 using BehaviourEngine;
 using BehaviourEngine.Interfaces;
+using BomberMan;
 using BomberMan2D.AI;
 using BomberMan2D.Interfaces;
 
 namespace BomberMan2D.Prefabs.Enemies
 {
-    public class Kondoria : GameObject, IEnemy, IPathfind
+    public class Kondoria : AI
     {
-        public Bomberman Player { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public IWaypoint Target { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public List<Node> CurrentPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override AnimationRenderer renderer { get; protected set; }
 
-        public bool Computed => throw new NotImplementedException();
-
-        public Kondoria()
+        public Kondoria() : base("Kondoria")
         {
-
+            renderer = new AnimationRenderer(FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false);
         }
 
-        public void ComputePath<T>(T item, int x, int y) where T : IMap
+        public override void OnTriggerEnter(Collider2D other)
         {
-            throw new NotImplementedException();
+            base.OnTriggerEnter(other);
         }
 
-        public void DoPath()
+        public override void OnGet()
         {
-            throw new NotImplementedException();
+            base.OnGet();
         }
 
-        public bool IsInRadius(GameObject target)
+        public override void OnRecycle()
         {
-            throw new NotImplementedException();
-        }
-
-        public void OnGet()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnRecycle()
-        {
-            throw new NotImplementedException();
+            base.OnRecycle();
         }
     }
 }
