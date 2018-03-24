@@ -13,21 +13,19 @@ namespace BomberMan2D.Prefabs.Enemies
 {
     public class Pontan : AI
     {
-        public override Transform RefTransform => throw new NotImplementedException();
+        public override Transform RefTransform => Transform;
+        public override ulong Score => 8000;
+        public override float Speed => 1.7f;
+        public override float Radius => 5.0f;
+        public override bool CanPassWall => true;
 
-        public override ulong Score => throw new NotImplementedException();
-
-        public override float Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override float Radius { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public Pontan() : base("Pontan", FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false)
+        public Pontan() : base("Pontan", FlyWeight.Get("Pontan"), 50, 50, 6, new int[] { 0, 1, 2, 3 }, 0.2f, true, false)
         {
 
         }
 
         public override void OnTriggerEnter(Collider2D other)
         {
-            throw new NotImplementedException();
         }
     }
 }

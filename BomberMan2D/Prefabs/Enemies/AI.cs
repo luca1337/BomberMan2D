@@ -49,8 +49,9 @@ namespace BomberMan2D.Prefabs.Enemies
 
         #region Interface Vars
         public abstract ulong Score { get; }
-        public abstract float Speed { get; set; }
-        public abstract float Radius { get; set; }
+        public abstract float Speed { get; }
+        public abstract float Radius { get; }
+        public abstract bool CanPassWall { get; }
         #endregion
 
         #region Constructor
@@ -125,8 +126,6 @@ namespace BomberMan2D.Prefabs.Enemies
 
             if ((Player as Bomberman).IsBadIndex) return false;
 
-            Console.WriteLine();
-
             if (distance < Radius)
             {
                 target = Player as Bomberman;
@@ -164,12 +163,10 @@ namespace BomberMan2D.Prefabs.Enemies
 
             public void OnStateEnter()
             {
-                throw new NotImplementedException();
             }
 
             public void OnStateExit()
             {
-                throw new NotImplementedException();
             }
 
             public IState OnStateUpdate()
@@ -222,12 +219,10 @@ namespace BomberMan2D.Prefabs.Enemies
 
             public void OnStateEnter()
             {
-                throw new NotImplementedException();
             }
 
             public void OnStateExit()
             {
-                throw new NotImplementedException();
             }
 
             public IState OnStateUpdate()
@@ -237,7 +232,6 @@ namespace BomberMan2D.Prefabs.Enemies
                     if (oneTimeChase)
                     {
                         next = GameManager.GetAllPoints()[RandomManager.Instance.Random.Next(0, GameManager.GetPointsCount())];
-                        Console.WriteLine(next);
                         oneTimeChase = !oneTimeChase;
                     }
 

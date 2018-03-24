@@ -13,21 +13,20 @@ namespace BomberMan2D.Prefabs.Enemies
 {
     public class Kondoria : AI
     {
-        public override Transform RefTransform => throw new NotImplementedException();
+        public override Transform RefTransform => Transform;
 
-        public override ulong Score => throw new NotImplementedException();
+        public override ulong Score => 1000;
+        public override float Speed => 0.7f;
+        public override float Radius => 5.0f;
+        public override bool CanPassWall => true;
 
-        public override float Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public override float Radius { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public Kondoria() : base("Kondoria", FlyWeight.Get("AI"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false)
+        public Kondoria() : base("Kondoria", FlyWeight.Get("Kondoria"), (int)18.5f, 17, 4, new int[] { 0, 1, 2, 3 }, 0.2f, true, false)
         {
 
         }
 
         public override void OnTriggerEnter(Collider2D other)
         {
-            throw new NotImplementedException();
         }
     }
 }

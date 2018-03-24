@@ -40,7 +40,7 @@ namespace BomberMan2D.Prefabs
 
             colliders = new List<BoxCollider2D>();
             locations = new List<Vector2>();
-            renderer  = new AnimationRenderer(FlyWeight.Get("Bomb"), 150, 150, 4, new int[] { 0, 1, 2, 3, 2 }, 0.2f, true, false);
+            renderer  = new AnimationRenderer(FlyWeight.Get("Bomb"), 50, 50, 3, new int[] { 0, 1, 2, 1 }, 0.2f, true, false);
             AddComponent(renderer);
 
             #region FSM

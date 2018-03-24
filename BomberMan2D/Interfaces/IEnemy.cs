@@ -47,11 +47,16 @@ namespace BomberMan2D.Interfaces
         /// <summary>
         /// Speed that tells how fast the enemy will move.
         /// </summary>
-        float Speed { get; set; }
+        float Speed { get; }
 
         /// <summary>
         /// Radius of the enemy that will turn him to move towards the target.
         /// </summary>
-        float Radius { get; set; }
+        float Radius { get; }
+
+        /// <summary>
+        /// Tells if the current enemy can go beyond walls.
+        /// </summary>
+        bool CanPassWall { get; }
     }
 }

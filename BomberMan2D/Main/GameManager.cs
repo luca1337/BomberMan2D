@@ -77,9 +77,7 @@ namespace BomberMan2D.Main
             FlyWeight.Add("Wall", "Assets/Wall_01.dat");
             FlyWeight.Add("Obstacle", "Assets/Obstacle_01.dat");
             FlyWeight.Add("BomberMan", "Assets/Bombertab1.dat");
-            FlyWeight.Add("Speed", "Assets/Speed.dat");
-            FlyWeight.Add("Health", "Assets/Health.dat");
-            FlyWeight.Add("Bomb", "Assets/bomb_drop.dat");
+            FlyWeight.Add("Bomb", "Assets/Bomb.dat");
             FlyWeight.Add("Explosion", "Assets/Explosion.dat");
             FlyWeight.Add("AI", "Assets/ballon.dat");
             FlyWeight.Add("Bomb_PW", "Assets/BombsPw.dat");
@@ -92,7 +90,13 @@ namespace BomberMan2D.Main
             FlyWeight.Add("Flame_PW", "Assets/FlamesPw.dat");
             FlyWeight.Add("MainScreen", "Assets/mainscreen.dat");
             FlyWeight.Add("Lose", "Assets/Lose.dat");
-
+            FlyWeight.Add("Balloom", "Assets/Balloom.dat");
+            FlyWeight.Add("Oneal", "Assets/Oneal.dat");
+            FlyWeight.Add("Doll", "Assets/Doll.dat");
+            FlyWeight.Add("Kondoria", "Assets/Kondoria.dat");
+            FlyWeight.Add("Minvo", "Assets/Minvo.dat");
+            FlyWeight.Add("Pass", "Assets/Pass.dat");
+            FlyWeight.Add("Ovapi", "Assets/Ovapi.dat");
         }
 
         private static void SetupObjectPools()
