@@ -13,11 +13,14 @@ namespace BomberMan2D.Factories
     {
         static EnemyFactory()
         {
-            // .. register pools here
-
             GlobalFactory<IEnemy>.RegisterPool(typeof(Balloom), () => new Balloom());
-
-            // ..
+            GlobalFactory<IEnemy>.RegisterPool(typeof(Doll), () => new Doll());
+            GlobalFactory<IEnemy>.RegisterPool(typeof(Oneal), () => new Oneal());
+            GlobalFactory<IEnemy>.RegisterPool(typeof(Minvo), () => new Minvo());
+            GlobalFactory<IEnemy>.RegisterPool(typeof(Ovapi), () => new Ovapi());
+            GlobalFactory<IEnemy>.RegisterPool(typeof(Pass), () => new Pass());
+            GlobalFactory<IEnemy>.RegisterPool(typeof(Kondoria), () => new Kondoria());
+            GlobalFactory<IEnemy>.RegisterPool(typeof(Pontan), () => new Pontan());
         }
 
         public static IEnemy Get(EnemyType type)

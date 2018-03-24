@@ -32,7 +32,6 @@ namespace BomberMan2D.Prefabs
         private List<Vector2> locations;
         private StateExplode explode;
         private StateWait wait;
-     //   private IState currentState;
 
         public Bomb() : base("Bomb")
         {
@@ -217,7 +216,7 @@ namespace BomberMan2D.Prefabs
             public StateWait(GameObject owner)
             {
                 this.owner = owner;
-                timer = new Timer(1f);
+                timer = new Timer(3f);
             }
 
             public void OnStateEnter()
