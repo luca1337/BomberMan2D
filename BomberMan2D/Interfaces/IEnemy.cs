@@ -20,7 +20,7 @@ namespace BomberMan2D.Interfaces
         /// </summary>
         /// <param name="target"></param>
         /// <returns></returns>
-        bool IsInRadius(GameObject target);
+        bool IsInRadius(out GameObject target);
 
         /// <summary>
         /// void method that just incapsulate the execution path for the Enemy to the target.

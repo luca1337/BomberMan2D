@@ -120,9 +120,11 @@ namespace BomberMan2D.Prefabs.Enemies
             }
         }
 
-        public virtual bool IsInRadius(GameObject target)
+        public virtual bool IsInRadius(out GameObject target)
         {
             float distance = ((Player as Bomberman).Transform.Position - this.Transform.Position).Length;
+
+            target = null;
 
             if ((Player as Bomberman).IsBadIndex) return false;
 
@@ -171,7 +173,7 @@ namespace BomberMan2D.Prefabs.Enemies
 
             public IState OnStateUpdate()
             {
-                if (owner.IsInRadius(target))
+                if (owner.IsInRadius(out target))
                 {
                     if (target is Bomberman)
                     {
@@ -186,14 +188,14 @@ namespace BomberMan2D.Prefabs.Enemies
                     return Next;
                 }
 
-                if (owner.CurrentPath == null)
-                    return this;
+                //if (owner.CurrentPath == null)
+                //    return this;
 
-                if (owner.CurrentPath.Count == 0)
-                {
-                    owner.CurrentPath = null;
-                    return this;
-                }
+                //if (owner.CurrentPath.Count == 0)
+                //{
+                //    owner.CurrentPath = null;
+                //    return this;
+                //}
 
                 owner.ExecutePath();
 
@@ -227,7 +229,7 @@ namespace BomberMan2D.Prefabs.Enemies
 
             public IState OnStateUpdate()
             {
-                if (!owner.IsInRadius(target))
+                if (!owner.IsInRadius(out target))
                 {
                     if (oneTimeChase)
                     {
