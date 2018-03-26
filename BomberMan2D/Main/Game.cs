@@ -21,7 +21,7 @@ namespace BomberMan2D.Main
         {
             #region Context
             Window window = new Window(1200, 700, "BomberMan");
-            window.SetDefaultOrthographicSize(14);
+            window.SetDefaultOrthographicSize(15);
             window.SetClearColor(0.0f, 0.61f, 0.0f);
             Engine.Init(window);
             #endregion
