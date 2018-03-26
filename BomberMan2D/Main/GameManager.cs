@@ -318,8 +318,7 @@ namespace BomberMan2D.Main
             {
                 if (map == null)
                 {
-                    map = new Map("Levels/Level00.csv");
-                    GameObject.Spawn(map);
+                    LevelManager.Add("Levels/Level00.csv");
                 }
                 else
                 {

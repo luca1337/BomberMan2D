@@ -188,14 +188,14 @@ namespace BomberMan2D.Prefabs.Enemies
                     return Next;
                 }
 
-                //if (owner.CurrentPath == null)
-                //    return this;
+                if (owner.CurrentPath == null)
+                    return this;
 
-                //if (owner.CurrentPath.Count == 0)
-                //{
-                //    owner.CurrentPath = null;
-                //    return this;
-                //}
+                if (owner.CurrentPath.Count == 0)
+                {
+                    owner.CurrentPath = null;
+                    return this;
+                }
 
                 owner.ExecutePath();
 

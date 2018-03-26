@@ -37,7 +37,6 @@ namespace BomberMan2D.Prefabs
             MapNodes = new Node[cells.Count];
             GenerateNodes();
             GenerateNeighborNode();
-            LevelManager.Add(fileName, this);
         }
 
         private void GenerateMap()

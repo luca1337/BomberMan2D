@@ -11,15 +11,24 @@ namespace BomberMan2D.Main
 {
     public static class LevelManager
     {
-        private static Dictionary<string, Map> maps = new Dictionary<string, Map>();
-        public static Map CurrentMap { get; set; }
+        private static Dictionary<string, Map> maps;
+        private static Map map;
 
-        public static IMap Add(string mapName, Map map)
+        public static Map CurrentMap { get => map; private set => map = value; }
+
+        static LevelManager()
+        {
+            maps = new Dictionary<string, Map>();
+        }
+
+        public static IMap Add(string mapName)
         {
             try
             {
+                map = new Map(mapName);
                 maps.Add(mapName, map);
                 CurrentMap = maps[mapName];
+                GameObject.Spawn(CurrentMap);
                 return map;
             }
             catch
