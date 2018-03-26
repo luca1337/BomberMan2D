@@ -69,8 +69,6 @@ namespace BomberMan2D.Main
             LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.SolidWall);
         }
 
-
-
         private static void SetupTextures()
         {
             FlyWeight.Add("Font01", "Assets/Font.dat");
@@ -301,6 +299,8 @@ namespace BomberMan2D.Main
             {
                 if (bomberMan.Active == false)
                     timer.Update(false);
+
+                Node.ShowPath();
 
                 Console.WriteLine(timer.currentTime);
                 if (timer.IsOver())

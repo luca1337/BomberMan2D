@@ -37,7 +37,7 @@ namespace BomberMan2D.Components
                 SetCamera(cam);
 
             if (Owner.Transform.Position.X > BehaviourEngine.Graphics.Instance.Window.OrthoWidth / 2
-                && Owner.Transform.Position.X < BehaviourEngine.Graphics.Instance.Window.OrthoWidth / 2 + (6 * blockSize))
+                && Owner.Transform.Position.X < BehaviourEngine.Graphics.Instance.Window.OrthoWidth / 2 + (5.25 * blockSize))
             {
                 cam.position.X = Owner.Transform.Position.X;
 
