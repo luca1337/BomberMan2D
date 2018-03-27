@@ -470,12 +470,14 @@ namespace BomberMan2D.Main
 
                     SteamMatchmaking.JoinLobby(lobbies[0]);
 
-                    SteamMatchmaking.GetLobbyMemberByIndex(lobbies[0], 0);
+                    Console.WriteLine("Index : "+ SteamMatchmaking.GetLobbyMemberByIndex(lobbies[0], 0));
+
+                    Console.WriteLine("Members count: "+ SteamMatchmaking.GetNumLobbyMembers(lobbies[0]));
                 });
 
                 Callback<LobbyEnter_t>.Create(cb =>
                 {
-
+                    Console.WriteLine(cb.m_ulSteamIDLobby);
                 });
 
             }
@@ -487,6 +489,8 @@ namespace BomberMan2D.Main
 
             public IState OnStateUpdate()
             {
+          
+
                 SteamAPI.RunCallbacks();
                 return this;
             }
