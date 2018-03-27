@@ -12,11 +12,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Steamworks;
 
 namespace BomberMan2D.Prefabs
 {
     public class Bomberman : GameObject, IWaypoint
     {
+        public CSteamID ID { get; set; }
         public Vector2 Location { get; set; }
         public bool Invulnerability { get; set; }
 
