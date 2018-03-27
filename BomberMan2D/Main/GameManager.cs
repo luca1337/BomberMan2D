@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Steamworks;
+using System.Windows.Forms;
+using Menu = BomberMan2D.Prefabs.Menu;
 
 
 namespace BomberMan2D.Main
@@ -41,17 +44,29 @@ namespace BomberMan2D.Main
         {
             SetupState setupState = new SetupState(this);
             MenuState menuState = new MenuState(this);
-            LoopState loopState = new LoopState(this);
+            SinglePlayer singleMode = new SinglePlayer(this);
             PauseState pauseState = new PauseState(this);
             LoseState loseState = new LoseState(this);
             WinState winState = new WinState(this);
-
+            MultiPlayer multiMode = new MultiPlayer(this);
+            LobbySetup lobby = new LobbySetup(this);
             //Link State
             setupState.MenuState = menuState;
-            menuState.Loop = loopState;
-            loopState.NextWin = winState;
-            loopState.NextLose = loseState;
-            loopState.NextPause = pauseState;
+
+            menuState.SinglePlayerMode = singleMode;
+            menuState.Lobby = lobby;
+
+            singleMode.NextWin = winState;
+            singleMode.NextLose = loseState;
+            singleMode.NextPause = pauseState;
+
+            lobby.Menu = menuState;
+            lobby.MultiMode = multiMode;
+
+            multiMode.NextLose = loseState;
+            multiMode.NextPause = pauseState;
+            multiMode.NextWin = winState;
+
             loseState.Retry = menuState;
 
             setupState.OnStateEnter();
@@ -167,7 +182,8 @@ namespace BomberMan2D.Main
 
         private class MenuState : IState
         {
-            public LoopState Loop { get; set; }
+            public SinglePlayer SinglePlayerMode { get; set; }
+            public LobbySetup Lobby { get; set; }
 
             private GameManager owner { get; set; }
             private Menu mainMenu;
@@ -176,7 +192,6 @@ namespace BomberMan2D.Main
             public MenuState(GameObject owner)
             {
                 this.owner = owner as GameManager;
-
             }
 
             public void OnStateEnter()
@@ -232,8 +247,17 @@ namespace BomberMan2D.Main
                 if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.Space))
                 {
                     this.OnStateExit();
-                    Loop.OnStateEnter();
-                    return Loop;
+                    if (mainMenu.GetComponent<UpdateMenu>().SinglePlayerMode)
+                    {
+                        SinglePlayerMode.OnStateEnter();
+                        return SinglePlayerMode;
+                    }
+                    else if (!mainMenu.GetComponent<UpdateMenu>().SinglePlayerMode)
+                    {
+                        Lobby.OnStateEnter();
+                        return Lobby;
+                    }
+
                 }
 
                 return this;
@@ -241,7 +265,7 @@ namespace BomberMan2D.Main
         }
 
 
-        private class LoopState : IState
+        private class SinglePlayer : IState
         {
             public WinState NextWin { get; set; }
             public LoseState NextLose { get; set; }
@@ -256,10 +280,10 @@ namespace BomberMan2D.Main
 
             private Timer timer;
 
-            public LoopState(GameObject owner)
+            public SinglePlayer(GameObject owner)
             {
                 this.owner = owner as GameManager;
-                timer      = new Timer(0.6f);
+                timer = new Timer(0.6f);
             }
 
             public void OnStateEnter()
@@ -270,7 +294,7 @@ namespace BomberMan2D.Main
 
             public void OnStateExit()
             {
-                gui.Active            = false;
+                gui.Active = false;
                 foreach (Component item in gui.Components)
                 {
                     item.Enabled = false;
@@ -394,6 +418,180 @@ namespace BomberMan2D.Main
             }
         }
 
+        private class LobbySetup : IState
+        {
+            public MultiPlayer MultiMode { get; set; }
+            public MenuState Menu { get; set; }
+            public GameManager owner;
+            private List<CSteamID> lobbies = new List<CSteamID>();
+
+            public LobbySetup(GameObject owner)
+            {
+                this.owner = owner as GameManager;
+            }
+
+            public void OnStateEnter()
+            {
+                if (!SteamAPI.Init())
+                {
+                    DialogResult eResult = MessageBox.Show("Coult not initialize Steam API...\n" +
+                        "What do you want to do?\n" +
+                        "Press OK to get back to Main Menu\n" +
+                        "Press Cancel to Abort the Game.",
+                        "Steam API Error!", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+
+                    if (eResult == DialogResult.OK)
+                    {
+                        //go back to main menu!
+                    }
+                    else
+                    {
+
+                    }
+
+                }
+
+                //start multiplayer game, look for lobbies, if no lobbies are found then create a single lobby and join it
+
+                SteamMatchmaking.AddRequestLobbyListResultCountFilter(10);
+                SteamMatchmaking.AddRequestLobbyListFilterSlotsAvailable(2);
+                SteamMatchmaking.AddRequestLobbyListDistanceFilter(ELobbyDistanceFilter.k_ELobbyDistanceFilterClose);
+
+                SteamMatchmaking.RequestLobbyList();
+
+                Callback<LobbyMatchList_t>.Create(cb =>
+                {
+                    for (int i = 0; i < cb.m_nLobbiesMatching - 1; i++)
+                    {
+                        CSteamID currentID = SteamMatchmaking.GetLobbyByIndex(i);
+                        lobbies.Add(currentID);
+
+                    }
+
+                    SteamMatchmaking.JoinLobby(lobbies[0]);
+
+                    SteamMatchmaking.GetLobbyMemberByIndex(lobbies[0], 0);
+                });
+
+                Callback<LobbyEnter_t>.Create(cb =>
+                {
+
+                });
+
+            }
+
+            public void OnStateExit()
+            {
+
+            }
+
+            public IState OnStateUpdate()
+            {
+                SteamAPI.RunCallbacks();
+                return this;
+            }
+        }
+
+        private class MultiPlayer : IState
+        {
+            public WinState NextWin { get; set; }
+            public LoseState NextLose { get; set; }
+            public PauseState NextPause { get; set; }
+
+            private GameManager owner { get; set; }
+            private List<Bomberman> bomberMans = new List<Bomberman>();
+            private OnScreenDisplay gui;
+            private EnemySpawner enemySpawner;
+            private TargetSpawner targetSpawner;
+            private Map map;
+
+            private Timer timer;
+
+            public MultiPlayer(GameObject owner)
+            {
+                this.owner = owner as GameManager;
+                timer = new Timer(0.6f);
+            }
+
+            public void OnStateEnter()
+            {
+                LoadLevels();
+                LoadGameObjects();
+            }
+
+            public void OnStateExit()
+            {
+                gui.Active = false;
+                foreach (Component item in gui.Components)
+                {
+                    item.Enabled = false;
+                }
+
+                targetSpawner.Active = false;
+                foreach (Component item in targetSpawner.Components)
+                {
+                    item.Enabled = false;
+                }
+
+                enemySpawner.Active = false;
+                foreach (Component item in enemySpawner.Components)
+                {
+                    item.Enabled = false;
+                }
+
+                map.Active = false;
+                foreach (Component item in map.Components)
+                {
+                    item.Enabled = false;
+                }
+            }
+
+            public IState OnStateUpdate()
+            {
+                for (int i = 0; i < bomberMans.Count; i++)
+                {
+                    if (bomberMans[i].Active == false)
+                        timer.Update(false);
+                }
+                Console.WriteLine("Multi");
+
+                Node.ShowPath();
+
+                Console.WriteLine(timer.currentTime);
+                if (timer.IsOver())
+                {
+                    timer.Stop(true);
+                    OnStateExit();
+                    NextLose.OnStateEnter();
+                    return NextLose;
+                }
+
+                return this;
+            }
+
+            private void LoadLevels()
+            {
+                if (map == null)
+                {
+                    LevelManager.Add("Levels/Level00.csv");
+                }
+                else
+                {
+                    map.Active = true;
+                    foreach (Component item in map.Components)
+                    {
+                        item.Enabled = false;
+                    }
+                }
+            }
+
+            private void LoadGameObjects()
+            {
+
+
+            }
+        }
+
         private class WinState : IState
         {
             private GameManager owner { get; set; }
@@ -473,7 +671,7 @@ namespace BomberMan2D.Main
 
         private class PauseState : IState
         {
-            public LoopState Next { get; set; }
+            public SinglePlayer Next { get; set; }
 
             private GameManager owner { get; set; }
 

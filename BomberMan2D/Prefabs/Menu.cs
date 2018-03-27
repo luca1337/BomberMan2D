@@ -34,26 +34,16 @@ namespace BomberMan2D.Prefabs
 
     class UpdateMenu : Component, IUpdatable
     {
-        int MenuItem = 0;
+        public bool SinglePlayerMode { get; set; }
+
+        private int MenuItem = 0;
         private List<Text2D> menuTexts;
+
 
         public UpdateMenu(List<Text2D> menuTexts)
         {
             this.menuTexts = menuTexts;
         }
-        //public IState ChangeScene( IState NextState, IState currentState)
-        //{
-        //    if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.Space))
-        //    {
-        //        currentState.OnStateExit();
-        //        currentState = NextState.OnStateUpdate();
-        //        currentState.OnStateEnter();
-        //        return currentState;
-        //    }
-        //    else
-        //        return currentState;
-
-        //}
 
         public void Update()
         {
@@ -61,11 +51,13 @@ namespace BomberMan2D.Prefabs
             {
                 menuTexts[1].message = "Multi-Player";
                 menuTexts[MenuItem].message = "Single-Player <";
+                SinglePlayerMode = true;
             }
             else if (MenuItem == 1)
             {
-                menuTexts[0].message = "Single-Player";
+                menuTexts[0].message        = "Single-Player";
                 menuTexts[MenuItem].message = "Multi-Player <";
+                SinglePlayerMode            = false;
             }
 
             if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.Down))
