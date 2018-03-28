@@ -443,6 +443,7 @@ namespace BomberMan2D.Main
                 if (!SteamAPI.Init())
                 {
                     DialogResult eResult = MessageBox.Show("Coult not initialize Steam API...\n" +
+                        "Make sure Steam is not closed\n" +
                         "What do you want to do?\n" +
                         "Press OK to get back to Main Menu\n" +
                         "Press Cancel to Abort the Game.",
@@ -464,7 +465,10 @@ namespace BomberMan2D.Main
                 lobbyEnter = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
                 lobbyInfo = Callback<LobbyDataUpdate_t>.Create(OnGetLobbyInfo);
 
+                SteamMatchmaking.RequestLobbyList();
+
                 //start multiplayer game, look for lobbies, if no lobbies are found then create a single lobby and join it
+
 
             }
 
@@ -545,18 +549,17 @@ namespace BomberMan2D.Main
 
                 if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.B))
                 {
-                    SteamMatchmaking.JoinLobby(SteamMatchmaking.GetLobbyByIndex(0));
-                 //   SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 10);
+                    SteamMatchmaking.JoinLobby(lobbyIDS[0]);
                 }
 
                 if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.H))
                 {
                     int numPlayers = SteamMatchmaking.GetNumLobbyMembers((CSteamID)current_lobbyID);
 
-                    Console.WriteLine("\t Number of players currently in lobby : " + numPlayers);
+                    Console.WriteLine("Number of players currently in lobby : " + numPlayers);
                     for (int i = 0; i < numPlayers; i++)
                     {
-                        Console.WriteLine("\t Player(" + i + ") == " + SteamFriends.GetFriendPersonaName(SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)current_lobbyID, i)));
+                        Console.WriteLine("Player(" + i + ") is " + SteamFriends.GetFriendPersonaName(SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)current_lobbyID, i)));
                     }
                 }
 
