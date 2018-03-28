@@ -460,12 +460,14 @@ namespace BomberMan2D.Main
 
                 }
 
+                SteamMatchmaking.AddRequestLobbyListStringFilter("name", "Glukosesirup's game", ELobbyComparison.k_ELobbyComparisonEqual);
+
                 lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
                 lobbyList = Callback<LobbyMatchList_t>.Create(OnGetLobbiesList);
                 lobbyEnter = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
                 lobbyInfo = Callback<LobbyDataUpdate_t>.Create(OnGetLobbyInfo);
 
-                SteamMatchmaking.RequestLobbyList();
+                //SteamMatchmaking.RequestLobbyList();
 
                 //start multiplayer game, look for lobbies, if no lobbies are found then create a single lobby and join it
 
@@ -513,7 +515,10 @@ namespace BomberMan2D.Main
                     Console.WriteLine("Lobby created -- failure ...");
 
                 string personalName = SteamFriends.GetPersonaName();
-                SteamMatchmaking.SetLobbyData((CSteamID)result.m_ulSteamIDLobby, "name", personalName + "'s game");
+                if(SteamMatchmaking.SetLobbyData((CSteamID)result.m_ulSteamIDLobby, "name", personalName + "'s game"))
+                {
+                    Console.WriteLine(SteamMatchmaking.GetLobbyData((CSteamID)result.m_ulSteamIDLobby, "name"));
+                }
             }
 
             public void OnStateExit()
@@ -549,8 +554,14 @@ namespace BomberMan2D.Main
 
                 if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.B))
                 {
-                    SteamMatchmaking.JoinLobby(lobbyIDS[0]);
+                    SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeInvisible, 2);
                 }
+
+                if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.D))
+                {
+                    SteamMatchmaking.RequestLobbyList();
+                }
+
 
                 if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.H))
                 {
