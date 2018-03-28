@@ -465,12 +465,20 @@ namespace BomberMan2D.Main
 
                 SteamMatchmaking.AddRequestLobbyListStringFilter("name", "Glukosesirup's game", ELobbyComparison.k_ELobbyComparisonEqual);
 
+                //Creation and management of lobby, the lobbies created must be set with SteamMatchmackig.SetData();
                 lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
                 lobbyList = Callback<LobbyMatchList_t>.Create(OnGetLobbiesList);
                 lobbyEnter = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
                 lobbyChatMsg = Callback<LobbyChatMsg_t>.Create(OnLobbyChatMsg);
                 connectionInfo = Callback<P2PSessionRequest_t>.Create(OnNewP2PConnection);
 
+
+                //To accept a P2P connection
+                Callback<P2PSessionRequest_t>.Create( cb =>
+                {
+                    SteamNetworking.AcceptP2PSessionWithUser(cb.m_steamIDRemote);
+                }
+                );
                 //SteamMatchmaking.RequestLobbyList();
 
                 //start multiplayer game, look for lobbies, if no lobbies are found then create a single lobby and join it
@@ -562,7 +570,8 @@ namespace BomberMan2D.Main
 
                 if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.B))
                 {
-                    SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeInvisible, 2);
+                    SteamMatchmaking.JoinLobby(lobbyIDS[0]);
+                   // SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeInvisible, 2);
                 }
 
                 if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.C))
@@ -575,6 +584,33 @@ namespace BomberMan2D.Main
                     SteamMatchmaking.RequestLobbyList();
                 }
 
+                if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.L))
+                {
+                    string message = "massimoisonni ha joinato la tua vita!";
+                    byte[] packet = Encoding.ASCII.GetBytes(message);
+                    int numPlayers = SteamMatchmaking.GetNumLobbyMembers((CSteamID)current_lobbyID);
+                    for (int i = 0; i < numPlayers; i++)
+                    {
+                        Console.Write(SteamFriends.GetFriendPersonaName(SteamMatchmaking.GetLobbyMemberByIndex(lobbyIDS[0], i)));
+                        SteamNetworking.SendP2PPacket(SteamMatchmaking.GetLobbyMemberByIndex(lobbyIDS[0], i), packet, (uint)packet.Length, EP2PSend.k_EP2PSendReliable);
+                    }
+
+
+                    //SteamMatchmaking.SendLobbyChatMsg(lobbyIDS[0],packet, packet.Length);
+                }
+
+                while (SteamNetworking.IsP2PPacketAvailable(out uint messageSize))
+                {
+                    byte[] packet = new byte[messageSize];
+                    CSteamID bho = CSteamID.Nil;
+
+                    uint byteReader = 0;
+               
+                    if (SteamNetworking.ReadP2PPacket(packet, messageSize, out byteReader, out bho));
+
+                    string message = Encoding.ASCII.GetString(packet);
+                    Console.WriteLine(message);
+                }
 
                 if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.H))
                 {
