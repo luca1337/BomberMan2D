@@ -431,6 +431,9 @@ namespace BomberMan2D.Main
             private Callback<LobbyMatchList_t> lobbyList;
             private Callback<LobbyEnter_t> lobbyEnter;
             private Callback<LobbyDataUpdate_t> lobbyInfo;
+            private Callback<LobbyChatMsg_t> lobbyChatMsg;
+            private Callback<LobbyChatUpdate_t> lobbyChatInfo;
+            private Callback<P2PSessionRequest_t> connectionInfo;
 
 
             public LobbySetup(GameObject owner)
@@ -465,7 +468,8 @@ namespace BomberMan2D.Main
                 lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
                 lobbyList = Callback<LobbyMatchList_t>.Create(OnGetLobbiesList);
                 lobbyEnter = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
-                lobbyInfo = Callback<LobbyDataUpdate_t>.Create(OnGetLobbyInfo);
+                lobbyChatMsg = Callback<LobbyChatMsg_t>.Create(OnLobbyChatMsg);
+                connectionInfo = Callback<P2PSessionRequest_t>.Create(OnNewP2PConnection);
 
                 //SteamMatchmaking.RequestLobbyList();
 
@@ -521,6 +525,16 @@ namespace BomberMan2D.Main
                 }
             }
 
+            private void OnLobbyChatMsg(LobbyChatMsg_t result)
+            {
+                
+            }
+
+            void OnNewP2PConnection(P2PSessionRequest_t result)
+            {
+                SteamNetworking.AcceptP2PSessionWithUser(result.m_steamIDRemote);
+            }
+
             public void OnStateExit()
             {
 
@@ -544,17 +558,16 @@ namespace BomberMan2D.Main
 
             public IState OnStateUpdate()
             {
-                //if (lobbies.Count > 0)
-                //{
-                //    foreach (KeyValuePair<uint, CSteamID> pair in lobbies)
-                //    {
-                //        Console.WriteLine("Lobby ID: " + pair.Key + " Lobby CSteamID: " + pair.Value);
-                //    }
-                //}
+                GetDataFromBroadcasters();
 
                 if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.B))
                 {
                     SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeInvisible, 2);
+                }
+
+                if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.C))
+                {
+                    net_broadcast(1, "ciaone");
                 }
 
                 if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.D))
@@ -578,7 +591,30 @@ namespace BomberMan2D.Main
 
                 return this;
             }
+
+            private static void GetDataFromBroadcasters()
+            {
+                while (SteamNetworking.IsP2PPacketAvailable(out uint msgSize))
+                {
+                    byte[] msgReceived = new byte[msgSize];
+                    CSteamID outID = CSteamID.Nil;
+
+                    if (SteamNetworking.ReadP2PPacket(msgReceived, msgSize, out uint readBytes, out outID))
+                    {
+                        string realMessage = Encoding.ASCII.GetString(msgReceived);
+
+                        string receiverName = SteamFriends.GetFriendPersonaName(outID);
+
+                        Console.WriteLine(receiverName + " Wrote You: " + realMessage);
+                    }
+                }
+            }
+
+            public void net_broadcast(int TYPE, string message)
+            {
+            }
         }
+
 
         private class MultiPlayer : IState
         {
