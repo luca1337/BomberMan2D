@@ -423,7 +423,15 @@ namespace BomberMan2D.Main
             public MultiPlayer MultiMode { get; set; }
             public MenuState Menu { get; set; }
             public GameManager owner;
-            private List<CSteamID> lobbies = new List<CSteamID>();
+            private Dictionary<uint, CSteamID> lobbies = new Dictionary<uint, CSteamID>();
+
+            private ulong current_lobbyID;
+            private List<CSteamID> lobbyIDS = new List<CSteamID>();
+            private Callback<LobbyCreated_t> lobbyCreated;
+            private Callback<LobbyMatchList_t> lobbyList;
+            private Callback<LobbyEnter_t> lobbyEnter;
+            private Callback<LobbyDataUpdate_t> lobbyInfo;
+
 
             public LobbySetup(GameObject owner)
             {
@@ -451,47 +459,109 @@ namespace BomberMan2D.Main
 
                 }
 
+                lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
+                lobbyList = Callback<LobbyMatchList_t>.Create(OnGetLobbiesList);
+                lobbyEnter = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
+                lobbyInfo = Callback<LobbyDataUpdate_t>.Create(OnGetLobbyInfo);
+
                 //start multiplayer game, look for lobbies, if no lobbies are found then create a single lobby and join it
 
-                SteamMatchmaking.AddRequestLobbyListResultCountFilter(10);
-                SteamMatchmaking.AddRequestLobbyListFilterSlotsAvailable(2);
-                SteamMatchmaking.AddRequestLobbyListDistanceFilter(ELobbyDistanceFilter.k_ELobbyDistanceFilterClose);
+            }
 
-                SteamMatchmaking.RequestLobbyList();
-
-                Callback<LobbyMatchList_t>.Create(cb =>
+            private void OnGetLobbyInfo(LobbyDataUpdate_t result)
+            {
+                for (int i = 0; i < lobbyIDS.Count; i++)
                 {
-                    for (int i = 0; i < cb.m_nLobbiesMatching - 1; i++)
+                    if (lobbyIDS[i].m_SteamID == result.m_ulSteamIDLobby)
                     {
-                        CSteamID currentID = SteamMatchmaking.GetLobbyByIndex(i);
-                        lobbies.Add(currentID);
-
+                        Console.WriteLine("Lobby " + i + " :: " + SteamMatchmaking.GetLobbyData((CSteamID)lobbyIDS[i].m_SteamID, "name"));
+                        return;
                     }
+                }
+            }
 
-                    SteamMatchmaking.JoinLobby(lobbies[0]);
+            private void OnLobbyEntered(LobbyEnter_t result)
+            {
+                current_lobbyID = result.m_ulSteamIDLobby;
 
-                    Console.WriteLine("Index : "+ SteamMatchmaking.GetLobbyMemberByIndex(lobbies[0], 0));
+                if (result.m_EChatRoomEnterResponse == 1)
+                    Console.WriteLine("Lobby joined!");
+                else
+                    Console.WriteLine("Failed to join lobby.");
+            }
 
-                    Console.WriteLine("Members count: "+ SteamMatchmaking.GetNumLobbyMembers(lobbies[0]));
-                });
-
-                Callback<LobbyEnter_t>.Create(cb =>
+            private void OnGetLobbiesList(LobbyMatchList_t result)
+            {
+                Console.WriteLine("Found " + result.m_nLobbiesMatching + " lobbies!");
+                for (int i = 0; i < result.m_nLobbiesMatching; i++)
                 {
-                    Console.WriteLine(cb.m_ulSteamIDLobby);
-                });
+                    CSteamID lobbyID = SteamMatchmaking.GetLobbyByIndex(i);
+                    lobbyIDS.Add(lobbyID);
+                    SteamMatchmaking.RequestLobbyData(lobbyID);
+                }
+            }
 
+            private void OnLobbyCreated(LobbyCreated_t result)
+            {
+                if (result.m_eResult == EResult.k_EResultOK)
+                    Console.WriteLine("Lobby created -- SUCCESS!");
+                else
+                    Console.WriteLine("Lobby created -- failure ...");
+
+                string personalName = SteamFriends.GetPersonaName();
+                SteamMatchmaking.SetLobbyData((CSteamID)result.m_ulSteamIDLobby, "name", personalName + "'s game");
             }
 
             public void OnStateExit()
             {
 
             }
+            private void SearchForLobby()
+            {
+                SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 10);
+
+                Callback<LobbyCreated_t>.Create(cb =>
+                {
+                    Console.WriteLine("ciaone");
+                });
+
+                SteamMatchmaking.RequestLobbyList();
+
+                Callback<LobbyMatchList_t>.Create(x =>
+                {
+                    Console.WriteLine(x.m_nLobbiesMatching);
+                });
+            }
 
             public IState OnStateUpdate()
             {
-          
+                //if (lobbies.Count > 0)
+                //{
+                //    foreach (KeyValuePair<uint, CSteamID> pair in lobbies)
+                //    {
+                //        Console.WriteLine("Lobby ID: " + pair.Key + " Lobby CSteamID: " + pair.Value);
+                //    }
+                //}
+
+                if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.B))
+                {
+                    SteamMatchmaking.JoinLobby(SteamMatchmaking.GetLobbyByIndex(0));
+                 //   SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, 10);
+                }
+
+                if (Input.IsKeyDown(Aiv.Fast2D.KeyCode.H))
+                {
+                    int numPlayers = SteamMatchmaking.GetNumLobbyMembers((CSteamID)current_lobbyID);
+
+                    Console.WriteLine("\t Number of players currently in lobby : " + numPlayers);
+                    for (int i = 0; i < numPlayers; i++)
+                    {
+                        Console.WriteLine("\t Player(" + i + ") == " + SteamFriends.GetFriendPersonaName(SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)current_lobbyID, i)));
+                    }
+                }
 
                 SteamAPI.RunCallbacks();
+
                 return this;
             }
         }
