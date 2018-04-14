@@ -324,7 +324,7 @@ namespace BomberMan2D.Main
                 if (bomberMan.Active == false)
                     timer.Update(false);
 
-                Node.ShowPath();
+                //Node.ShowPath();
 
                 Console.WriteLine(timer.currentTime);
                 if (timer.IsOver())
