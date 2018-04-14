@@ -1,6 +1,8 @@
 # BomberMan2D
 2D BomberMan Game created using our Engine made in .NET
 
+**THIS GAME WAS A DIDACTICAL PROJECT IT'S NOT INTENDED TO BE PUSBLISHED OR STOLE ANY CONTENT FROM THE ORIGINAL ONE**
+
 __The game also support Multiplayer through steam API, it's still in development and will be
 ready soon!__
 
