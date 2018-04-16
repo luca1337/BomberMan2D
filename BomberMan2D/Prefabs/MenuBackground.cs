@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BehaviourEngine;
 using OpenTK;
 
-namespace BomberMan2D.Prefabs
+namespace BomberMan2D
 {
     public class MenuBackground : GameObject
     {

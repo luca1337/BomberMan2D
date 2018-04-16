@@ -1,6 +1,6 @@
 ﻿using BehaviourEngine;
 
-namespace BomberMan2D.Prefabs.Enemies
+namespace BomberMan2D
 {
     public class Minvo : AI
     {

@@ -1,7 +1,5 @@
 ﻿using BehaviourEngine;
 using OpenTK;
-using BomberMan2D.Enums;
-using BomberMan2D.Components;
 
 namespace BomberMan2D
 {

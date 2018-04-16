@@ -1,12 +1,6 @@
-﻿using BehaviourEngine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenTK;
+﻿using OpenTK;
 
-namespace BomberMan2D.AI
+namespace BomberMan2D
 {
     public interface IWaypoint
     {

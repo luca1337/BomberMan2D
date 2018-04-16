@@ -1,10 +1,8 @@
 ﻿using BehaviourEngine;
 using System.Linq;
 using OpenTK;
-using BomberMan2D.Main;
-using BomberMan2D.AI;
 
-namespace BomberMan2D.Prefabs
+namespace BomberMan2D
 {
     public class TargetPoint : GameObject, IWaypoint
     {

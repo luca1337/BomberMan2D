@@ -1,7 +1,6 @@
 ﻿using BehaviourEngine;
-using BomberMan2D.AI;
 
-namespace BomberMan2D.Interfaces
+namespace BomberMan2D
 {
     /// <summary>
     /// this interface exposes these fields and determines the exact behavior of the enemy
@@ -25,7 +24,7 @@ namespace BomberMan2D.Interfaces
         /// <summary>
         /// Player which will be the out target.
         /// </summary>
-        Prefabs.Bomberman Player { get; set; }
+        Bomberman Player { get; set; }
 
         /// <summary>
         /// Target that enemy will switch to, from player to a generic target point around the map.

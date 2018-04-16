@@ -1,7 +1,7 @@
 ﻿using System;
 using BehaviourEngine;
 
-namespace BomberMan2D.Prefabs.Enemies
+namespace BomberMan2D
 {
     public class Doll : AI
     {

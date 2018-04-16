@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aiv.Fast2D;
-using OpenTK;
-using BehaviourEngine.Utils;
+﻿using OpenTK;
 using BehaviourEngine;
-using BomberMan2D.Prefabs;
-using BomberMan2D.Main;
-using BomberMan2D.Enums;
 
-namespace BomberMan2D.Prefabs.Powerups
+namespace BomberMan2D
 {
     public class WallPass : GameObject, IPowerup
     {

@@ -1,6 +1,6 @@
 ﻿using BehaviourEngine;
 
-namespace BomberMan2D.Components
+namespace BomberMan2D
 {
     public class FSMUpdater : Component, IUpdatable
     {

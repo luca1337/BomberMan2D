@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
 using Aiv.Fast2D.Utils.Input;
-using BehaviourEngine.Components;
 
-namespace BomberMan2D.Prefabs
+namespace BomberMan2D
 {
     public class Menu : GameObject
     {

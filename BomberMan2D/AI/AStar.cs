@@ -1,9 +1,8 @@
 ﻿using BehaviourEngine;
 using BehaviourEngine.Pathfinding;
-using BomberMan2D.Prefabs;
 using System.Collections.Generic;
 
-namespace BomberMan2D.AI
+namespace BomberMan2D
 {
     public static class AStar
     {

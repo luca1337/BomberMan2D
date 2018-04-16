@@ -1,10 +1,9 @@
 ﻿using BehaviourEngine;
 using BehaviourEngine.Pathfinding;
-using BomberMan2D.Prefabs;
 using System;
 using System.Collections.Generic;
 
-namespace BomberMan2D.Main
+namespace BomberMan2D
 {
     public static class LevelManager
     {

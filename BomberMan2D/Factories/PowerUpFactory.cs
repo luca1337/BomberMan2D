@@ -1,14 +1,4 @@
-﻿using BomberMan2D.Enums;
-using BomberMan2D.Interfaces;
-using BomberMan2D.Prefabs;
-using BomberMan2D.Prefabs.Powerups;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BomberMan2D.Factories
+﻿namespace BomberMan2D
 {
     public static class PowerUpFactory
     {

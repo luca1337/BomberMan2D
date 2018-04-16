@@ -3,7 +3,7 @@ using Aiv.Fast2D.Utils.Input;
 using BehaviourEngine;
 using OpenTK;
 
-namespace BomberMan2D.Components
+namespace BomberMan2D
 {
     public class CharacterController : Component, IUpdatable
     {

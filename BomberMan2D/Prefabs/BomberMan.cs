@@ -1,18 +1,13 @@
 ﻿using Aiv.Fast2D;
 using Aiv.Fast2D.Utils.Input;
 using BehaviourEngine;
-using BomberMan2D.AI;
-using BomberMan2D.Enums;
-using BomberMan2D.Factories;
 using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Steamworks;
 
-namespace BomberMan2D.Prefabs
+namespace BomberMan2D
 {
     public class Bomberman : GameObject, IWaypoint
     {
@@ -73,11 +68,11 @@ namespace BomberMan2D.Prefabs
             //Bomb fsm
             drop = new StateDrop(this);
             drop.OnStateEnter();
-            AddComponent(new Components.FSMUpdater(drop));
+            AddComponent(new FSMUpdater(drop));
 
             #region Components
 
-            AddComponent(new Components.CharacterController());
+            AddComponent(new CharacterController());
             AddComponent(new UpdateAnimation(this));
           
             //Collider
@@ -90,7 +85,7 @@ namespace BomberMan2D.Prefabs
             rigidBody.IsGravityAffected = false;
             AddComponent(rigidBody);
 
-            AddComponent(new Components.CameraFollow());
+            AddComponent(new CameraFollow());
 
             manager = new InvulnerabilityManager(this);
             AddComponent(manager);
@@ -105,7 +100,7 @@ namespace BomberMan2D.Prefabs
                 powerup.ApplyPowerUp(this);
             }
 
-            if (other.Owner is Prefabs.Enemies.AI && !Invulnerability)
+            if (other.Owner is AI && !Invulnerability)
             {
                foreach (Component item in Components)
                {
@@ -158,14 +153,6 @@ namespace BomberMan2D.Prefabs
             {
                 if (Input.IsKeyDown(KeyCode.Space) && !timer.IsActive)
                 {
-                    //Bomb bomb = Pool<Bomb>.GetInstance(x =>
-                    //{
-                    //    x.Active = true;
-                    //    x.GetComponent<AnimationRenderer>().Enabled = true;
-                    //    // Maybe this is the way for spawn in the middle of the cell
-                    //    x.Transform.Position = new Vector2((int)(owner.Transform.Position.X + 0.5f), (int)(owner.Transform.Position.Y + 0.5f));
-                    //});
-
                     Bomb bomb = GlobalFactory<Bomb>.Get(typeof(Bomb));
                     bomb.Active = true;
                     bomb.GetComponent<AnimationRenderer>().Enabled = true;

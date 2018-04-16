@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BomberMan2D.Interfaces
+namespace BomberMan2D
 {
     public interface IPoolable
     {

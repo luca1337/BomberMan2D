@@ -2,7 +2,7 @@
 using BehaviourEngine;
 using OpenTK;
 
-namespace BomberMan2D.Components
+namespace BomberMan2D
 {
     public class CameraFollow : Component, IUpdatable
     {

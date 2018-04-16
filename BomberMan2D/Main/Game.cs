@@ -1,7 +1,7 @@
 ﻿using Aiv.Fast2D;
 using BehaviourEngine;
 
-namespace BomberMan2D.Main
+namespace BomberMan2D
 {
     public sealed class Game
     {

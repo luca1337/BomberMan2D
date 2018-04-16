@@ -1,17 +1,9 @@
 ﻿using BehaviourEngine;
 using BehaviourEngine.Pathfinding;
-using BehaviourEngine.Utils;
-using BomberMan2D.Enums;
-using BomberMan2D.Factories;
-using BomberMan2D.Main;
 using OpenTK;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BomberMan2D.Prefabs
+namespace BomberMan2D
 {
     public class Tile : GameObject
     {

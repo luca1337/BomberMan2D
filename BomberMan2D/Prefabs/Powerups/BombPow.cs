@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aiv.Fast2D;
-using BehaviourEngine;
+﻿using BehaviourEngine;
 using OpenTK;
-using BomberMan2D.Enums;
 
-namespace BomberMan2D.Prefabs.Powerups
+namespace BomberMan2D
 {
     public class BombPow : GameObject, IPowerup
     {

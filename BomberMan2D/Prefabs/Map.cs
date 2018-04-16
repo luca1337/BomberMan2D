@@ -4,7 +4,7 @@ using OpenTK;
 using System.IO;
 using BehaviourEngine.Pathfinding;
 
-namespace BomberMan2D.Prefabs
+namespace BomberMan2D
 {
     public class Map : GameObject, IMap
     {

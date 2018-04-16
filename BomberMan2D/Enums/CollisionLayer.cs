@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BomberMan2D.Enums
+namespace BomberMan2D
 {
     [Flags]
     public enum CollisionLayer : uint

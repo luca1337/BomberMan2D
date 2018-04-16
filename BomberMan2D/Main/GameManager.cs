@@ -1,20 +1,14 @@
 ﻿using Aiv.Fast2D.Utils.Input;
 using BehaviourEngine;
-using BomberMan2D.AI;
-using BomberMan2D.Components;
-using BomberMan2D.Enums;
-using BomberMan2D.Factories;
-using BomberMan2D.Prefabs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Steamworks;
 using System.Windows.Forms;
-using Menu = BomberMan2D.Prefabs.Menu;
 using BehaviourEngine.Pathfinding;
 
-namespace BomberMan2D.Main
+namespace BomberMan2D
 {
     public class GameManager : GameObject
     {
@@ -427,8 +421,8 @@ namespace BomberMan2D.Main
             private Callback<LobbyCreated_t> lobbyCreated;
             private Callback<LobbyMatchList_t> lobbyList;
             private Callback<LobbyEnter_t> lobbyEnter;
-            private Callback<LobbyDataUpdate_t> lobbyInfo;
             private Callback<LobbyChatMsg_t> lobbyChatMsg;
+            private Callback<LobbyDataUpdate_t> lobbyInfo;
             private Callback<LobbyChatUpdate_t> lobbyChatInfo;
             private Callback<P2PSessionRequest_t> connectionInfo;
 
@@ -600,7 +594,10 @@ namespace BomberMan2D.Main
                     byte[] packet = new byte[messageSize];
                     CSteamID bho = CSteamID.Nil;
 
-                    if (SteamNetworking.ReadP2PPacket(packet, messageSize, out uint byteReader, out bho)) ;
+                    if (SteamNetworking.ReadP2PPacket(packet, messageSize, out uint byteReader, out bho))
+                    {
+
+                    }
 
                     string message = Encoding.ASCII.GetString(packet);
                     Console.WriteLine(message);
@@ -654,7 +651,8 @@ namespace BomberMan2D.Main
 
             private GameManager owner { get; set; }
             private List<Bomberman> bomberMans = new List<Bomberman>();
-            private OnScreenDisplay gui;
+
+            private OnScreenDisplay gui ;
             private EnemySpawner enemySpawner;
             private TargetSpawner targetSpawner;
             private Map map;

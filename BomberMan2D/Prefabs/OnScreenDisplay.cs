@@ -3,10 +3,8 @@ using System.Linq;
 using Aiv.Fast2D;
 using OpenTK;
 using BehaviourEngine;
-using BehaviourEngine.Components;
-using BomberMan2D.Components;
 
-namespace BomberMan2D.Prefabs
+namespace BomberMan2D
 {
     public class OnScreenDisplay : GameObject
     {

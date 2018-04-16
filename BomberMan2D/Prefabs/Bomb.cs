@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using BehaviourEngine;
-using BomberMan2D.Components;
-using BomberMan2D.Factories;
 using OpenTK;
-using BomberMan2D.Enums;
 
-namespace BomberMan2D.Prefabs
+namespace BomberMan2D
 {
     public class Bomb : GameObject
     {

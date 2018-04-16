@@ -3,7 +3,7 @@ using BehaviourEngine;
 using Aiv.Fast2D;
 
 
-namespace BomberMan2D.Components
+namespace BomberMan2D
 {
     public class BoxRenderer : Component, IDrawable
     {

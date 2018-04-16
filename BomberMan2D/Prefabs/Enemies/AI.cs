@@ -1,15 +1,11 @@
 ﻿using BehaviourEngine;
-using BomberMan2D.Interfaces;
 using System;
 using System.Collections.Generic;
-using BomberMan2D.AI;
-using BomberMan2D.Components;
-using BomberMan2D.Main;
 using OpenTK;
 using Aiv.Fast2D;
 using BehaviourEngine.Pathfinding;
 
-namespace BomberMan2D.Prefabs.Enemies
+namespace BomberMan2D
 {
     public abstract class AI : GameObject, IEnemy, IPathfind
     {
