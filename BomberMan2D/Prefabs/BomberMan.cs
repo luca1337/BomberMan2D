@@ -95,9 +95,6 @@ namespace BomberMan2D.Prefabs
             manager = new InvulnerabilityManager(this);
             AddComponent(manager);
             #endregion
-
-       
-
         }
 
         private void OnTriggerEnter(Collider2D other)
