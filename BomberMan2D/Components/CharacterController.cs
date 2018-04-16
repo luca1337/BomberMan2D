@@ -1,7 +1,6 @@
 ﻿using Aiv.Fast2D;
 using Aiv.Fast2D.Utils.Input;
 using BehaviourEngine;
-using BehaviourEngine.Interfaces;
 using OpenTK;
 
 namespace BomberMan2D.Components

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BehaviourEngine;
-using BehaviourEngine.Interfaces;
 using OpenTK;
 
 namespace BomberMan2D.Prefabs

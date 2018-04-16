@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BehaviourEngine;
-using BehaviourEngine.Interfaces;
-using BomberMan;
-using BomberMan2D.AI;
-using BomberMan2D.Interfaces;
+﻿using BehaviourEngine;
 
 namespace BomberMan2D.Prefabs.Enemies
 {

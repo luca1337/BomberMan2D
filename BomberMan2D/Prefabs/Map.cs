@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BehaviourEngine;
 using OpenTK;
 using System.IO;
-using BehaviourEngine.Interfaces;
-using BomberMan2D.Main;
+using BehaviourEngine.Pathfinding;
 
 namespace BomberMan2D.Prefabs
 {

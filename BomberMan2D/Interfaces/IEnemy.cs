@@ -1,12 +1,5 @@
 ﻿using BehaviourEngine;
-using BehaviourEngine.Interfaces;
 using BomberMan2D.AI;
-using BomberMan2D.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BomberMan2D.Interfaces
 {

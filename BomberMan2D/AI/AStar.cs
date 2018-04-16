@@ -1,11 +1,7 @@
 ﻿using BehaviourEngine;
-using BehaviourEngine.Interfaces;
+using BehaviourEngine.Pathfinding;
 using BomberMan2D.Prefabs;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BomberMan2D.AI
 {

@@ -1,4 +1,5 @@
 ﻿using BehaviourEngine;
+using BehaviourEngine.Pathfinding;
 using BehaviourEngine.Utils;
 using BomberMan2D.Enums;
 using BomberMan2D.Factories;

@@ -1,21 +1,18 @@
 ﻿using Aiv.Fast2D.Utils.Input;
 using BehaviourEngine;
-using BehaviourEngine.Interfaces;
 using BomberMan2D.AI;
 using BomberMan2D.Components;
 using BomberMan2D.Enums;
 using BomberMan2D.Factories;
 using BomberMan2D.Prefabs;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Steamworks;
 using System.Windows.Forms;
 using Menu = BomberMan2D.Prefabs.Menu;
-
+using BehaviourEngine.Pathfinding;
 
 namespace BomberMan2D.Main
 {
@@ -324,7 +321,7 @@ namespace BomberMan2D.Main
                 if (bomberMan.Active == false)
                     timer.Update(false);
 
-                Node.ShowPath();
+                //Node.ShowPath();
 
                 Console.WriteLine(timer.currentTime);
                 if (timer.IsOver())
@@ -434,7 +431,6 @@ namespace BomberMan2D.Main
             private Callback<LobbyChatMsg_t> lobbyChatMsg;
             private Callback<LobbyChatUpdate_t> lobbyChatInfo;
             private Callback<P2PSessionRequest_t> connectionInfo;
-
 
             public LobbySetup(GameObject owner)
             {
@@ -604,9 +600,7 @@ namespace BomberMan2D.Main
                     byte[] packet = new byte[messageSize];
                     CSteamID bho = CSteamID.Nil;
 
-                    uint byteReader = 0;
-               
-                    if (SteamNetworking.ReadP2PPacket(packet, messageSize, out byteReader, out bho));
+                    if (SteamNetworking.ReadP2PPacket(packet, messageSize, out uint byteReader, out bho)) ;
 
                     string message = Encoding.ASCII.GetString(packet);
                     Console.WriteLine(message);

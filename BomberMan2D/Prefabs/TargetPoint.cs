@@ -1,5 +1,4 @@
 ﻿using BehaviourEngine;
-using BehaviourEngine.Interfaces;
 using System.Linq;
 using OpenTK;
 using BomberMan2D.Main;

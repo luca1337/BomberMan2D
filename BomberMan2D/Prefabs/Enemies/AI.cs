@@ -1,17 +1,13 @@
 ﻿using BehaviourEngine;
-using BehaviourEngine.Interfaces;
 using BomberMan2D.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using BomberMan2D.AI;
-using BomberMan;
 using BomberMan2D.Components;
 using BomberMan2D.Main;
 using OpenTK;
 using Aiv.Fast2D;
+using BehaviourEngine.Pathfinding;
 
 namespace BomberMan2D.Prefabs.Enemies
 {

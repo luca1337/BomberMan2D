@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aiv.Fast2D;
-using Aiv.Fast2D.Utils.TextureHelper;
+﻿using Aiv.Fast2D;
 using BehaviourEngine;
-using BehaviourEngine.Interfaces;
-using BehaviourEngine.Utils;
-using BomberMan2D.Main;
-using BomberMan2D.Prefabs;
-using OpenTK;
 
 namespace BomberMan2D.Main
 {

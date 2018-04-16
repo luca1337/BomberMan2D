@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Aiv.Fast2D;
-using Aiv.Fast2D.Utils.Input;
+﻿using System.Collections.Generic;
 using BehaviourEngine;
-using BehaviourEngine.Interfaces;
-using BomberMan;
 using BomberMan2D.Components;
 using BomberMan2D.Factories;
-using BomberMan2D.Prefabs;
 using OpenTK;
 using BomberMan2D.Enums;
 

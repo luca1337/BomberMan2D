@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BehaviourEngine;
-using BehaviourEngine.Renderer;
+﻿using BehaviourEngine;
 using OpenTK;
-using BehaviourEngine.Interfaces;
-using BomberMan;
-using static BehaviourEngine.Collider2D;
 using BomberMan2D.Enums;
 using BomberMan2D.Components;
 
