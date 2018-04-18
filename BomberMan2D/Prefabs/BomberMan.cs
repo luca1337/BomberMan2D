@@ -61,7 +61,7 @@ namespace BomberMan2D
             playerAnimations.Add(AnimationType.IDLE, new AnimationRenderer(FlyWeight.Get("BomberMan"), 62, 87, 7, new int[] { 0 }, 0.04f, true, false));
 
             playerAnimations.ToList().ForEach(item => AddComponent(item.Value));
-            playerAnimations.ToList().ForEach(item => item.Value.RenderOffset = (int)RenderLayer.BomberMan);
+            playerAnimations.ToList().ForEach(item => item.Value.RenderOffset = (int)RenderLayer.Player);
             #endregion
 
 
@@ -76,7 +76,7 @@ namespace BomberMan2D
             AddComponent(new UpdateAnimation(this));
           
             //Collider
-            BoxCollider2D collider2D = new BoxCollider2D(new Vector2(0.5f, 0.5f));
+            BoxCollider2D collider2D = new BoxCollider2D(new Vector2(1f, 1f));
             collider2D.CollisionMode = CollisionMode.Collision;
             collider2D.TriggerEnter += OnTriggerEnter;
             AddComponent(collider2D);

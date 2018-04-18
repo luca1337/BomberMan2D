@@ -14,7 +14,7 @@ namespace BomberMan2D
         public MenuBackground(string nameTexture) : base("Menu Background")
         {
             image = new SpriteRenderer(FlyWeight.Get(nameTexture));
-            image.RenderOffset = (int)RenderLayer.Gui2;
+            image.RenderOffset = (int)RenderLayer.Gui_01;
             AddComponent(image);
             this.Transform.Scale = new Vector2(Graphics.Instance.Window.OrthoWidth, Graphics.Instance.Window.OrthoHeight);
 
