@@ -1,4 +1,5 @@
-﻿using BehaviourEngine;
+﻿using System;
+using BehaviourEngine;
 using OpenTK;
 
 namespace BomberMan2D
@@ -26,15 +27,19 @@ namespace BomberMan2D
             }, 0.018f, true, false);
            
             BoxCollider  = new BoxCollider2D(new Vector2(1f, 1f));
-            BoxCollider.CollisionMode = CollisionMode.Collision;
+            BoxCollider.CollisionMode = CollisionMode.Trigger;
+            BoxCollider.TriggerEnter += OnTriggerEnter;
             AddComponent(BoxCollider);
-            Rigidbody2D rigidbody2D = new Rigidbody2D();
-            rigidbody2D.IsGravityAffected = false;
-            AddComponent(rigidbody2D);
 
             AddComponent(new BoxCollider2DRenderer(new Vector4(1f, -1f, -1f, 0f)));
 
             AddComponent(anim);
+        }
+
+        private void OnTriggerEnter(Collider2D other)
+        {
+            if (other.Owner is Bomberman || other.Owner is AI)
+                other.Owner.Active = false;
         }
 
         public void Reset()
