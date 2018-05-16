@@ -165,6 +165,14 @@ namespace BomberMan2D
                 }
             }
         }
+        public static bool GetSwap(int x, int y)
+        {
+            int index = y * (columns - 1) + x;
+            if (cells[index] == 3)
+                return true;
+
+            return false;
+        }
 
         public static bool GetIndexExplosion(bool explosion, int x, int y) // for explosion spawn
         {

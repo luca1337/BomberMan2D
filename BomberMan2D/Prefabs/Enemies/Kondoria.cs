@@ -16,7 +16,7 @@ namespace BomberMan2D
 
         }
 
-        public override void OnTriggerEnter(Collider2D other)
+        public override void OnCollisionEnter(Collider2D other, HitState hitstate)
         {
         }
     }

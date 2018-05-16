@@ -26,8 +26,11 @@ namespace BomberMan2D
             }, 0.018f, true, false);
            
             BoxCollider  = new BoxCollider2D(new Vector2(1f, 1f));
-            BoxCollider.CollisionMode = CollisionMode.Trigger;
+            BoxCollider.CollisionMode = CollisionMode.Collision;
             AddComponent(BoxCollider);
+            Rigidbody2D rigidbody2D = new Rigidbody2D();
+            rigidbody2D.IsGravityAffected = false;
+            AddComponent(rigidbody2D);
 
             AddComponent(new BoxCollider2DRenderer(new Vector4(1f, -1f, -1f, 0f)));
 

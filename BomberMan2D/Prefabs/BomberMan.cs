@@ -16,6 +16,7 @@ namespace BomberMan2D
         public Vector2 Location { get; set; }
         public bool Invulnerability { get; set; }
 
+        private BoxCollider2D collider2D;
         //Animations
         private Dictionary<AnimationType, AnimationRenderer> playerAnimations = new Dictionary<AnimationType, AnimationRenderer>();
 
@@ -24,6 +25,7 @@ namespace BomberMan2D
 
         private InvulnerabilityManager manager;
 
+        private bool go = false;
         #region Powerups
 
         public int CurrentExplosion = 0;
@@ -76,12 +78,13 @@ namespace BomberMan2D
             AddComponent(new UpdateAnimation(this));
 
             //Collider
-            BoxCollider2D collider2D = new BoxCollider2D(new Vector2(1f, 1f));
+            collider2D = new BoxCollider2D(new Vector2(1f, 1f));
             collider2D.CollisionMode = CollisionMode.Collision;
             collider2D.CollisionStay += OnCollisionStay;
             collider2D.TriggerEnter += OnTriggerEnter;
             AddComponent(collider2D);
 
+            AddComponent(new BoxCollider2DRenderer(new Vector4(1f, 0f, 0f, 0f)));
             Rigidbody2D rigidBody = new Rigidbody2D();
             rigidBody.IsGravityAffected = false;
             AddComponent(rigidBody);
@@ -96,17 +99,41 @@ namespace BomberMan2D
         private void OnCollisionStay(Collider2D other, HitState hitState)
         {
 
-            //if (Map.GetIndex((int)other.Owner.Transform.Position.X, (int)other.Owner.Transform.Position.Y) == 3)
-            //{
-                if (hitState.normal.Y > 0)
-                    Transform.Position += new Vector2(0.1f, 0f);
-                else if (hitState.normal.Y < 0)
-                    Transform.Position += new Vector2(-0.1f, 0f);
-                else if (hitState.normal.X > 0)
-                    Transform.Position += new Vector2( 0f, -0.1f);
-                else if (hitState.normal.X < 0)
-                    Transform.Position += new Vector2( 0f, 0.1f);
-            //}
+            bool isWall = Map.GetSwap((int)other.Center.X, (int)other.Center.Y);
+
+            if (isWall)
+            {
+                int spriteSize = 1;
+                float deadzone = 0.15f;
+                float offset   = 0.25f;
+               
+                //Top & Bottom Collision (Player)
+                bool yLeft  = collider2D.internalTransform.Position.X < other.internalTransform.Position.X + spriteSize + deadzone && collider2D.internalTransform.Position.X > other.internalTransform.Position.X + spriteSize - offset - deadzone;
+                bool yRight = collider2D.internalTransform.Position.X + spriteSize < other.internalTransform.Position.X + offset + deadzone && collider2D.internalTransform.Position.X + spriteSize > other.internalTransform.Position.X - deadzone;
+                //Left & Right Collision (Player)
+                bool xTop = collider2D.internalTransform.Position.Y < other.internalTransform.Position.Y + spriteSize + deadzone && collider2D.internalTransform.Position.Y > other.internalTransform.Position.Y + spriteSize - offset - deadzone;
+                bool xBottom = collider2D.internalTransform.Position.Y + spriteSize < other.internalTransform.Position.Y + deadzone + offset && collider2D.internalTransform.Position.Y + spriteSize > other.internalTransform.Position.Y - deadzone;
+
+                float swapDist = 0.05f;
+
+                if (hitState.normal.Y > 0 && yLeft)
+                    Transform.Position += new Vector2(swapDist, 0f);
+                else if (hitState.normal.Y > 0 && yRight)
+                    Transform.Position += new Vector2(-swapDist, 0f);
+                else if (hitState.normal.Y < 0 && yLeft)
+                    Transform.Position += new Vector2(swapDist, 0f);
+                else if (hitState.normal.Y < 0 && yRight)
+                    Transform.Position += new Vector2(-swapDist, 0f);
+                else if (hitState.normal.X > 0 && xTop)
+                    Transform.Position += new Vector2(0f, swapDist);
+                else if (hitState.normal.X > 0 && xBottom)
+                    Transform.Position += new Vector2(0f, -swapDist);
+                else if (hitState.normal.X < 0 && xTop)
+                    Transform.Position += new Vector2(0f, swapDist);
+                else if (hitState.normal.X < 0 && xBottom)
+                    Transform.Position += new Vector2(0f, -swapDist);
+
+            }
         }
 
         private void OnTriggerEnter(Collider2D other)

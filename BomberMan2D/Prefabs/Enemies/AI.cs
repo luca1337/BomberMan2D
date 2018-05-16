@@ -35,6 +35,8 @@ namespace BomberMan2D
         #endregion
 
         #region FSM
+        public ChaseState Chase => chaseState;
+
         private PatrolState patrolState;
         private ChaseState chaseState;
         #endregion
@@ -52,7 +54,7 @@ namespace BomberMan2D
             Renderer = new AnimationRenderer(tex, width, height, tilesPerRow, keyFrames, frameLength, show, stop);
             Renderer.RenderOffset = (int)RenderLayer.AI;
             AddComponent(Renderer);
-
+            this.Layer = (uint)CollisionLayer.Enemy;
             patrolState = new PatrolState(this);
             chaseState = new ChaseState(this);
 
@@ -60,10 +62,14 @@ namespace BomberMan2D
             chaseState.Next = patrolState;
 
             BoxCollider2D collider = new BoxCollider2D(new Vector2(1, 1));
-            collider.CollisionMode = CollisionMode.Trigger;
-            collider.TriggerEnter += OnTriggerEnter; ;
+            collider.CollisionEnter += OnCollisionEnter; 
             AddComponent(collider);
 
+            Rigidbody2D rigidBody = new Rigidbody2D();
+            rigidBody.IsGravityAffected = false;
+            AddComponent(rigidBody);
+
+            AddComponent(new BoxCollider2DRenderer(new Vector4(1f,0f,0f,0f)));
             patrolState.OnStateEnter();
 
             AddComponent(new FSMUpdater(patrolState));
@@ -71,7 +77,7 @@ namespace BomberMan2D
         #endregion
 
         #region Collision Events
-        public abstract void OnTriggerEnter(Collider2D other);
+        public abstract void OnCollisionEnter(Collider2D other, HitState hitstate);
         #endregion
 
         #region Pathfinding
@@ -143,9 +149,10 @@ namespace BomberMan2D
         #endregion
 
         #region FSM
-        internal class PatrolState : IState
+        public class PatrolState : IState
         {
             private AI owner { get; set; }
+          
             public ChaseState Next { get; set; }
 
             private GameObject target = null;
@@ -195,10 +202,11 @@ namespace BomberMan2D
             }
         }
 
-        internal class ChaseState : IState
+        public class ChaseState : IState
         {
             private AI owner { get; set; }
             public PatrolState Next { get; set; }
+            public bool doChase;
 
             private IWaypoint next;
             private GameObject target = null;
@@ -223,6 +231,12 @@ namespace BomberMan2D
             {
                 if (!owner.IsInRadius(out target))
                 {
+                    if (doChase)
+                    {
+                        oneTimeChase = true;
+                        doChase      = false;
+                    }
+
                     if (oneTimeChase)
                     {
                         next = GameManager.GetAllPoints()[RandomManager.Instance.Random.Next(0, GameManager.GetPointsCount())];

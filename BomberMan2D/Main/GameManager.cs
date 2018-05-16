@@ -72,7 +72,14 @@ namespace BomberMan2D
             Physics.Instance.Gravity *= 2f;
 
             LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.SolidWall | (uint)CollisionLayer.Powerup);
+            LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.Bombs);
+            LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.Explosion);
+
             LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.SolidWall);
+            LayerManager.AddLayer((uint)CollisionLayer.Enemy, (uint)CollisionLayer.Enemy);
+            LayerManager.AddLayer((uint)CollisionLayer.Enemy, (uint)CollisionLayer.Explosion);
+            LayerManager.AddLayer((uint)CollisionLayer.Enemy, (uint)CollisionLayer.Bombs);
+
         }
 
         private static void SetupTextures()

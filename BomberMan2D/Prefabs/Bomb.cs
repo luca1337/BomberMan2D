@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BehaviourEngine;
 using OpenTK;
 
@@ -15,16 +16,27 @@ namespace BomberMan2D
         private int bigExplosion               = 9;
         private int littleExplosion            = 5;
         private AnimationRenderer renderer;
-        private List<BoxCollider2D> colliders;
+        private BoxCollider2D collider;
         private List<Vector2> locations;
         private StateExplode explode;
+        private List<BoxCollider2D> colliders;
         private StateWait wait;
 
         public Bomb() : base("Bomb")
         {
-            this.Layer = (uint)CollisionLayer.BomberMan;
+            this.Layer = (uint)CollisionLayer.Bombs;
 
+            collider = new BoxCollider2D(Vector2.One);
+            collider.CollisionMode = CollisionMode.Collision;
+            collider.CollisionEnter += OnCollisionEnter;
             colliders = new List<BoxCollider2D>();
+            AddComponent(collider);
+            AddComponent(new BoxCollider2DRenderer(Vector4.Zero));
+
+            Rigidbody2D rigidBody = new Rigidbody2D();
+            rigidBody.IsGravityAffected = false;
+            AddComponent(rigidBody);
+
             locations = new List<Vector2>();
             renderer  = new AnimationRenderer(FlyWeight.Get("Bomb"), 50, 50, 3, new int[] { 0, 1, 2, 1 }, 0.2f, true, false);
             AddComponent(renderer);
@@ -47,6 +59,11 @@ namespace BomberMan2D
                 explosionList.Add(toAdd);
             }
             // ChooseBomb();
+        }
+
+        private void OnCollisionEnter(Collider2D other, HitState hitState)
+        {
+            throw new NotImplementedException();
         }
 
         public  List<Vector2> GetAdjacentLocation(Vector2 from)
