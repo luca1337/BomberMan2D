@@ -303,8 +303,8 @@ namespace BomberMan2D
                     item.Enabled = false;
                 }
 
-                map.Active = false;
-                foreach (Component item in map.Components)
+                LevelManager.CurrentMap.Active = false;
+                foreach (Component item in LevelManager.CurrentMap.Components)
                 {
                     item.Enabled = false;
                 }
