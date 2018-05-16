@@ -27,7 +27,7 @@ namespace BomberMan2D
         #region Powerups
 
         public int CurrentExplosion = 0;
-     
+
         public bool IsBadIndex
         {
             get
@@ -74,10 +74,11 @@ namespace BomberMan2D
 
             AddComponent(new CharacterController());
             AddComponent(new UpdateAnimation(this));
-          
+
             //Collider
             BoxCollider2D collider2D = new BoxCollider2D(new Vector2(1f, 1f));
             collider2D.CollisionMode = CollisionMode.Collision;
+            collider2D.CollisionStay += OnCollisionStay;
             collider2D.TriggerEnter += OnTriggerEnter;
             AddComponent(collider2D);
 
@@ -92,6 +93,22 @@ namespace BomberMan2D
             #endregion
         }
 
+        private void OnCollisionStay(Collider2D other, HitState hitState)
+        {
+
+            //if (Map.GetIndex((int)other.Owner.Transform.Position.X, (int)other.Owner.Transform.Position.Y) == 3)
+            //{
+                if (hitState.normal.Y > 0)
+                    Transform.Position += new Vector2(0.1f, 0f);
+                else if (hitState.normal.Y < 0)
+                    Transform.Position += new Vector2(-0.1f, 0f);
+                else if (hitState.normal.X > 0)
+                    Transform.Position += new Vector2( 0f, -0.1f);
+                else if (hitState.normal.X < 0)
+                    Transform.Position += new Vector2( 0f, 0.1f);
+            //}
+        }
+
         private void OnTriggerEnter(Collider2D other)
         {
             if (other.Owner is IPowerup)
@@ -102,12 +119,12 @@ namespace BomberMan2D
 
             if (other.Owner is AI && !Invulnerability)
             {
-               foreach (Component item in Components)
-               {
-                   item.Enabled = false;
-               }
-        
-               this.Active = false;
+                foreach (Component item in Components)
+                {
+                    item.Enabled = false;
+                }
+
+                this.Active = false;
 
                 Console.WriteLine("Collided With AI");
             }
@@ -164,9 +181,9 @@ namespace BomberMan2D
                         bomb.IsBig = false;
                     else
                         bomb.IsBig = true;
-              
 
-                    if(firstTimeSpawn)
+
+                    if (firstTimeSpawn)
                     {
                         GameObject.Spawn(bomb);
                         Console.WriteLine("first spawn time of bomb");
