@@ -78,6 +78,7 @@ namespace BomberMan2D
         private static void SetupTextures()
         {
             FlyWeight.Add("Font01", "Assets/Font.dat");
+            FlyWeight.Add("Box2D", "Assets/Box2D.dat");
             FlyWeight.Add("Wall", "Assets/Wall_01.dat");
             FlyWeight.Add("Obstacle", "Assets/Obstacle_01.dat");
             FlyWeight.Add("BomberMan", "Assets/Bombertab1.dat");
@@ -154,6 +155,7 @@ namespace BomberMan2D
 
             public void OnStateEnter()
             {
+                //cazzo
                 GameManager.SetupCollisionsRulesAndPhysics();
                 GameManager.SetupTextures();
                 GameManager.SetupObjectPools();
