@@ -18,7 +18,7 @@ namespace BomberMan2D
             menuTexts.Add(new Text2D("Font01", "", new Vector2(Graphics.Instance.Window.OrthoWidth / 2 - 4.5f,
                Graphics.Instance.Window.OrthoHeight / 2 + 4), new Vector4(0f, 0f, 0f, 0f), 0.7f));
 
-            menuTexts.ToList().ForEach(t => t.RenderOffset = (int)RenderLayer.Gui);
+            menuTexts.ToList().ForEach(t => t.RenderOffset = (int)RenderLayer.Gui_00);
             menuTexts.ToList().ForEach(t => AddComponent(t));
 
             AddComponent(new UpdateMenu(menuTexts));
