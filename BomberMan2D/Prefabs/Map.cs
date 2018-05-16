@@ -38,7 +38,7 @@ namespace BomberMan2D
         {
             for (int iterator = 0; iterator < cells.Count; iterator++)
             {
-                if (cells[iterator] == 3)
+                if (cells[iterator] == 3 || cells[iterator] == 4)
                 {
                     Spawn(new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))), "Wall", true));
                 }
