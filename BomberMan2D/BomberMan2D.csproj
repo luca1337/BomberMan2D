@@ -78,6 +78,7 @@
     <Compile Include="Enums\EnemyType.cs" />
     <Compile Include="Factories\EnemyFactory.cs" />
     <Compile Include="Factories\GlobalFactory.cs" />
+    <Compile Include="Generator.cs" />
     <Compile Include="Interfaces\IPoolable.cs" />
     <Compile Include="Main\GameManager.cs" />
     <Compile Include="Factories\PowerUpFactory.cs" />

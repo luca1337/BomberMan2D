@@ -134,7 +134,8 @@ namespace BomberMan2D
 
         private void ReadFromFile(string csvFileName)
         {
-            string[] lines = File.ReadAllLines(csvFileName);
+            //string[] lines = File.ReadAllLines(csvFileName);
+            string[] lines = Generator.GenerateLevel(csvFileName, 30);
             rows = lines.Length;
 
             foreach (string t1 in lines)
