@@ -16,19 +16,26 @@ namespace BomberMan2D
                 return null;
 
             string[] lines = File.ReadAllLines(fileName);
-
+            
             for (int i = 0; i < lines.Length; i++)
             {
-                if(lines[i].Contains("0") && numOfWallsToGenerate > 0)
-                {
-                    int rnd = RandomManager.Instance.Random.Next(0, 10);
+                char[] line = lines[i].ToCharArray();
 
-                    if (rnd > 0 && rnd < 4)
+                for (int j = 0; j < line.Length; j++)
+                {
+                    if (line[j] == '0' && numOfWallsToGenerate > 0)
                     {
-                        lines[i].Replace('0', '2');
-                        numOfWallsToGenerate--;
+                        int rnd = RandomManager.Instance.Random.Next(0, 10);
+
+                        if (rnd > 0 && rnd < 4)
+                        {
+                            line[j] = '2';
+                            numOfWallsToGenerate--;
+                        }
                     }
                 }
+
+                lines[i] = new string (line);
             }
 
             return lines;

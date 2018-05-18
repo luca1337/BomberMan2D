@@ -10,7 +10,8 @@ namespace BomberMan2D
 
         public TargetPoint() : base("TargetPoint")
         {
-            Location = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, Map.GetPowerupSpawnPoint().Count)];
+            int n = Map.GetPowerupSpawnPoint().Count;
+            Location = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0,n )];
         }
     }
 

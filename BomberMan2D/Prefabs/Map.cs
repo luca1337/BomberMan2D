@@ -34,50 +34,6 @@ namespace BomberMan2D
             GenerateNeighborNode();
         }
 
-        private void GenerateMap()
-        {
-            for (int iterator = 0; iterator < cells.Count; iterator++)
-            {
-                if (cells[iterator] == 3 || cells[iterator] == 4)
-                {
-                    Spawn(new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))), "Wall", true));
-                }
-                else if (cells[iterator] == 2)
-                {
-                    Tile walkable = new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))), "Obstacle", true);
-                    WalkablePass.Add(walkable);
-                    Spawn(walkable);
-                }
-                else if (cells[iterator] == 5)
-                {
-                    playerSpawnPoint = new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize)));
-                }
-                else if (cells[iterator] == 5 || cells[iterator] == 0)
-                {
-                    powerUpSpawnPoints.Add(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))));
-                }
-                else if (cells[iterator] == 12)
-                {
-                    enemySpawnPoints.Add(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))));
-                }
-            }
-        }
-
-        private void GenerateNodes()
-        {
-            for (int y = 2; y < rows + 2; y++)
-            {
-                for (int x = 0; x < (columns - 1); x++)
-                {
-                    int index = y * (columns - 1) + x;
-
-                    if (cells[index] == 3 ||cells[index] == 2)
-                        MapNodes[index] = null;
-                    else if(cells[index] == 5 || cells[index] == 12 || cells[index] == 0)
-                        MapNodes[index] = new Node(1, new Vector2(x, y));
-                }
-            }
-        }
         public void GenerateNeighborNode()
         {
             // Here we move between the indexes
@@ -112,7 +68,6 @@ namespace BomberMan2D
                 }
             }
         }
-
         public Node GetNodeByIndex(int x, int y)
         {
             if (x < 0 || x  > (columns - 1))
@@ -124,12 +79,54 @@ namespace BomberMan2D
 
             return MapNodes[index];
         }
-
         public static int GetLevelEnumeratedIndex(int x, int y)
         {
             int index = y * (columns - 1) + x;
 
             return cells[index];
+        }
+        private void GenerateMap()
+        {
+            for (int iterator = 0; iterator < cells.Count; iterator++)
+            {
+                if (cells[iterator] == 3 || cells[iterator] == 4)
+                {
+                    Spawn(new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))), "Wall", true));
+                }
+                else if (cells[iterator] == 2)
+                {
+                    Tile walkable = new Tile(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))), "Obstacle", true);
+                    WalkablePass.Add(walkable);
+                    Spawn(walkable);
+                }
+                else if (cells[iterator] == 5)
+                {
+                    playerSpawnPoint = new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize)));
+                }
+                else if (cells[iterator] == 5 || cells[iterator] == 0)
+                {
+                    powerUpSpawnPoints.Add(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))));
+                }
+                else if (cells[iterator] == 12)
+                {
+                    enemySpawnPoints.Add(new Vector2((iterator % (columns - 1) * blockSize), ((iterator / (columns - 1) * blockSize))));
+                }
+            }
+        }
+        private void GenerateNodes()
+        {
+            for (int y = 2; y < rows + 2; y++)
+            {
+                for (int x = 0; x < (columns - 1); x++)
+                {
+                    int index = y * (columns - 1) + x;
+
+                    if (cells[index] == 3 ||cells[index] == 2)
+                        MapNodes[index] = null;
+                    else if(cells[index] == 5 || cells[index] == 12 || cells[index] == 0)
+                        MapNodes[index] = new Node(1, new Vector2(x, y));
+                }
+            }
         }
 
         private void ReadFromFile(string csvFileName)
