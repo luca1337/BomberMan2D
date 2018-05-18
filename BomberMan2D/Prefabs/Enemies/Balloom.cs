@@ -17,8 +17,13 @@ namespace BomberMan2D
 
         public override void OnCollisionEnter(Collider2D other, HitState hitstate)
         {
-            if (other.Owner is AI)
+            if (other.Owner is AI )
                 Chase.doChase = true;
+
+            //FIX
+            //if (other.Owner is Bomb)
+            //    Chase.doChase = true;
+
         }
     }
 }

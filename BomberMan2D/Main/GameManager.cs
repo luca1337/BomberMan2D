@@ -71,15 +71,10 @@ namespace BomberMan2D
             //do we want physics?
             Physics.Instance.Gravity *= 2f;
 
-            LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.SolidWall | (uint)CollisionLayer.Powerup);
-            LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.Bombs);
-            LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.Explosion);
-
+            LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.SolidWall | (uint)CollisionLayer.Powerup  | (uint)CollisionLayer.Explosion | (uint)CollisionLayer.Bombs);
             LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.SolidWall);
-            LayerManager.AddLayer((uint)CollisionLayer.Enemy, (uint)CollisionLayer.Enemy);
-            LayerManager.AddLayer((uint)CollisionLayer.Enemy, (uint)CollisionLayer.Explosion);
-            LayerManager.AddLayer((uint)CollisionLayer.Enemy, (uint)CollisionLayer.Bombs);
-
+            LayerManager.AddLayer((uint)CollisionLayer.Enemy,(uint)CollisionLayer.Enemy | (uint)CollisionLayer.Explosion | (uint)CollisionLayer.Bombs);
+         //   LayerManager.AddLayer ( (uint)CollisionLayer.Bombs , (uint)CollisionLayer.BomberMan);
         }
 
         private static void SetupTextures()

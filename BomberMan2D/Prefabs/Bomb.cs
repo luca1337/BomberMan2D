@@ -33,9 +33,7 @@ namespace BomberMan2D
             AddComponent(collider);
             AddComponent(new BoxCollider2DRenderer(Vector4.Zero));
 
-            Rigidbody2D rigidBody = new Rigidbody2D();
-            rigidBody.IsGravityAffected = false;
-            AddComponent(rigidBody);
+      
 
             locations = new List<Vector2>();
             renderer  = new AnimationRenderer(FlyWeight.Get("Bomb"), 50, 50, 3, new int[] { 0, 1, 2, 1 }, 0.2f, true, false);
@@ -63,7 +61,6 @@ namespace BomberMan2D
 
         private void OnCollisionEnter(Collider2D other, HitState hitState)
         {
-            throw new NotImplementedException();
         }
 
         public  List<Vector2> GetAdjacentLocation(Vector2 from)
