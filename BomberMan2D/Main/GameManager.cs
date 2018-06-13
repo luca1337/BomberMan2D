@@ -384,7 +384,7 @@ namespace BomberMan2D
                 //TargetPoints
                 if (targetSpawner == null)
                 {
-                    targetSpawner = new TargetSpawner(5, 3.5f);
+                    targetSpawner = new TargetSpawner(10, 7.5f);
                     GameObject.Spawn(targetSpawner);
                 }
                 else
@@ -399,7 +399,7 @@ namespace BomberMan2D
                 //AI
                 if (enemySpawner == null)
                 {
-                    enemySpawner = new EnemySpawner(bomberMan);
+                    enemySpawner = new EnemySpawner();
                     GameObject.Spawn(enemySpawner);
                 }
                 else

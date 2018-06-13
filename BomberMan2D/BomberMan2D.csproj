@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AI\AStar.cs" />
+    <Compile Include="Components\AIUpdater.cs" />
     <Compile Include="Components\BoxRenderer.cs" />
     <Compile Include="Components\EnemySpawner.cs" />
     <Compile Include="Enums\EnemyType.cs" />

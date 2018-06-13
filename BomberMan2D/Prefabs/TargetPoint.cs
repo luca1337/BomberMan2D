@@ -7,30 +7,32 @@ namespace BomberMan2D
     public class TargetPoint : GameObject, IWaypoint
     {
         public Vector2 Location { get => this.Transform.Position; set => this.Transform.Position = value; }
+        SpriteRenderer sr;
 
         public TargetPoint() : base("TargetPoint")
         {
             int n = Map.GetPowerupSpawnPoint().Count;
-            Location = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0,n )];
+            Location = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, n)];
+            sr = AddComponent<SpriteRenderer>(new SpriteRenderer(FlyWeight.Get("Box2D")));
         }
     }
 
     public class TargetSpawner : GameObject
     {
-        public TargetSpawner(int size, float shuffleTimeStep) : base("TargetSpawner") => AddComponent(new TargetPointBehaviour(size, shuffleTimeStep));
+        public TargetSpawner(int size, float shuffleTimeStep) : base("TargetSpawner") => AddComponent(new TargetPointComponent(size, shuffleTimeStep));
     }
 
-    public class TargetPointBehaviour : Component, IUpdatable
+    public class TargetPointComponent : Component, IUpdatable
     {
         private float tMin;
         private float tMax;
         public TargetPoint current;
 
-        public TargetPointBehaviour(int size, float shuffleTimeStep)
+        public TargetPointComponent(int numOfTargets, float shuffleTimeStep)
         {
             tMax = shuffleTimeStep;
 
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < numOfTargets; i++)
             {
                 current = new TargetPoint();
                 GameManager.AddTargetPoint(current);
@@ -45,7 +47,7 @@ namespace BomberMan2D
             tMin += Time.DeltaTime;
             if (tMin > tMax)
             {
-                GameManager.GetAllPoints().Where( x => x.GetType() != typeof(Bomberman)).ToList().ForEach(item => (item as GameObject).GetComponent<Transform>().Position = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, Map.GetPowerupSpawnPoint().Count)]);
+                GameManager.GetAllPoints().Where(x => x.GetType() != typeof(Bomberman)).ToList().ForEach(item => (item as GameObject).GetComponent<Transform>().Position = Map.GetPowerupSpawnPoint()[RandomManager.Instance.Random.Next(0, Map.GetPowerupSpawnPoint().Count)]);
                 ResetTiming();
             }
         }

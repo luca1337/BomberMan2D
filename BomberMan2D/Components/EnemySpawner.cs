@@ -5,17 +5,13 @@ namespace BomberMan2D
 {
     public class EnemySpawner : BehaviourEngine.GameObject
     {
-        IWaypoint Player { get; set; }
-
-        public EnemySpawner(IWaypoint player) : base("AI Spawner")
+        public EnemySpawner() : base("AI Spawner")
         {
-            this.Player = player;
-
-            for (int i = 0; i < Map.GetEnemySpawnPoints().Count(); i++)
+            int cnt = Map.GetEnemySpawnPoints().Count();
+            for (int i = 0; i < cnt; i++)
             {
                 IEnemy enemy = EnemyFactory.Get(EnemyType.Balloom);
-                enemy.Player = (Bomberman)player;
-                enemy.RefTransform.Position = Map.GetEnemySpawnPoints()[RandomManager.Instance.Random.Next(0, Map.GetEnemySpawnPoints().Count())];
+                enemy.RefTransform.Position = Map.GetEnemySpawnPoints()[i];
 
                 GameObject.Spawn((GameObject)enemy);
             }
