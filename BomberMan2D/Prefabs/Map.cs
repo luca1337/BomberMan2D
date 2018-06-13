@@ -178,7 +178,7 @@ namespace BomberMan2D
 
             if (explosion)
             {
-                if (cells[index] == 0 || cells[index] == 5 || cells[index] == 12)
+                if (cells[index] == 0 || cells[index] == 5 || cells[index] == 12 || cells[index] == 15)
                     return true;
 
                 if (cells[index] == 3)

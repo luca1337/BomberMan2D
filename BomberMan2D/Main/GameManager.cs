@@ -73,7 +73,7 @@ namespace BomberMan2D
 
             LayerManager.AddLayer((uint)CollisionLayer.BomberMan, (uint)CollisionLayer.SolidWall | (uint)CollisionLayer.Powerup  | (uint)CollisionLayer.Explosion | (uint)CollisionLayer.Bombs);
             LayerManager.AddLayer((uint)CollisionLayer.Explosion, (uint)CollisionLayer.SolidWall);
-            LayerManager.AddLayer((uint)CollisionLayer.Enemy,(uint)CollisionLayer.Enemy | (uint)CollisionLayer.Explosion | (uint)CollisionLayer.Bombs);
+            LayerManager.AddLayer((uint)CollisionLayer.Enemy, (uint)CollisionLayer.Explosion | (uint)CollisionLayer.Bombs);
          //   LayerManager.AddLayer ( (uint)CollisionLayer.Bombs , (uint)CollisionLayer.BomberMan);
         }
 

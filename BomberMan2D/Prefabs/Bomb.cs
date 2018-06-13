@@ -27,8 +27,10 @@ namespace BomberMan2D
             this.Layer = (uint)CollisionLayer.Bombs;
 
             collider = new BoxCollider2D(Vector2.One);
-            collider.CollisionMode = CollisionMode.Collision;
-            collider.CollisionEnter += OnCollisionEnter;
+            //collider.CollisionMode = CollisionMode.Collision;
+            //collider.CollisionEnter += OnCollisionEnter;
+            collider.CollisionMode = CollisionMode.Trigger;
+            collider.TriggerExit += OnTriggerExit;
             colliders = new List<BoxCollider2D>();
             AddComponent(collider);
             AddComponent(new BoxCollider2DRenderer(Vector4.Zero));
@@ -59,8 +61,15 @@ namespace BomberMan2D
             // ChooseBomb();
         }
 
+        private void OnTriggerExit(Collider2D other)
+        {
+            collider.CollisionMode = CollisionMode.Collision;
+            collider.CollisionEnter += OnCollisionEnter;
+        }
+
         private void OnCollisionEnter(Collider2D other, HitState hitState)
         {
+
         }
 
         public  List<Vector2> GetAdjacentLocation(Vector2 from)
